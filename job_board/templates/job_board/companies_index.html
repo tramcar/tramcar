@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Companies</h1>
+
+{% if companies %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Twitter</th>
+        <th>Job Count</th>
+      </tr>
+    </thead>
+    {% for company in companies %}
+    <tr>
+      <td><a href="{% url 'companies_show' company.id %}">{{ company.name }}</a></td>
+      <td><a href="https://www.twitter.com/{{ company.twitter }}">{{ company.twitter }}</a></td>
+      <td>{{ company.paid_jobs.count }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+<p>No companies found.</p>
+{% endif %}
+{% endblock %}

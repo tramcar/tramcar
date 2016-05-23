@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ job.title }} @ {{ job.company }}</h1>
+
+<div class="row">
+  <div class="col-md-4">
+    <h4>
+      <mark>URL</mark>
+    </h4>
+    <p><a href="{{ job.company.url }}">{{ job.company.url }}</a></p>
+    <h4>
+      <mark>Twitter</mark>
+    </h4>
+    <p><a href="https://twitter.com/{{ job.company.twitter }}">{{ job.company.twitter }}</a></p>
+    <p><a href="{% url 'companies_show' job.company.id %}">View more jobs</a></p>
+    {% if user.id == job.id or user.is_staff %}
+    <hr>
+    <h3>Job Admin</h3>
+    <h4>
+      <mark>Status</mark>
+    </h4>
+    <p>
+      {% if not job.paid_at and not job.expired_at %}
+      <span class="label label-warning %>">Unpaid</span>
+      {% elif job.paid_at and not job.expired_at %}
+      <span class="label label-success %>">Paid</span>
+      {% elif job.paid_at and job.expired_at %}
+      <span class="label label-warning %>">Expired</span>
+      {% endif %}
+    </p>
+    <div class="btn-group btn-group-sm button-group-margin">
+      <a href="{% url 'jobs_edit' job.id %}" class="btn btn-default">Edit</a>
+      {% if job.paid_at and not job.expired_at %}
+      <a href="{% url 'jobs_expire' job.id %}" class="btn btn-default">Expire</a>
+      {% elif not job.paid_at and user.is_staff %}
+      <a href="{% url 'jobs_activate' job.id %}" class="btn btn-default">Activate</a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+  <div class="col-md-8">
+    <h4><mark>Category</mark></h4>
+    <p><a href="{% url 'categories_show' job.category.id %}">{{ job.category }}</a></p>
+    <h4><mark>Date</mark></h4>
+    <p>{{ job.paid_at|date:'Y-m-d H:i' }}</p>
+    <h4><mark>Description</mark></h4>
+    <p>{{ job.description_md | safe }}</p>
+    <h4><mark>Application Info</mark></h4>
+    <p>{{ job.application_info_md | safe }}</p>
+    {% if job.country %}
+    <h4><mark>Country</mark></h4>
+    <p>{{ job.country }}</p>
+    {% endif %}
+    {% if job.location %}
+    <h4><mark>Location</mark></h4>
+    <p>{{ job.location }}</p>
+    {% endif %}
+    {% if user.id == job.id or user.is_staff %}
+    <h4><mark>E-mail</mark></h4>
+    <p>{{ job.email }}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

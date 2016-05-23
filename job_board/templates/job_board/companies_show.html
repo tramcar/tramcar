@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ company.name }}</h1>
+
+<div class="row">
+  <div class="col-md-4">
+    <h4>
+      <mark>URL</mark>
+    </h4>
+    <p><a href="{{ company.url }}">{{ company.url }}</a></p>
+    {% if company.country %}
+    <h4>
+      <mark>Headquarters</mark>
+    </h4>
+    <p>{{ company.country.name }}</p>
+    {% endif %}
+    <h4>
+      <mark>Twitter</mark>
+    </h4>
+    <p><a href="https://twitter.com/{{ company.twitter }}">{{ company.twitter }}</a></p>
+    {% if company.id == user.id or user.is_staff %}
+    <a class="btn btn-primary btn-sm" href="{% url 'companies_edit' company.id %}">Edit Company</a>
+    {% endif %}
+  </div>
+  <div class="col-md-8">
+    <h4><mark>Jobs</mark></h4>
+    {% if jobs %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Post Date</th>
+          <th>Title</th>
+          <th>Country</th>
+          <th>Category</th>
+          <th>Expired</th>
+        </tr>
+      </thead>
+      {% for job in jobs %}
+      <tr>
+        <td>{{ job.paid_at }}</td>
+        <td><a href="{% url 'jobs_show' job.id %}">{{ job.title }}</a></td>
+        <td>{{ job.format_country }}</td>
+        <td><a href="{% url 'categories_show' job.category.id %}">{{ job.category.name }}</a></td>
+        <td>
+          {% if job.paid_at and not job.expired_at %}
+          <span class="label label-success %>">Paid</span>
+          {% elif job.paid_at and job.expired_at %}
+          <span class="label label-warning %>">Expired</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+      <p>No jobs are available.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

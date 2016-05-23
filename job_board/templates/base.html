@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Categories</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">{{ request.site.name }}</a>
+        </div>
+        <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li role="presentation"><a href="{% url 'jobs_index' %}">Jobs</a></li>
+            <li role="presentation"><a href="{% url 'categories_index' %}">Categories</a></li>
+            <li role="presentation"><a href="{% url 'companies_index' %}">Companies</a></li>
+            {% if user.is_authenticated %}
+            <li role="presentation"><a href="{% url 'companies_new' %}">Add Company</a></li>
+            <li role="presentation"><a href="{% url 'jobs_new' %}">Post Job</a></li>
+            {% endif %}
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+            <li role="presentation"><a href="{% url 'logout' %}?next={% url 'jobs_index' %}">Logout</a></li>
+            {% else %}
+            <li role="presentation"><a href="{% url 'register' %}">Register</a></li>
+            <li role="presentation"><a href="{% url 'login' %}?next={% url 'jobs_index' %}">Login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>
