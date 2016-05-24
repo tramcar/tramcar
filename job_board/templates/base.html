@@ -18,6 +18,7 @@
             <li role="presentation"><a href="{% url 'categories_index' %}">Categories</a></li>
             <li role="presentation"><a href="{% url 'companies_index' %}">Companies</a></li>
             {% if user.is_authenticated %}
+            <li role="presentation"><a href="{% url 'jobs_mine' %}">My Jobs</a></li>
             <li role="presentation"><a href="{% url 'companies_new' %}">Add Company</a></li>
             <li role="presentation"><a href="{% url 'jobs_new' %}">Post Job</a></li>
             {% endif %}

@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^$', views.jobs_index, name='jobs_index'),
     url(r'^jobs/$', views.jobs_index, name='jobs_index'),
     url(r'^jobs/new/$', views.jobs_new, name='jobs_new'),
+    url(r'^jobs/mine/$', views.jobs_mine, name='jobs_mine'),
     url(r'^jobs/(?P<job_id>[0-9]+)/$', views.jobs_show, name='jobs_show'),
     url(r'^jobs/(?P<job_id>[0-9]+)/activate$', views.jobs_activate, name='jobs_activate'),
     url(r'^jobs/(?P<job_id>[0-9]+)/expire$', views.jobs_expire, name='jobs_expire'),
