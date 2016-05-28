@@ -18,13 +18,13 @@
             <li role="presentation"><a href="{% url 'categories_index' %}">Categories</a></li>
             <li role="presentation"><a href="{% url 'companies_index' %}">Companies</a></li>
             {% if user.is_authenticated %}
-            <li role="presentation"><a href="{% url 'jobs_mine' %}">My Jobs</a></li>
             <li role="presentation"><a href="{% url 'companies_new' %}">Add Company</a></li>
             <li role="presentation"><a href="{% url 'jobs_new' %}">Post Job</a></li>
             {% endif %}
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
+            <li role="presentation"><a href="{% url 'jobs_mine' %}">My Jobs</a></li>
             <li role="presentation"><a href="{% url 'logout' %}?next={% url 'jobs_index' %}">Logout</a></li>
             {% else %}
             <li role="presentation"><a href="{% url 'register' %}">Register</a></li>

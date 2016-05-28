@@ -53,6 +53,7 @@ class Company(models.Model):
 
 
 class Job(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=50)
     description = models.TextField()
     application_info = models.TextField()
