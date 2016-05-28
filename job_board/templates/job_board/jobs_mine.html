@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Jobs</h1>
+
+{% if jobs %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Post Date</th>
+      <th>Title</th>
+      <th>Company</th>
+      <th>Country</th>
+      <th>Category</th>
+    </tr>
+  </thead>
+  {% for job in jobs %}
+  <tr>
+    <td>{{ job.created_at|date:'Y-m-d H:i' }}</td>
+    <td><a href="{% url 'jobs_show' job.id %}">{{ job.title }}</a></td>
+    <td><a href="{% url 'companies_show' job.company.id %}">{{ job.company.name }}</a></td>
+    <td>{{ job.format_country }}</td>
+    <td><a href="{% url 'categories_show' job.category.id %}">{{ job.category.name }}</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+  <p>No jobs are available.</p>
+{% endif %}
+{% endblock %}

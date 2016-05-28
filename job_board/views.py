@@ -20,9 +20,9 @@ def jobs_index(request):
 
 @login_required(login_url='/login/')
 def jobs_mine(request):
-    jobs = Job.on_site.filter(user_id=request.user.id).order_by('paid_at')
+    jobs = Job.on_site.filter(user_id=request.user.id).order_by('created_at')
     context = {'jobs': jobs }
-    return render(request, 'job_board/jobs_index.html', context)
+    return render(request, 'job_board/jobs_mine.html', context)
 
 
 @login_required(login_url='/login/')
