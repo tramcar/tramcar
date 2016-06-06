@@ -4,8 +4,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
+from django.utils.encoding import python_2_unicode_compatible
 
 
+@python_2_unicode_compatible
 class Category(models.Model):
     name = models.CharField(max_length=30)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
@@ -22,6 +24,7 @@ class Category(models.Model):
         return self.job_set.filter(paid_at__isnull=False).filter(expired_at__isnull=True)
 
 
+@python_2_unicode_compatible
 class Country(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -32,6 +35,7 @@ class Country(models.Model):
         return self.name
 
 
+@python_2_unicode_compatible
 class Company(models.Model):
     name = models.CharField(max_length=50)
     url = models.URLField(verbose_name="URL")
@@ -52,6 +56,7 @@ class Company(models.Model):
         return self.job_set.filter(paid_at__isnull=False)
 
 
+@python_2_unicode_compatible
 class Job(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=50)
