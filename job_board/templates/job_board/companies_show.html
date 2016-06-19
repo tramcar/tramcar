@@ -44,9 +44,9 @@
         <td><a href="{% url 'categories_show' job.category.id %}">{{ job.category.name }}</a></td>
         <td>
           {% if job.paid_at and not job.expired_at %}
-          <span class="label label-success %>">Paid</span>
+          <span class="label label-success %>">No</span>
           {% elif job.paid_at and job.expired_at %}
-          <span class="label label-warning %>">Expired</span>
+          <span class="label label-warning %>">Yes</span>
           {% endif %}
         </td>
       </tr>

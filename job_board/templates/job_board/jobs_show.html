@@ -40,6 +40,12 @@
     {% endif %}
   </div>
   <div class="col-md-8">
+    {% if job.paid_at and job.expired_at %}
+    <div class="alert alert-info alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Hey there!</strong> This job has expired and may no longer be applicable
+    </div>
+    {% endif %}
     <h4><mark>Category</mark></h4>
     <p><a href="{% url 'categories_show' job.category.id %}">{{ job.category }}</a></p>
     <h4><mark>Post Date</mark></h4>
