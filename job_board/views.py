@@ -99,7 +99,7 @@ def jobs_activate(request, job_id):
 
 
 def categories_index(request):
-    categories = Category.on_site.all().order_by('name')
+    categories = Category.on_site.all()
     context = {'categories': categories }
     return render(request, 'job_board/categories_index.html', context)
 
@@ -111,7 +111,7 @@ def categories_show(request, category_id):
 
 
 def companies_index(request):
-    companies = Company.on_site.all().order_by('name')
+    companies = Company.on_site.all()
     context = {'companies': companies }
     return render(request, 'job_board/companies_index.html', context)
 

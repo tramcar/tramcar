@@ -16,6 +16,7 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = "categories"
         unique_together = ("name", "site")
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -30,6 +31,7 @@ class Country(models.Model):
 
     class Meta:
         verbose_name_plural = "countries"
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -48,6 +50,7 @@ class Company(models.Model):
     class Meta:
         verbose_name_plural = "companies"
         unique_together = ("name", "site")
+        ordering = ['name']
 
     def __str__(self):
         return self.name
