@@ -49,7 +49,7 @@
     <h4><mark>Category</mark></h4>
     <p><a href="{% url 'categories_show' job.category.id %}">{{ job.category }}</a></p>
     <h4><mark>Post Date</mark></h4>
-    <p>{{ job.paid_at|date:'Y-m-d H:i' }}</p>
+    <p>{{ post_date|date:'Y-m-d H:i' }}</p>
     <h4><mark>Description</mark></h4>
     <p>{{ job.description_md | safe }}</p>
     <h4><mark>Application Info</mark></h4>
