@@ -2,7 +2,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.utils import timezone
 
@@ -20,7 +20,7 @@ def jobs_index(request):
 
 @login_required(login_url='/login/')
 def jobs_mine(request):
-    jobs = Job.on_site.filter(user_id=request.user.id).order_by('created_at')
+    jobs = Job.on_site.filter(user_id=request.user.id).order_by('-created_at')
     context = {'jobs': jobs }
     return render(request, 'job_board/jobs_mine.html', context)
 
@@ -42,19 +42,27 @@ def jobs_new(request):
 
 def jobs_show(request, job_id):
     job = get_object_or_404(Job, pk=job_id, site_id=request.site)
+    # If the browsing user does not own the job, and the job has yet to be paid
+    # for, then 404
+    if job.user_id != request.user.id and job.paid_at is None:
+        raise Http404("No Job matches the given query.")
+    # If the browsing user owns the job, and the job is unpaid for, display the
+    # job's created_at date instead of paid_at
+    if job.user_id == request.user.id and job.paid_at is None:
+        post_date = job.created_at
+    else:
+        post_date = job.paid_at
     md = markdown.Markdown(safe_mode='remove')
     job.description_md = md.convert(job.description)
     job.application_info_md = md.convert(job.application_info)
 
-    context = {'job': job}
+    context = {'job': job, 'post_date': post_date}
     return render(request, 'job_board/jobs_show.html', context)
 
 
 @login_required(login_url='/login/')
 def jobs_edit(request, job_id):
     job = get_object_or_404(Job, pk=job_id, site_id=request.site)
-
-    print dir(job)
 
     if request.user.id != job.user.id:
         return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
