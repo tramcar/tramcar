@@ -32,5 +32,5 @@ Superuser created successfully.
 (.venv) $ python manage.py runserver
 ```
 
-You can now browse (http://127.0.0.1:8000/) to access your job board, and
-(http://127.0.0.1:8000/admin) to access the admin panel.
+You can now browse http://127.0.0.1:8000/ to access your job board, and
+http://127.0.0.1:8000/admin/ to access the admin panel.
