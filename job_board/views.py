@@ -1,6 +1,7 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_list_or_404, get_object_or_404, render
@@ -20,7 +21,17 @@ def jobs_index(request):
 
 @login_required(login_url='/login/')
 def jobs_mine(request):
-    jobs = Job.on_site.filter(user_id=request.user.id).order_by('-created_at')
+    jobs_list = Job.on_site.filter(user_id=request.user.id).order_by('-created_at')
+    paginator = Paginator(jobs_list, 25)
+    page = request.GET.get('page')
+    try:
+        jobs = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        jobs = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        jobs = paginator.page(paginator.num_pages)
     context = {'jobs': jobs }
     return render(request, 'job_board/jobs_mine.html', context)
 
@@ -119,7 +130,17 @@ def categories_show(request, category_id):
 
 
 def companies_index(request):
-    companies = Company.on_site.all()
+    companies_list = Company.on_site.all()
+    paginator = Paginator(companies_list, 25)
+    page = request.GET.get('page')
+    try:
+        companies = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        companies = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        companies = paginator.page(paginator.num_pages)
     context = {'companies': companies }
     return render(request, 'job_board/companies_index.html', context)
 

@@ -34,7 +34,11 @@
   </tr>
   {% endfor %}
 </table>
+
+{% include "pagination.html" with pagination_list=jobs %}
+
 {% else %}
   <p>No jobs are available.</p>
 {% endif %}
+
 {% endblock %}
