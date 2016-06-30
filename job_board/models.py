@@ -73,6 +73,9 @@ class Job(models.Model):
     paid_at = models.DateTimeField(null=True)
     expired_at = models.DateTimeField(null=True)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    # When using CurrentSiteManager, we do not have access to Job.objects,
+    # which we need when we want to expire all jobs irrespective of site
+    objects = models.Manager()
     on_site = CurrentSiteManager()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
