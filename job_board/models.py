@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
+from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 
 
@@ -78,6 +79,10 @@ class Job(models.Model):
     objects = models.Manager()
     on_site = CurrentSiteManager()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def expire(self):
+        self.expired_at = timezone.now()
+        self.save()
 
     def format_country(self):
         if self.country:
