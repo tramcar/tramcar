@@ -104,8 +104,7 @@ def jobs_expire(request, job_id):
     if request.user.id != job.user.id:
         return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
 
-    job.expired_at = timezone.now()
-    job.save()
+    job.expire()
     return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
 
 

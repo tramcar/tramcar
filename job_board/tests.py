@@ -4,6 +4,21 @@ from django.test import TestCase
 from .models import Job
 
 
+class JobMethodTests(TestCase):
+    def setUp(self):
+        # Note that we're assigning non-existent values for country,
+        # category, etc.
+        job = Job(title='Software Developer', country_id=1, category_id=1,
+                  company_id=1, site_id=1, user_id=1)
+        job.paid_at = job.created_at
+        job.save()
+
+    def test_expire(self):
+        job = Job.objects.get(title='Software Developer')
+        job.expire()
+        self.assertIsNotNone(job.expired_at)
+
+
 class JobViewTests(TestCase):
 
     def test_index_view(self):
