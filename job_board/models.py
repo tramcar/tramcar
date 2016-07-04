@@ -80,9 +80,21 @@ class Job(models.Model):
     on_site = CurrentSiteManager()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def activate(self):
+        if self.paid_at is None:
+            self.paid_at = timezone.now()
+            self.save()
+            return True
+        else:
+            return False
+
     def expire(self):
-        self.expired_at = timezone.now()
-        self.save()
+        if self.paid_at is not None and self.expired_at is None:
+            self.expired_at = timezone.now()
+            self.save()
+            return True
+        else:
+            return False
 
     def format_country(self):
         if self.country:

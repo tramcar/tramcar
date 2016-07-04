@@ -13,11 +13,36 @@ class JobMethodTests(TestCase):
         job.paid_at = job.created_at
         job.save()
 
-    def test_expire(self):
+    def test_activate_on_unactivated_job(self):
         job = Job.objects.get(title='Software Developer')
-        job.expire()
+        self.assertTrue(job.activate())
+        self.assertIsNotNone(job.paid_at)
+
+    def test_activate_on_already_activated_job(self):
+        job = Job.objects.get(title='Software Developer')
+        job.activate()
+        paid_at = job.paid_at
+        self.assertFalse(job.activate())
+        self.assertEqual(paid_at, job.paid_at)
+
+    def test_expire_on_unexpired_job(self):
+        job = Job.objects.get(title='Software Developer')
+        job.activate()
+        self.assertTrue(job.expire())
         self.assertIsNotNone(job.expired_at)
 
+    def test_expire_on_already_expired_job(self):
+        job = Job.objects.get(title='Software Developer')
+        job.activate()
+        job.expire()
+        expired_at = job.expired_at
+        self.assertFalse(job.expire())
+        self.assertEqual(expired_at, job.expired_at)
+
+    def test_expire_on_unactivated_job(self):
+        job = Job.objects.get(title='Software Developer')
+        self.assertFalse(job.expire())
+        self.assertIsNone(job.expired_at)
 
 class JobViewTests(TestCase):
 
