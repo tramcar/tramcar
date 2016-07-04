@@ -111,7 +111,7 @@ class CategoryViewTests(TestCase):
 
     def test_show_view(self):
         response = self.client.get(reverse('categories_show', args=(1,)))
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 200)
 
 
 class CompanyViewTests(TestCase):
