@@ -5,7 +5,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_list_or_404, get_object_or_404, render
-from django.utils import timezone
 
 from .forms import CompanyForm, JobForm
 from .models import Category, Company, Job
@@ -92,8 +91,7 @@ def jobs_edit(request, job_id):
 @staff_member_required(login_url='/login/')
 def jobs_activate(request, job_id):
     job = get_object_or_404(Job, pk=job_id, site_id=request.site)
-    job.paid_at = timezone.now()
-    job.save()
+    job.activate()
     return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
 
 
@@ -105,14 +103,6 @@ def jobs_expire(request, job_id):
         return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
 
     job.expire()
-    return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
-
-
-@staff_member_required(login_url='/login/')
-def jobs_activate(request, job_id):
-    job = get_object_or_404(Job, pk=job_id, site_id=request.site)
-    job.paid_at = timezone.now()
-    job.save()
     return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
 
 
