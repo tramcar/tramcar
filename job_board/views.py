@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import get_list_or_404, get_object_or_404, render
+from django.shortcuts import get_object_or_404, render
 
 from .forms import CompanyForm, JobForm
 from .models import Category, Company, Job
@@ -113,7 +113,10 @@ def categories_index(request):
 
 
 def categories_show(request, category_id):
-    jobs = get_list_or_404(Job, category_id=category_id, site_id=request.site)
+    jobs = Job.on_site.filter(category_id=category_id) \
+                      .filter(paid_at__isnull=False) \
+                      .filter(expired_at__isnull=True) \
+                      .order_by('paid_at')
     context = {'jobs': jobs}
     return render(request, 'job_board/jobs_index.html', context)
 
