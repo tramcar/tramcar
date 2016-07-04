@@ -1,7 +1,35 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from .models import Job
+from .models import Company, Job
+
+
+class CompanyMethodTests(TestCase):
+    def setUp(self):
+        # Note that we're assigning non-existent values for country,
+        # category, etc.
+        company = Company(name='Tramcar', site_id=1, user_id=1)
+        company.save()
+
+    def test_active_jobs(self):
+        company = Company.objects.get(name='Tramcar')
+        job = Job(title='Software Developer', country_id=1,
+                  category_id=1, company_id=company.id, site_id=1,
+                  user_id=1)
+        job.save()
+        self.assertEqual(len(company.active_jobs()), 0)
+        job.activate()
+        self.assertEqual(len(company.active_jobs()), 1)
+
+    def test_paid_jobs(self):
+        company = Company.objects.get(name='Tramcar')
+        job = Job(title='Software Developer', country_id=1,
+                         category_id=1, company_id=company.id, site_id=1,
+                         user_id=1)
+        job.save()
+        self.assertEqual(len(company.paid_jobs()), 0)
+        job.activate()
+        self.assertEqual(len(company.paid_jobs()), 1)
 
 
 class JobMethodTests(TestCase):

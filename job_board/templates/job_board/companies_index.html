@@ -8,15 +8,19 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>URL</th>
       <th>Twitter</th>
-      <th>Job Count</th>
+      <th>Total Jobs</th>
+      <th>Active Jobs</th>
     </tr>
   </thead>
   {% for company in companies %}
   <tr>
     <td><a href="{% url 'companies_show' company.id %}">{{ company.name }}</a></td>
+    <td><a href="{{ company.url }}">{{ company.url }}</a></td>
     <td><a href="https://www.twitter.com/{{ company.twitter }}">{{ company.twitter }}</a></td>
     <td>{{ company.paid_jobs.count }}</td>
+    <td>{{ company.active_jobs.count }}</td>
   </tr>
   {% endfor %}
 </table>
