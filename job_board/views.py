@@ -13,7 +13,7 @@ import markdown
 
 
 def jobs_index(request):
-    jobs = Job.on_site.filter(paid_at__isnull=False).filter(expired_at__isnull=True).order_by('paid_at')
+    jobs = Job.on_site.filter(paid_at__isnull=False).filter(expired_at__isnull=True).order_by('-paid_at')
     context = {'jobs': jobs }
     return render(request, 'job_board/jobs_index.html', context)
 
@@ -116,7 +116,7 @@ def categories_show(request, category_id):
     jobs = Job.on_site.filter(category_id=category_id) \
                       .filter(paid_at__isnull=False) \
                       .filter(expired_at__isnull=True) \
-                      .order_by('paid_at')
+                      .order_by('-paid_at')
     context = {'jobs': jobs}
     return render(request, 'job_board/jobs_index.html', context)
 
