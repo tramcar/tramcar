@@ -13,14 +13,17 @@ import markdown
 
 
 def jobs_index(request):
-    jobs = Job.on_site.filter(paid_at__isnull=False).filter(expired_at__isnull=True).order_by('-paid_at')
-    context = {'jobs': jobs }
+    jobs = Job.on_site.filter(paid_at__isnull=False) \
+                      .filter(expired_at__isnull=True) \
+                      .order_by('-paid_at')
+    context = {'jobs': jobs}
     return render(request, 'job_board/jobs_index.html', context)
 
 
 @login_required(login_url='/login/')
 def jobs_mine(request):
-    jobs_list = Job.on_site.filter(user_id=request.user.id).order_by('-created_at')
+    jobs_list = Job.on_site.filter(user_id=request.user.id) \
+                           .order_by('-created_at')
     paginator = Paginator(jobs_list, 25)
     page = request.GET.get('page')
     try:
@@ -31,7 +34,7 @@ def jobs_mine(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         jobs = paginator.page(paginator.num_pages)
-    context = {'jobs': jobs }
+    context = {'jobs': jobs}
     return render(request, 'job_board/jobs_mine.html', context)
 
 
@@ -85,7 +88,9 @@ def jobs_edit(request, job_id):
     else:
         form = JobForm(instance=job)
 
-    return render(request, 'job_board/jobs_edit.html', {'form': form, 'job': job})
+    return render(request,
+                  'job_board/jobs_edit.html',
+                  {'form': form, 'job': job})
 
 
 @staff_member_required(login_url='/login/')
@@ -108,7 +113,7 @@ def jobs_expire(request, job_id):
 
 def categories_index(request):
     categories = Category.on_site.all()
-    context = {'categories': categories }
+    context = {'categories': categories}
     return render(request, 'job_board/categories_index.html', context)
 
 
@@ -133,7 +138,7 @@ def companies_index(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         companies = paginator.page(paginator.num_pages)
-    context = {'companies': companies }
+    context = {'companies': companies}
     return render(request, 'job_board/companies_index.html', context)
 
 
@@ -146,7 +151,8 @@ def companies_new(request):
             company.site_id = 1
             company.user_id = request.user.id
             company.save()
-            return HttpResponseRedirect(reverse('companies_show', args=(company.id,)))
+            return HttpResponseRedirect(reverse('companies_show',
+                                                args=(company.id,)))
     else:
         form = CompanyForm()
     return render(request, 'job_board/companies_new.html', {'form': form})
@@ -157,7 +163,9 @@ def companies_show(request, company_id):
     # We don't use get_list_or_404 here as we redirect to this view after
     # adding a new company and at that point it won't have any jobs assigned
     # to it.
-    jobs = Job.on_site.filter(company=company, paid_at__isnull=False).order_by('-paid_at')
+    jobs = Job.on_site.filter(company=company) \
+                      .filter(paid_at__isnull=False) \
+                      .order_by('-paid_at')
     context = {'company': company, 'jobs': jobs}
     return render(request, 'job_board/companies_show.html', context)
 
@@ -167,16 +175,20 @@ def companies_edit(request, company_id):
     company = get_object_or_404(Company, pk=company_id, site_id=request.site)
 
     if request.user.id != company.user.id:
-        return HttpResponseRedirect(reverse('companies_show', args=(company.id,)))
+        return HttpResponseRedirect(reverse('companies_show',
+                                            args=(company.id,)))
 
     if request.method == 'POST':
         form = CompanyForm(request.POST, instance=company)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('companies_show', args=(company.id,)))
+            return HttpResponseRedirect(reverse('companies_show',
+                                                args=(company.id,)))
     else:
         form = CompanyForm(instance=company)
-    return render(request, 'job_board/companies_edit.html', {'company': company, 'form': form})
+    return render(request,
+                  'job_board/companies_edit.html',
+                  {'company': company, 'form': form})
 
 
 def register(request):
