@@ -23,7 +23,8 @@ class Category(models.Model):
         return self.name
 
     def active_jobs(self):
-        return self.job_set.filter(paid_at__isnull=False).filter(expired_at__isnull=True)
+        return self.job_set.filter(paid_at__isnull=False) \
+                           .filter(expired_at__isnull=True)
 
 
 @python_2_unicode_compatible

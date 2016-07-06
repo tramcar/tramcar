@@ -24,8 +24,8 @@ class CompanyMethodTests(TestCase):
     def test_paid_jobs(self):
         company = Company.objects.get(name='Tramcar')
         job = Job(title='Software Developer', country_id=1,
-                         category_id=1, company_id=company.id, site_id=1,
-                         user_id=1)
+                  category_id=1, company_id=company.id, site_id=1,
+                  user_id=1)
         job.save()
         self.assertEqual(len(company.paid_jobs()), 0)
         job.activate()
@@ -71,6 +71,7 @@ class JobMethodTests(TestCase):
         job = Job.objects.get(title='Software Developer')
         self.assertFalse(job.expire())
         self.assertIsNone(job.expired_at)
+
 
 class JobViewTests(TestCase):
 
