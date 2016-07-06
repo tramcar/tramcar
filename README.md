@@ -34,3 +34,17 @@ Superuser created successfully.
 
 You can now browse http://127.0.0.1:8000/ to access your job board, and
 http://127.0.0.1:8000/admin/ to access the admin panel.
+
+## Job Expiration
+
+Jobs can be expired manually by logging in as an admin user and then clicking
+the `Expire` button under `Job Admin` when viewing a given job.  A simpler
+solution is to run this instead:
+
+```
+(.venv) $ python manage.py expire
+```
+
+The above will scan through all jobs across all sites and expire out any jobs
+older than 30 days.  Ideally, the above should be scheduled with cron so jobs
+so that jobs are expired in a consistent manner.

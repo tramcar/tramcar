@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.core.management.base import BaseCommand, CommandError
+from django.utils import timezone
 
 from job_board.models import Job, Site
 
