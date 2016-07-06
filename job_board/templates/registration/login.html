@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
+{% block header %}Login{% endblock %}
+
 {% load bootstrap %}
 
 {% block content %}
-<h1>Login</h1>
-
 <form method="post" action="{% url 'login' %}">
   {% csrf_token %}
 
@@ -16,5 +16,4 @@
 
 {# Assumes you setup the password_reset view in your URLconf #}
 <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-
 {% endblock %}
