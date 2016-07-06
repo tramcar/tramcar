@@ -46,5 +46,5 @@ solution is to run this instead:
 ```
 
 The above will scan through all jobs across all sites and expire out any jobs
-older than 30 days.  Ideally, the above should be scheduled with cron so jobs
-so that jobs are expired in a consistent manner.
+older than 30 days.  Ideally, the above should be scheduled with cron so that
+jobs are expired in a consistent manner.
