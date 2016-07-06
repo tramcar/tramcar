@@ -13,10 +13,14 @@
       <mark>Twitter</mark>
     </h4>
     <p><a href="https://twitter.com/{{ job.company.twitter }}">{{ job.company.twitter }}</a></p>
-    <p><a href="{% url 'companies_show' job.company.id %}">View more jobs</a></p>
+    <a href="{% url 'companies_show' job.company.id %}" title="View all of company's jobs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
     {% if user.id == job.id or user.is_staff %}
     <hr>
     <h3>Job Admin</h3>
+    {% if user.is_staff %}
+    <h4><mark>Posted By</mark></h4>
+    <p>{{ user.username }} (UID: {{ user.id }})</p>
+    {% endif %}
     <h4>
       <mark>Status</mark>
     </h4>
