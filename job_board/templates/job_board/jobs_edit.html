@@ -1,13 +1,20 @@
 {% extends "base.html" %}
 
+{% block header %}Edit Job{% endblock %}
+
 {% load bootstrap %}
 
 {% block content %}
-<h1>Post Job</h1>
-
-<form action="{% url 'jobs_edit' job.id %}" method="post">
-    {% csrf_token %}
-    {{ form|bootstrap }}
-    <input type="submit" class="btn btn-default" value="Submit" />
-</form>
+<div class="row">
+  <div class="col-md-4">
+    {% include "markdown.html" %}
+  </div>
+  <div class="col-md-8">
+    <form action="{% url 'jobs_edit' job.id %}" method="post">
+        {% csrf_token %}
+        {{ form|bootstrap }}
+        <input type="submit" class="btn btn-default" value="Submit" />
+    </form>
+  </div>
+</div>
 {% endblock %}

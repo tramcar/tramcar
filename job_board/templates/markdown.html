@@ -1,0 +1,34 @@
+<h4>Markdown Basics</h4>
+<table class="table table-condensed">
+  <tbody>
+    <tr>
+      <td>_Emphasis_</td><td><em>Emphasis</em></td>
+    </tr>
+    <tr>
+      <td>__Strong Emphasis__</td><td><strong>Strong Emphasis</strong></td>
+    </tr>
+    <tr>
+      <td>&#60;http://www.{{ request.site.domain }}&#62;</td><td><a href="http://www.{{ request.site.domain }}">http://www.{{ request.site.domain }}</a></td>
+    </tr>
+    <tr>
+      <td>[WFH.io](http://www.{{ request.site.domain }})</td><td><a href="http://www.{{ request.site.domain }}">WFH.io</a></td>
+    </tr>
+    <tr>
+      <td>&#60;doesnotexist@{{ request.site.domain }}&#62;</td><td><a href="mailto:doesnotexist@{{ request.site.domain }}">doesnotexist@{{ request.site.domain }}</a></td>
+    </tr>
+    <tr>
+      <td>
+        * One<br>
+        * Two<br>
+        * Three<br>
+      </td>
+      <td>
+        <ul>
+          <li>One</li>
+          <li>Two</li>
+          <li>Three</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>

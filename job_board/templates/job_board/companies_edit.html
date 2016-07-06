@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
+{% block header %}Add Company{% endblock %}
+
 {% load bootstrap %}
 
 {% block content %}
-<h1>Add Company</h1>
-
 <form action="{% url 'companies_edit' company.id %}" method="post">
     {% csrf_token %}
     {{ form|bootstrap }}
