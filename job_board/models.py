@@ -4,6 +4,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 
@@ -98,8 +100,16 @@ class Job(models.Model):
 
     def expire(self):
         if self.paid_at is not None and self.expired_at is None:
+            context = { 'job': self}
             self.expired_at = timezone.now()
             self.save()
+            send_mail(
+                'Your %s job has expired' % self.site.name,
+                render_to_string('job_board/emails/expired.txt', context),
+                'admin@%s' % self.site.domain,
+                [self.email],
+                fail_silently=True,
+            )
             return True
         else:
             return False

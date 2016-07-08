@@ -1,0 +1,15 @@
+Hi there!
+
+Thank you for using {{ job.site.domain }}.  This e-mail is to notify you that
+the following post has now expired:
+
+https://www.{{ job.site.domain }}{% url 'jobs_show' job.id %}
+
+If you are still hiring for this position, please log into https://www.{{ job.site.domain }}/
+and then re-post this job.
+
+As always, let us know if you have any questions or comments, and thank you again
+for using {{ job.site.name }}!
+
+Kind Regards,
+Matt @ {{ job.site.name }}
