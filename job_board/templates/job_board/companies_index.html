@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "job_board/base.html" %}
 
 {% block header %}Companies{% endblock %}
 
@@ -25,7 +25,7 @@
   {% endfor %}
 </table>
 
-{% include "pagination.html" with pagination_list=companies %}
+{% include "job_board/pagination.html" with pagination_list=companies %}
 
 {% else %}
 <p>No companies found.</p>

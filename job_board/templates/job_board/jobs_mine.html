@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "job_board/base.html" %}
 
 {% block header %}Jobs{% endblock %}
 
@@ -35,7 +35,7 @@
   {% endfor %}
 </table>
 
-{% include "pagination.html" with pagination_list=jobs %}
+{% include "job_board/pagination.html" with pagination_list=jobs %}
 
 {% else %}
   <p>No jobs are available.</p>

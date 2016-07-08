@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "job_board/base.html" %}
 
 {% block header %}Edit Job{% endblock %}
 
@@ -7,7 +7,7 @@
 {% block content %}
 <div class="row">
   <div class="col-md-4">
-    {% include "markdown.html" %}
+    {% include "job_board/markdown.html" %}
   </div>
   <div class="col-md-8">
     <form action="{% url 'jobs_edit' job.id %}" method="post">
