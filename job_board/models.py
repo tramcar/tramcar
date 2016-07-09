@@ -72,14 +72,34 @@ class Company(models.Model):
 
 @python_2_unicode_compatible
 class Job(models.Model):
+    url = "http://daringfireball.net/projects/markdown/syntax"
+    markdown = "<a href='%s'>Markdown</a>" % url
     created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=50)
-    description = models.TextField()
-    application_info = models.TextField()
-    location = models.TextField(blank=True)
-    email = models.EmailField()
+    description = models.TextField(
+                      help_text="Feel free to use %s to format "
+                                "description" % markdown
+                  )
+    application_info = models.TextField(
+                           help_text="What's the best way to apply for this "
+                                     "job? %s accepted" % markdown
+                       )
+    location = models.TextField(
+                   blank=True,
+                   help_text="Specify timezone requirements or other "
+                             "location-related details"
+               )
+    email = models.EmailField(
+                help_text="This is the address we will use to contact you; "
+                          "it will be not be visible on the public site"
+            )
     category = models.ForeignKey(Category)
-    country = models.ForeignKey(Country, blank=True, null=True)
+    country = models.ForeignKey(
+                  Country,
+                  blank=True,
+                  null=True,
+                  help_text="Select if you're hiring within a specific country"
+              )
     company = models.ForeignKey(Company)
     paid_at = models.DateTimeField(null=True)
     expired_at = models.DateTimeField(null=True)
@@ -100,7 +120,7 @@ class Job(models.Model):
 
     def expire(self):
         if self.paid_at is not None and self.expired_at is None:
-            context = { 'job': self}
+            context = {'job': self}
             self.expired_at = timezone.now()
             self.save()
             send_mail(
