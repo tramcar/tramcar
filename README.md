@@ -1,6 +1,6 @@
 # Welcome!
 
-Tramcar is a self-hosted job board built using
+Tramcar is a _multi-site_, _self-hosted_ __job board__ built using
 [Django](https://www.djangoproject.com/).  This project is still in its infancy,
 but we welcome your involvement to help us get Tramcar ready for production
 installs.
@@ -46,5 +46,5 @@ solution is to run this instead:
 ```
 
 The above will scan through all jobs across all sites and expire out any jobs
-older than 30 days.  Ideally, the above should be scheduled with cron so that
-jobs are expired in a consistent manner.
+older than the site's `expire_after` value.  Ideally, the above should be
+scheduled with cron so that jobs are expired in a consistent manner.

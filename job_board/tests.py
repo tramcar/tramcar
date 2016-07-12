@@ -1,7 +1,27 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from .models import Company, Job
+from .models import Company, Job, Site, SiteConfig
+
+
+class SiteMethodTests(TestCase):
+    def setUp(self):
+        # Note that we're assigning non-existent values for country,
+        # category, etc.
+        site = Site(domain='tramcar.org', name='Tramcar')
+        site.save()
+
+    def test_site_config_entry_exists(self):
+        site = Site.objects.get(name='Tramcar')
+        # NOTE: We use .first() here so we get None when there is no match,
+        #       rather than an exception being raised.
+        sc = SiteConfig.objects.filter(site=site).first()
+        self.assertIsNotNone(sc)
+
+    def test_site_config_has_correct_expire_after(self):
+        site = Site.objects.get(name='Tramcar')
+        sc = SiteConfig.objects.filter(site=site).first()
+        self.assertEqual(sc.expire_after, 30)
 
 
 class CompanyMethodTests(TestCase):

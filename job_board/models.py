@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from django.dispatch import receiver
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
@@ -8,6 +9,15 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
+
+
+# NOTE: This uses signals to auto-create a SiteConfig object when a site when a
+#       site is added.  This saves the admin from having to manually create the
+#       site's SiteConfig after a site is added.
+@receiver(models.signals.post_save, sender=Site)
+def generate_site_config(sender, **kwargs):
+    if kwargs.get('created', True):
+        SiteConfig.objects.get_or_create(site=kwargs.get('instance'))
 
 
 @python_2_unicode_compatible
@@ -153,3 +163,14 @@ class Job(models.Model):
 
     def __str__(self):
         return self.title
+
+
+@python_2_unicode_compatible
+class SiteConfig(models.Model):
+    expire_after = models.SmallIntegerField(default=30)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    objects = models.Manager()
+    on_site = CurrentSiteManager()
+
+    def __str__(self):
+        return self.site.name
