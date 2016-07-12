@@ -45,8 +45,16 @@ class Country(models.Model):
 class Company(models.Model):
     name = models.CharField(max_length=50)
     url = models.URLField(verbose_name="URL")
-    twitter = models.CharField(max_length=20)
-    country = models.ForeignKey(Country, blank=True, null=True)
+    twitter = models.CharField(
+                  max_length=20,
+                  help_text="Please leave empty if none"
+              )
+    country = models.ForeignKey(
+                  Country,
+                  blank=True,
+                  null=True,
+                  help_text="Please leave empty if 100% virtual"
+              )
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
     # When using CurrentSiteManager, we do not have access to Company.objects,
     # which we need when we want to expire all jobs irrespective of site
