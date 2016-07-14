@@ -18,10 +18,11 @@ class SiteMethodTests(TestCase):
         sc = SiteConfig.objects.filter(site=site).first()
         self.assertIsNotNone(sc)
 
-    def test_site_config_has_correct_expire_after(self):
+    def test_site_config_has_correct_defaults(self):
         site = Site.objects.get(name='Tramcar')
         sc = SiteConfig.objects.filter(site=site).first()
         self.assertEqual(sc.expire_after, 30)
+        self.assertEqual(sc.admin_email, 'admin@tramcar.org')
 
 
 class CompanyMethodTests(TestCase):
