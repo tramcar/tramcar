@@ -17,7 +17,11 @@ from django.utils.encoding import python_2_unicode_compatible
 @receiver(models.signals.post_save, sender=Site)
 def generate_site_config(sender, **kwargs):
     if kwargs.get('created', True):
-        SiteConfig.objects.get_or_create(site=kwargs.get('instance'))
+        site = kwargs.get('instance')
+        SiteConfig.objects.get_or_create(
+            site=site,
+            admin_email='admin@%s' % site.domain
+        )
 
 
 @python_2_unicode_compatible
@@ -139,12 +143,13 @@ class Job(models.Model):
     def expire(self):
         if self.paid_at is not None and self.expired_at is None:
             context = {'job': self}
+            sc = self.site.siteconfig_set.first()
             self.expired_at = timezone.now()
             self.save()
             send_mail(
                 'Your %s job has expired' % self.site.name,
                 render_to_string('job_board/emails/expired.txt', context),
-                'admin@%s' % self.site.domain,
+                sc.admin_email,
                 [self.email],
                 fail_silently=True,
             )
@@ -168,6 +173,9 @@ class Job(models.Model):
 @python_2_unicode_compatible
 class SiteConfig(models.Model):
     expire_after = models.SmallIntegerField(default=30)
+    # NOTE: We set a default here, but we will override this with a more
+    #       suitable default when we create the SiteConfig instance
+    admin_email = models.EmailField(default='admin@site')
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
     objects = models.Manager()
     on_site = CurrentSiteManager()

@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for site in Site.objects.all():
-            sc = site.siteconfig_set.get(site=site)
+            sc = site.siteconfig_set.first()
             days_ago = timezone.now() - timedelta(days=sc.expire_after)
             jobs = Job.objects.filter(site=site) \
                               .filter(paid_at__lt=days_ago) \
