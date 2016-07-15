@@ -1,0 +1,1752 @@
+[
+  {
+    "model": "job_board.country",
+    "pk": 1,
+    "fields": {
+      "name": "Afghanistan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 2,
+    "fields": {
+      "name": "Albania"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 3,
+    "fields": {
+      "name": "Algeria"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 4,
+    "fields": {
+      "name": "American Samoa"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 5,
+    "fields": {
+      "name": "Andorre"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 6,
+    "fields": {
+      "name": "Angola"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 7,
+    "fields": {
+      "name": "Anguilla"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 8,
+    "fields": {
+      "name": "Antarctica"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 9,
+    "fields": {
+      "name": "Antigua and Barbuda"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 10,
+    "fields": {
+      "name": "Argentina"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 11,
+    "fields": {
+      "name": "Armenia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 12,
+    "fields": {
+      "name": "Aruba"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 13,
+    "fields": {
+      "name": "Australia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 14,
+    "fields": {
+      "name": "Austria"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 15,
+    "fields": {
+      "name": "Azerbaijan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 16,
+    "fields": {
+      "name": "Bahamas"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 17,
+    "fields": {
+      "name": "Bahrain"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 18,
+    "fields": {
+      "name": "Bangladesh"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 19,
+    "fields": {
+      "name": "Barbade"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 20,
+    "fields": {
+      "name": "Belarus"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 21,
+    "fields": {
+      "name": "Belgium"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 22,
+    "fields": {
+      "name": "Belize"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 23,
+    "fields": {
+      "name": "Benin"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 24,
+    "fields": {
+      "name": "Bermuda"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 25,
+    "fields": {
+      "name": "Bhutan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 26,
+    "fields": {
+      "name": "Bolivia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 27,
+    "fields": {
+      "name": "Bonaire, Sint Eustatius and Saba"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 28,
+    "fields": {
+      "name": "Bosnia and Herzegovina"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 29,
+    "fields": {
+      "name": "Botswana"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 30,
+    "fields": {
+      "name": "Bouvet Island"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 31,
+    "fields": {
+      "name": "Brazil"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 32,
+    "fields": {
+      "name": "British Indian Ocean Territory"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 33,
+    "fields": {
+      "name": "British Virgin Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 34,
+    "fields": {
+      "name": "Brunei"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 35,
+    "fields": {
+      "name": "Bulgaria"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 36,
+    "fields": {
+      "name": "Burkina Faso"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 37,
+    "fields": {
+      "name": "Burundi"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 38,
+    "fields": {
+      "name": "Cambodia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 39,
+    "fields": {
+      "name": "Cameroon"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 40,
+    "fields": {
+      "name": "Canada"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 41,
+    "fields": {
+      "name": "Cape Verde"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 42,
+    "fields": {
+      "name": "Cayman Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 43,
+    "fields": {
+      "name": "Central African Republic"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 44,
+    "fields": {
+      "name": "Chad"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 45,
+    "fields": {
+      "name": "Chile"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 46,
+    "fields": {
+      "name": "China"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 47,
+    "fields": {
+      "name": "Christmas Island"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 48,
+    "fields": {
+      "name": "Cocos (Keeling) Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 49,
+    "fields": {
+      "name": "Colombia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 50,
+    "fields": {
+      "name": "Comoros"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 51,
+    "fields": {
+      "name": "Congo"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 52,
+    "fields": {
+      "name": "Congo (Dem. Rep.)"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 53,
+    "fields": {
+      "name": "Cook Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 54,
+    "fields": {
+      "name": "Costa Rica"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 61,
+    "fields": {
+      "name": "Côte D&#39;Ivoire"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 55,
+    "fields": {
+      "name": "Crna Gora"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 56,
+    "fields": {
+      "name": "Croatia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 57,
+    "fields": {
+      "name": "Cuba"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 58,
+    "fields": {
+      "name": "Curaçao"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 59,
+    "fields": {
+      "name": "Cyprus"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 60,
+    "fields": {
+      "name": "Czech Republic"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 62,
+    "fields": {
+      "name": "Denmark"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 63,
+    "fields": {
+      "name": "Djibouti"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 64,
+    "fields": {
+      "name": "Dominica"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 65,
+    "fields": {
+      "name": "Dominican Republic"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 66,
+    "fields": {
+      "name": "East Timor"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 67,
+    "fields": {
+      "name": "Ecuador"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 68,
+    "fields": {
+      "name": "Egypt"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 69,
+    "fields": {
+      "name": "El Salvador"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 70,
+    "fields": {
+      "name": "Equatorial Guinea"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 71,
+    "fields": {
+      "name": "Eritrea"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 72,
+    "fields": {
+      "name": "Estonia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 73,
+    "fields": {
+      "name": "Ethiopia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 74,
+    "fields": {
+      "name": "Falkland Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 75,
+    "fields": {
+      "name": "Faroe Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 76,
+    "fields": {
+      "name": "Fiji"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 77,
+    "fields": {
+      "name": "Finland"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 78,
+    "fields": {
+      "name": "France"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 79,
+    "fields": {
+      "name": "French Guiana"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 80,
+    "fields": {
+      "name": "French Polynesia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 81,
+    "fields": {
+      "name": "French Southern Territories"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 82,
+    "fields": {
+      "name": "Gabon"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 83,
+    "fields": {
+      "name": "Gambia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 84,
+    "fields": {
+      "name": "Georgia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 85,
+    "fields": {
+      "name": "Germany"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 86,
+    "fields": {
+      "name": "Ghana"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 87,
+    "fields": {
+      "name": "Gibraltar"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 88,
+    "fields": {
+      "name": "Greece"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 89,
+    "fields": {
+      "name": "Greenland"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 90,
+    "fields": {
+      "name": "Grenada"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 91,
+    "fields": {
+      "name": "Guadeloupe"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 92,
+    "fields": {
+      "name": "Guam"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 93,
+    "fields": {
+      "name": "Guatemala"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 94,
+    "fields": {
+      "name": "Guernsey and Alderney"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 95,
+    "fields": {
+      "name": "Guinea"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 96,
+    "fields": {
+      "name": "Guinea-Bissau"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 97,
+    "fields": {
+      "name": "Guyana"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 98,
+    "fields": {
+      "name": "Haiti"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 99,
+    "fields": {
+      "name": "Heard and McDonald Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 100,
+    "fields": {
+      "name": "Honduras"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 101,
+    "fields": {
+      "name": "Hong Kong"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 102,
+    "fields": {
+      "name": "Hungary"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 103,
+    "fields": {
+      "name": "Iceland"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 104,
+    "fields": {
+      "name": "India"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 105,
+    "fields": {
+      "name": "Indonesia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 106,
+    "fields": {
+      "name": "Iran"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 107,
+    "fields": {
+      "name": "Iraq"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 108,
+    "fields": {
+      "name": "Ireland"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 109,
+    "fields": {
+      "name": "Isle of Man"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 110,
+    "fields": {
+      "name": "Israel"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 111,
+    "fields": {
+      "name": "Italy"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 112,
+    "fields": {
+      "name": "Jamaica"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 113,
+    "fields": {
+      "name": "Japan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 114,
+    "fields": {
+      "name": "Jersey"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 115,
+    "fields": {
+      "name": "Jordan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 116,
+    "fields": {
+      "name": "Kazakhstan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 117,
+    "fields": {
+      "name": "Kenya"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 118,
+    "fields": {
+      "name": "Kiribati"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 119,
+    "fields": {
+      "name": "Korea (North)"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 120,
+    "fields": {
+      "name": "Korea (South)"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 121,
+    "fields": {
+      "name": "Kuwait"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 122,
+    "fields": {
+      "name": "Kyrgyzstan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 123,
+    "fields": {
+      "name": "Laos"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 124,
+    "fields": {
+      "name": "Latvia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 125,
+    "fields": {
+      "name": "Lebanon"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 126,
+    "fields": {
+      "name": "Lesotho"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 127,
+    "fields": {
+      "name": "Liberia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 128,
+    "fields": {
+      "name": "Libya"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 129,
+    "fields": {
+      "name": "Liechtenstein"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 130,
+    "fields": {
+      "name": "Lithuania"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 131,
+    "fields": {
+      "name": "Luxembourg"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 132,
+    "fields": {
+      "name": "Macao"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 133,
+    "fields": {
+      "name": "Macedonia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 134,
+    "fields": {
+      "name": "Madagascar"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 135,
+    "fields": {
+      "name": "Malawi"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 136,
+    "fields": {
+      "name": "Malaysia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 137,
+    "fields": {
+      "name": "Maldives"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 138,
+    "fields": {
+      "name": "Mali"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 139,
+    "fields": {
+      "name": "Malta"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 140,
+    "fields": {
+      "name": "Marshall Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 141,
+    "fields": {
+      "name": "Martinique"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 142,
+    "fields": {
+      "name": "Mauritania"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 143,
+    "fields": {
+      "name": "Mauritius"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 144,
+    "fields": {
+      "name": "Mayotte"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 145,
+    "fields": {
+      "name": "Mexico"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 146,
+    "fields": {
+      "name": "Micronesia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 147,
+    "fields": {
+      "name": "Moldova"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 148,
+    "fields": {
+      "name": "Monaco"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 149,
+    "fields": {
+      "name": "Mongolia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 150,
+    "fields": {
+      "name": "Montserrat"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 151,
+    "fields": {
+      "name": "Morocco"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 152,
+    "fields": {
+      "name": "Mozambique"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 153,
+    "fields": {
+      "name": "Myanmar"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 154,
+    "fields": {
+      "name": "Namibia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 155,
+    "fields": {
+      "name": "Nauru"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 156,
+    "fields": {
+      "name": "Nepal"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 157,
+    "fields": {
+      "name": "Netherlands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 158,
+    "fields": {
+      "name": "Netherlands Antilles"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 159,
+    "fields": {
+      "name": "New Caledonia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 160,
+    "fields": {
+      "name": "New Zealand"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 161,
+    "fields": {
+      "name": "Nicaragua"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 162,
+    "fields": {
+      "name": "Niger"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 163,
+    "fields": {
+      "name": "Nigeria"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 164,
+    "fields": {
+      "name": "Niue"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 165,
+    "fields": {
+      "name": "Norfolk Island"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 166,
+    "fields": {
+      "name": "Northern Mariana Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 167,
+    "fields": {
+      "name": "Norway"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 168,
+    "fields": {
+      "name": "Oman"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 169,
+    "fields": {
+      "name": "Pakistan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 170,
+    "fields": {
+      "name": "Palau"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 171,
+    "fields": {
+      "name": "Palestine"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 172,
+    "fields": {
+      "name": "Panama"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 173,
+    "fields": {
+      "name": "Papua New Guinea"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 174,
+    "fields": {
+      "name": "Paraguay"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 175,
+    "fields": {
+      "name": "Peru"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 176,
+    "fields": {
+      "name": "Philippines"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 177,
+    "fields": {
+      "name": "Pitcairn"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 178,
+    "fields": {
+      "name": "Poland"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 179,
+    "fields": {
+      "name": "Portugal"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 180,
+    "fields": {
+      "name": "Puerto Rico"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 181,
+    "fields": {
+      "name": "Qatar"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 185,
+    "fields": {
+      "name": "Réunion"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 182,
+    "fields": {
+      "name": "Romania"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 183,
+    "fields": {
+      "name": "Russia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 184,
+    "fields": {
+      "name": "Rwanda"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 186,
+    "fields": {
+      "name": "Saint Barthélemy"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 187,
+    "fields": {
+      "name": "Saint Helena"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 188,
+    "fields": {
+      "name": "Saint Kitts and Nevis"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 189,
+    "fields": {
+      "name": "Saint Lucia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 190,
+    "fields": {
+      "name": "Saint Martin"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 191,
+    "fields": {
+      "name": "Saint Pierre and Miquelon"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 192,
+    "fields": {
+      "name": "Saint Vincent and the Grenadines"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 193,
+    "fields": {
+      "name": "Samoa"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 194,
+    "fields": {
+      "name": "San Marino"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 218,
+    "fields": {
+      "name": "São Tomé and Príncipe"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 195,
+    "fields": {
+      "name": "Saudi Arabia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 196,
+    "fields": {
+      "name": "Senegal"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 197,
+    "fields": {
+      "name": "Serbia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 198,
+    "fields": {
+      "name": "Seychelles"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 199,
+    "fields": {
+      "name": "Sierra Leone"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 200,
+    "fields": {
+      "name": "Singapore"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 201,
+    "fields": {
+      "name": "Sint Maarten"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 202,
+    "fields": {
+      "name": "Slovakia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 203,
+    "fields": {
+      "name": "Slovenia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 204,
+    "fields": {
+      "name": "Solomon Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 205,
+    "fields": {
+      "name": "Somalia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 206,
+    "fields": {
+      "name": "South Africa"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 207,
+    "fields": {
+      "name": "South Georgia and the South Sandwich Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 208,
+    "fields": {
+      "name": "South Sudan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 209,
+    "fields": {
+      "name": "Spain"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 210,
+    "fields": {
+      "name": "Sri Lanka"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 211,
+    "fields": {
+      "name": "Sudan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 212,
+    "fields": {
+      "name": "Suriname"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 213,
+    "fields": {
+      "name": "Svalbard and Jan Mayen"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 214,
+    "fields": {
+      "name": "Swaziland"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 215,
+    "fields": {
+      "name": "Sweden"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 216,
+    "fields": {
+      "name": "Switzerland"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 217,
+    "fields": {
+      "name": "Syria"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 219,
+    "fields": {
+      "name": "Taiwan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 220,
+    "fields": {
+      "name": "Tajikistan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 221,
+    "fields": {
+      "name": "Tanzania"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 222,
+    "fields": {
+      "name": "Thailand"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 223,
+    "fields": {
+      "name": "Togo"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 224,
+    "fields": {
+      "name": "Tokelau"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 225,
+    "fields": {
+      "name": "Tonga"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 226,
+    "fields": {
+      "name": "Trinidad and Tobago"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 227,
+    "fields": {
+      "name": "Tunisia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 228,
+    "fields": {
+      "name": "Turkey"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 229,
+    "fields": {
+      "name": "Turkmenistan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 230,
+    "fields": {
+      "name": "Turks and Caicos Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 231,
+    "fields": {
+      "name": "Tuvalu"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 232,
+    "fields": {
+      "name": "Uganda"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 233,
+    "fields": {
+      "name": "Ukraine"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 234,
+    "fields": {
+      "name": "United Arab Emirates"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 235,
+    "fields": {
+      "name": "United Kingdom"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 237,
+    "fields": {
+      "name": "United States"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 236,
+    "fields": {
+      "name": "United States Minor Outlying Islands"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 238,
+    "fields": {
+      "name": "Uruguay"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 239,
+    "fields": {
+      "name": "Uzbekistan"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 240,
+    "fields": {
+      "name": "Vanuatu"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 241,
+    "fields": {
+      "name": "Vatican City"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 242,
+    "fields": {
+      "name": "Venezuela"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 243,
+    "fields": {
+      "name": "Vietnam"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 244,
+    "fields": {
+      "name": "Virgin Islands of the United States"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 245,
+    "fields": {
+      "name": "Wallis and Futuna"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 246,
+    "fields": {
+      "name": "Western Sahara"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 247,
+    "fields": {
+      "name": "Yemen"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 248,
+    "fields": {
+      "name": "Zambia"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 249,
+    "fields": {
+      "name": "Zimbabwe"
+    }
+  },
+  {
+    "model": "job_board.country",
+    "pk": 250,
+    "fields": {
+      "name": "Åland Islands"
+    }
+  }
+]
