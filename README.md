@@ -35,6 +35,19 @@ Superuser created successfully.
 You can now browse http://127.0.0.1:8000/ to access your job board, and
 http://127.0.0.1:8000/admin/ to access the admin panel.
 
+## Fixtures
+
+We have a fixtures file in `job_board/fixtures/countries.json`, which you can
+load into your database by running the following:
+
+```
+(.venv) $ python manage.py loaddata countries.json
+```
+
+This will save you having to import your own list of countries.  However, be
+aware that any changes made to the `job_board_country` table will be lost if
+you re-run the above.
+
 ## Job Expiration
 
 Jobs can be expired manually by logging in as an admin user and then clicking
