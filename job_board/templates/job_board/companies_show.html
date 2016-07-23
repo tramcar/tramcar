@@ -3,25 +3,31 @@
 {% block header %}{{ company.name }}{% endblock %}
 
 {% block content %}
+<hr>
+
 <div class="row">
   <div class="col-md-4">
-    <h4>
-      <mark>URL</mark>
-    </h4>
-    <p><a href="{{ company.url }}">{{ company.url }}</a></p>
-    {% if company.country %}
-    <h4>
-      <mark>Headquarters</mark>
-    </h4>
-    <p>{{ company.country.name }}</p>
-    {% endif %}
-    <h4>
-      <mark>Twitter</mark>
-    </h4>
-    <p><a href="https://twitter.com/{{ company.twitter }}">{{ company.twitter }}</a></p>
-    {% if company.id == user.id or user.is_staff %}
-    <a class="btn btn-primary btn-sm" href="{% url 'companies_edit' company.id %}">Edit Company</a>
-    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h4>
+          <mark>URL</mark>
+        </h4>
+        <p><a href="{{ company.url }}">{{ company.url }}</a></p>
+        {% if company.country %}
+        <h4>
+          <mark>Headquarters</mark>
+        </h4>
+        <p>{{ company.country.name }}</p>
+        {% endif %}
+        <h4>
+          <mark>Twitter</mark>
+        </h4>
+        <p><a href="https://twitter.com/{{ company.twitter }}">{{ company.twitter }}</a></p>
+        {% if company.id == user.id or user.is_staff %}
+        <a class="btn btn-primary btn-sm" href="{% url 'companies_edit' company.id %}">Edit Company</a>
+        {% endif %}
+      </div>
+    </div>
   </div>
   <div class="col-md-8">
     <h4><mark>Jobs</mark></h4>
