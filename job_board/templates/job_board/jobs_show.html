@@ -1,45 +1,54 @@
 {% extends "job_board/base.html" %}
 
-{% block header %}{{ job.title }} @ {{ job.company }}{% endblock %}
+{% block header %}{{ job.title }} @ {{ job.company.name }}{% endblock %}
 
 {% block content %}
+<hr>
+
 <div class="row">
   <div class="col-md-4">
-    <h4>
-      <mark>URL</mark>
-    </h4>
-    <p><a href="{{ job.company.url }}">{{ job.company.url }}</a></p>
-    <h4>
-      <mark>Twitter</mark>
-    </h4>
-    <p><a href="https://twitter.com/{{ job.company.twitter }}">{{ job.company.twitter }}</a></p>
-    <a href="{% url 'companies_show' job.company.id %}" title="View all of company's jobs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ job.company.name }}</h3>
+      </div>
+      <div class="panel-body">
+        <h4><mark>URL</mark></h4>
+        <p><a href="{{ job.company.url }}">{{ job.company.url }}</a></p>
+        <h4><mark>Twitter</mark></h4>
+        <p><a href="https://twitter.com/{{ job.company.twitter }}">{{ job.company.twitter }}</a></p>
+        <a href="{% url 'companies_show' job.company.id %}" title="View all of company's jobs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+      </div>
+    </div>
     {% if user.id == job.id or user.is_staff %}
-    <hr>
-    <h3>Job Admin</h3>
-    {% if user.is_staff %}
-    <h4><mark>Posted By</mark></h4>
-    <p>{{ user.username }} (UID: {{ user.id }})</p>
-    {% endif %}
-    <h4>
-      <mark>Status</mark>
-    </h4>
-    <p>
-      {% if not job.paid_at and not job.expired_at %}
-      <span class="label label-warning %>">Unpaid</span>
-      {% elif job.paid_at and not job.expired_at %}
-      <span class="label label-success %>">Paid</span>
-      {% elif job.paid_at and job.expired_at %}
-      <span class="label label-warning %>">Expired</span>
-      {% endif %}
-    </p>
-    <div class="btn-group btn-group-sm button-group-margin">
-      <a href="{% url 'jobs_edit' job.id %}" class="btn btn-default">Edit</a>
-      {% if job.paid_at and not job.expired_at %}
-      <a href="{% url 'jobs_expire' job.id %}" class="btn btn-default">Expire</a>
-      {% elif not job.paid_at and user.is_staff %}
-      <a href="{% url 'jobs_activate' job.id %}" class="btn btn-default">Activate</a>
-      {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Job Admin</h3>
+      </div>
+      <div class="panel-body">
+
+        {% if user.is_staff %}
+        <h4><mark>Posted By</mark></h4>
+        <p>{{ user.username }} (UID: {{ user.id }})</p>
+        {% endif %}
+        <h4><mark>Status</mark></h4>
+        <p>
+          {% if not job.paid_at and not job.expired_at %}
+          <span class="label label-warning %>">Unpaid</span>
+          {% elif job.paid_at and not job.expired_at %}
+          <span class="label label-success %>">Paid</span>
+          {% elif job.paid_at and job.expired_at %}
+          <span class="label label-warning %>">Expired</span>
+          {% endif %}
+        </p>
+        <div class="btn-group btn-group-sm button-group-margin">
+          <a href="{% url 'jobs_edit' job.id %}" class="btn btn-default">Edit</a>
+          {% if job.paid_at and not job.expired_at %}
+          <a href="{% url 'jobs_expire' job.id %}" class="btn btn-default">Expire</a>
+          {% elif not job.paid_at and user.is_staff %}
+          <a href="{% url 'jobs_activate' job.id %}" class="btn btn-default">Activate</a>
+          {% endif %}
+        </div>
+      </div>
     </div>
     {% endif %}
   </div>
@@ -50,26 +59,33 @@
       <strong>Hey there!</strong> This job has expired and may no longer be applicable
     </div>
     {% endif %}
-    <h4><mark>Category</mark></h4>
-    <p><a href="{% url 'categories_show' job.category.id %}">{{ job.category }}</a></p>
-    <h4><mark>Post Date</mark></h4>
-    <p>{{ post_date|date:'Y-m-d H:i' }}</p>
-    <h4><mark>Description</mark></h4>
-    <p>{{ job.description_md | safe }}</p>
-    <h4><mark>Application Info</mark></h4>
-    <p>{{ job.application_info_md | safe }}</p>
-    {% if job.country %}
-    <h4><mark>Country</mark></h4>
-    <p>{{ job.country }}</p>
-    {% endif %}
-    {% if job.location %}
-    <h4><mark>Location</mark></h4>
-    <p>{{ job.location }}</p>
-    {% endif %}
-    {% if user.id == job.id or user.is_staff %}
-    <h4><mark>E-mail</mark></h4>
-    <p>{{ job.email }}</p>
-    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ job.title }}</h3>
+      </div>
+      <div class="panel-body">
+        <h4><mark>Posted</mark></h4>
+        <p>{{ post_date|date:'Y-m-d H:i' }}</p>
+        <h4><mark>Description</mark></h4>
+        <p>{{ job.description_md | safe }}</p>
+        <h4><mark>Application Info</mark></h4>
+        <p>{{ job.application_info_md | safe }}</p>
+        {% if job.country %}
+        <h4><mark>Country</mark></h4>
+        <p>{{ job.country }}</p>
+        {% endif %}
+        {% if job.location %}
+        <h4><mark>Location</mark></h4>
+        <p>{{ job.location }}</p>
+        {% endif %}
+        <h4><mark>Category</mark></h4>
+        <p><a href="{% url 'categories_show' job.category.id %}">{{ job.category }}</a></p>
+        {% if user.id == job.id or user.is_staff %}
+        <h4><mark>E-mail</mark></h4>
+        <p>{{ job.email }}</p>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
