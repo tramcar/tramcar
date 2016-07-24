@@ -16,7 +16,8 @@ def jobs_index(request):
     jobs = Job.on_site.filter(paid_at__isnull=False) \
                       .filter(expired_at__isnull=True) \
                       .order_by('-paid_at')
-    context = {'jobs': jobs}
+    title = 'Jobs'
+    context = {'jobs': jobs, 'title': title}
     return render(request, 'job_board/jobs_index.html', context)
 
 
@@ -26,6 +27,7 @@ def jobs_mine(request):
                            .order_by('-created_at')
     paginator = Paginator(jobs_list, 25)
     page = request.GET.get('page')
+    title = 'My Jobs'
     try:
         jobs = paginator.page(page)
     except PageNotAnInteger:
@@ -34,12 +36,14 @@ def jobs_mine(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         jobs = paginator.page(paginator.num_pages)
-    context = {'jobs': jobs}
+    context = {'jobs': jobs, 'title': title}
     return render(request, 'job_board/jobs_mine.html', context)
 
 
 @login_required(login_url='/login/')
 def jobs_new(request):
+    title = 'Add a Job'
+
     if request.method == 'POST':
         form = JobForm(request.POST, initial={'site': '1'})
         if form.is_valid():
@@ -50,7 +54,9 @@ def jobs_new(request):
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
         form = JobForm()
-    return render(request, 'job_board/jobs_new.html', {'form': form})
+
+    context = {'form': form, 'title': title}
+    return render(request, 'job_board/jobs_new.html', context)
 
 
 def jobs_show(request, job_id):
@@ -68,14 +74,16 @@ def jobs_show(request, job_id):
     md = markdown.Markdown(safe_mode='remove')
     job.description_md = md.convert(job.description)
     job.application_info_md = md.convert(job.application_info)
+    title = "%s @ %s" % (job.title, job.company.name)
 
-    context = {'job': job, 'post_date': post_date}
+    context = {'job': job, 'post_date': post_date, 'title': title}
     return render(request, 'job_board/jobs_show.html', context)
 
 
 @login_required(login_url='/login/')
 def jobs_edit(request, job_id):
     job = get_object_or_404(Job, pk=job_id, site_id=request.site)
+    title = 'Edit a Job'
 
     if request.user.id != job.user.id:
         return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
@@ -88,9 +96,9 @@ def jobs_edit(request, job_id):
     else:
         form = JobForm(instance=job)
 
-    return render(request,
-                  'job_board/jobs_edit.html',
-                  {'form': form, 'job': job})
+    context = {'form': form, 'job': job, 'title': title}
+
+    return render(request, 'job_board/jobs_edit.html', context)
 
 
 @staff_member_required(login_url='/login/')
@@ -113,7 +121,8 @@ def jobs_expire(request, job_id):
 
 def categories_index(request):
     categories = Category.on_site.all()
-    context = {'categories': categories}
+    title = 'Categories'
+    context = {'categories': categories, 'title': title}
     return render(request, 'job_board/categories_index.html', context)
 
 
@@ -130,6 +139,7 @@ def companies_index(request):
     companies_list = Company.on_site.all()
     paginator = Paginator(companies_list, 25)
     page = request.GET.get('page')
+    title = 'Companies'
     try:
         companies = paginator.page(page)
     except PageNotAnInteger:
@@ -138,12 +148,13 @@ def companies_index(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         companies = paginator.page(paginator.num_pages)
-    context = {'companies': companies}
+    context = {'companies': companies, 'title': title}
     return render(request, 'job_board/companies_index.html', context)
 
 
 @login_required(login_url='/login/')
 def companies_new(request):
+    title = 'Add a Company'
     if request.method == 'POST':
         form = CompanyForm(request.POST, initial={'site': '1'})
         if form.is_valid():
@@ -155,7 +166,8 @@ def companies_new(request):
                                                 args=(company.id,)))
     else:
         form = CompanyForm()
-    return render(request, 'job_board/companies_new.html', {'form': form})
+    context = {'form': form, 'title': title}
+    return render(request, 'job_board/companies_new.html', context)
 
 
 def companies_show(request, company_id):
@@ -166,13 +178,15 @@ def companies_show(request, company_id):
     jobs = Job.on_site.filter(company=company) \
                       .filter(paid_at__isnull=False) \
                       .order_by('-paid_at')
-    context = {'company': company, 'jobs': jobs}
+    title = company.name
+    context = {'company': company, 'jobs': jobs, 'title': title}
     return render(request, 'job_board/companies_show.html', context)
 
 
 @login_required(login_url='/login/')
 def companies_edit(request, company_id):
     company = get_object_or_404(Company, pk=company_id, site_id=request.site)
+    title = 'Edit a Company'
 
     if request.user.id != company.user.id:
         return HttpResponseRedirect(reverse('companies_show',
@@ -186,9 +200,10 @@ def companies_edit(request, company_id):
                                                 args=(company.id,)))
     else:
         form = CompanyForm(instance=company)
-    return render(request,
-                  'job_board/companies_edit.html',
-                  {'company': company, 'form': form})
+
+    context = {'company': company, 'form': form, 'title': title}
+
+    return render(request, 'job_board/companies_edit.html', context)
 
 
 def register(request):
