@@ -45,10 +45,10 @@ def jobs_new(request):
     title = 'Add a Job'
 
     if request.method == 'POST':
-        form = JobForm(request.POST, initial={'site': '1'})
+        form = JobForm(request.POST)
         if form.is_valid():
             job = form.save(commit=False)
-            job.site_id = 1
+            job.site = request.site
             job.user_id = request.user.id
             job.save()
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
@@ -156,10 +156,10 @@ def companies_index(request):
 def companies_new(request):
     title = 'Add a Company'
     if request.method == 'POST':
-        form = CompanyForm(request.POST, initial={'site': '1'})
+        form = CompanyForm(request.POST)
         if form.is_valid():
             company = form.save(commit=False)
-            company.site_id = 1
+            company.site = request.site
             company.user_id = request.user.id
             company.save()
             return HttpResponseRedirect(reverse('companies_show',
