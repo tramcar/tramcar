@@ -1,6 +1,7 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect
@@ -13,7 +14,8 @@ import markdown
 
 
 def jobs_index(request):
-    jobs = Job.on_site.filter(paid_at__isnull=False) \
+    jobs = Job.objects.filter(site_id=get_current_site(request).id) \
+                      .filter(paid_at__isnull=False) \
                       .filter(expired_at__isnull=True) \
                       .order_by('-paid_at')
     title = 'Jobs'
@@ -23,7 +25,8 @@ def jobs_index(request):
 
 @login_required(login_url='/login/')
 def jobs_mine(request):
-    jobs_list = Job.on_site.filter(user_id=request.user.id) \
+    jobs_list = Job.objects.filter(site_id=get_current_site(request).id) \
+                           .filter(user_id=request.user.id) \
                            .order_by('-created_at')
     paginator = Paginator(jobs_list, 25)
     page = request.GET.get('page')
@@ -48,19 +51,31 @@ def jobs_new(request):
         form = JobForm(request.POST)
         if form.is_valid():
             job = form.save(commit=False)
-            job.site = request.site
+            job.site_id = get_current_site(request).id
             job.user_id = request.user.id
             job.save()
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
+        site_id = get_current_site(request).id
         form = JobForm()
+        # NOTE: By default, the company and category dropdowns will contain all
+        #       instances across all sites, and the following limits this to
+        #       the site in question.
+        form.fields['company'].queryset = Company.objects.filter(
+                                              site_id=site_id
+                                          )
+        form.fields['category'].queryset = Category.objects.filter(
+                                              site_id=site_id
+                                           )
 
     context = {'form': form, 'title': title}
     return render(request, 'job_board/jobs_new.html', context)
 
 
 def jobs_show(request, job_id):
-    job = get_object_or_404(Job, pk=job_id, site_id=request.site)
+    job = get_object_or_404(
+              Job, pk=job_id, site_id=get_current_site(request).id
+          )
     # If the browsing user does not own the job, and the job has yet to be paid
     # for, then 404
     if job.user_id != request.user.id and job.paid_at is None:
@@ -82,7 +97,9 @@ def jobs_show(request, job_id):
 
 @login_required(login_url='/login/')
 def jobs_edit(request, job_id):
-    job = get_object_or_404(Job, pk=job_id, site_id=request.site)
+    job = get_object_or_404(
+              Job, pk=job_id, site_id=get_current_site(request).id
+          )
     title = 'Edit a Job'
 
     if request.user.id != job.user.id:
@@ -94,7 +111,10 @@ def jobs_edit(request, job_id):
             form.save()
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
+        site_id = get_current_site(request).id
         form = JobForm(instance=job)
+        form.fields['company'].queryset = Company.objects.filter(site_id=site_id)
+        form.fields['category'].queryset = Category.objects.filter(site_id=site_id)
 
     context = {'form': form, 'job': job, 'title': title}
 
@@ -103,14 +123,18 @@ def jobs_edit(request, job_id):
 
 @staff_member_required(login_url='/login/')
 def jobs_activate(request, job_id):
-    job = get_object_or_404(Job, pk=job_id, site_id=request.site)
+    job = get_object_or_404(
+              Job, pk=job_id, site_id=get_current_site(request).id
+          )
     job.activate()
     return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
 
 
 @login_required(login_url='/login/')
 def jobs_expire(request, job_id):
-    job = get_object_or_404(Job, pk=job_id, site_id=request.site)
+    job = get_object_or_404(
+              Job, pk=job_id, site_id=get_current_site(request).id
+          )
 
     if request.user.id != job.user.id:
         return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
@@ -120,14 +144,15 @@ def jobs_expire(request, job_id):
 
 
 def categories_index(request):
-    categories = Category.on_site.all()
+    categories = Category.objects.filter(site_id=get_current_site(request).id)
     title = 'Categories'
     context = {'categories': categories, 'title': title}
     return render(request, 'job_board/categories_index.html', context)
 
 
 def categories_show(request, category_id):
-    jobs = Job.on_site.filter(category_id=category_id) \
+    jobs = Job.objects.filter(site_id=get_current_site(request).id) \
+                      .filter(category_id=category_id) \
                       .filter(paid_at__isnull=False) \
                       .filter(expired_at__isnull=True) \
                       .order_by('-paid_at')
@@ -136,7 +161,8 @@ def categories_show(request, category_id):
 
 
 def companies_index(request):
-    companies_list = Company.on_site.all()
+    companies_list = Company.objects \
+                            .filter(site_id=get_current_site(request).id)
     paginator = Paginator(companies_list, 25)
     page = request.GET.get('page')
     title = 'Companies'
@@ -159,7 +185,7 @@ def companies_new(request):
         form = CompanyForm(request.POST)
         if form.is_valid():
             company = form.save(commit=False)
-            company.site = request.site
+            company.site_id = get_current_site(request).id
             company.user_id = request.user.id
             company.save()
             return HttpResponseRedirect(reverse('companies_show',
@@ -171,11 +197,16 @@ def companies_new(request):
 
 
 def companies_show(request, company_id):
-    company = get_object_or_404(Company, pk=company_id, site_id=request.site)
+    company = get_object_or_404(
+                  Company,
+                  pk=company_id,
+                  site_id=get_current_site(request).id
+              )
     # We don't use get_list_or_404 here as we redirect to this view after
     # adding a new company and at that point it won't have any jobs assigned
     # to it.
-    jobs = Job.on_site.filter(company=company) \
+    jobs = Job.objects.filter(site_id=get_current_site(request).id) \
+                      .filter(company=company) \
                       .filter(paid_at__isnull=False) \
                       .order_by('-paid_at')
     title = company.name
@@ -185,7 +216,9 @@ def companies_show(request, company_id):
 
 @login_required(login_url='/login/')
 def companies_edit(request, company_id):
-    company = get_object_or_404(Company, pk=company_id, site_id=request.site)
+    company = get_object_or_404(
+                  Company, pk=company_id, site_id=get_current_site(request).id
+              )
     title = 'Edit a Company'
 
     if request.user.id != company.user.id:

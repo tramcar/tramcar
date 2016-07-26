@@ -4,7 +4,6 @@ from django.dispatch import receiver
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.contrib.sites.managers import CurrentSiteManager
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils import timezone
@@ -28,7 +27,6 @@ def generate_site_config(sender, **kwargs):
 class Category(models.Model):
     name = models.CharField(max_length=30)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
-    on_site = CurrentSiteManager()
 
     class Meta:
         verbose_name_plural = "categories"
@@ -70,10 +68,6 @@ class Company(models.Model):
                   help_text="Please leave empty if 100% virtual"
               )
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
-    # When using CurrentSiteManager, we do not have access to Company.objects,
-    # which we need when we want to expire all jobs irrespective of site
-    objects = models.Manager()
-    on_site = CurrentSiteManager()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
@@ -126,10 +120,6 @@ class Job(models.Model):
     paid_at = models.DateTimeField(null=True)
     expired_at = models.DateTimeField(null=True)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
-    # When using CurrentSiteManager, we do not have access to Job.objects,
-    # which we need when we want to expire all jobs irrespective of site
-    objects = models.Manager()
-    on_site = CurrentSiteManager()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def activate(self):
@@ -177,8 +167,6 @@ class SiteConfig(models.Model):
     #       suitable default when we create the SiteConfig instance
     admin_email = models.EmailField(default='admin@site')
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
-    objects = models.Manager()
-    on_site = CurrentSiteManager()
 
     def __str__(self):
         return self.site.name
