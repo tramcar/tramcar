@@ -8,13 +8,13 @@
       <td>__Strong Emphasis__</td><td><strong>Strong Emphasis</strong></td>
     </tr>
     <tr>
-      <td>&#60;http://www.{{ request.site.domain }}&#62;</td><td><a href="http://www.{{ request.site.domain }}">http://www.{{ request.site.domain }}</a></td>
+      <td>&#60;http://www.{{ current_site.domain }}&#62;</td><td><a href="http://www.{{ current_site.domain }}">http://www.{{ current_site.domain }}</a></td>
     </tr>
     <tr>
-      <td>[WFH.io](http://www.{{ request.site.domain }})</td><td><a href="http://www.{{ request.site.domain }}">WFH.io</a></td>
+      <td>[{{ current_site.name }}](http://www.{{ current_site.domain }})</td><td><a href="http://www.{{ current_site.domain }}">{{ current_site.name }}</a></td>
     </tr>
     <tr>
-      <td>&#60;doesnotexist@{{ request.site.domain }}&#62;</td><td><a href="mailto:doesnotexist@{{ request.site.domain }}">doesnotexist@{{ request.site.domain }}</a></td>
+      <td>&#60;doesnotexist@{{ current_site.domain }}&#62;</td><td><a href="mailto:doesnotexist@{{ current_site.domain }}">doesnotexist@{{ current_site.domain }}</a></td>
     </tr>
     <tr>
       <td>
