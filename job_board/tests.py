@@ -1,7 +1,15 @@
 from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.test import TestCase
 
 from .models import Company, Job, Site, SiteConfig
+
+# NOTE: This seems counter-intuitive as we do not set a SITE_ID in settings.py,
+#       however if we do not do this then the tests fail since the requests
+#       don't match an existing site.  If we can figure out how to trick the
+#       runner into using http://tramcar.org or change the domain of our site
+#       to localhost/127.0.0.1 then we may be able to avoid having to set this.
+settings.SITE_ID = 1
 
 
 class SiteMethodTests(TestCase):

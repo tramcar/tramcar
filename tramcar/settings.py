@@ -124,4 +124,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-SITE_ID = 1
+# NOTE: We leave SITE_ID unset so that it will be looked up based on the
+#       hostname in the request
+#SITE_ID = 1
