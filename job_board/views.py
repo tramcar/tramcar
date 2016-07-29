@@ -7,8 +7,10 @@ from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 
-from .forms import CompanyForm, JobForm
-from .models import Category, Company, Job
+from job_board.forms import CompanyForm, JobForm
+from job_board.models.category import Category
+from job_board.models.company import Company
+from job_board.models.job import Job
 
 import markdown
 
@@ -113,8 +115,12 @@ def jobs_edit(request, job_id):
     else:
         site_id = get_current_site(request).id
         form = JobForm(instance=job)
-        form.fields['company'].queryset = Company.objects.filter(site_id=site_id)
-        form.fields['category'].queryset = Category.objects.filter(site_id=site_id)
+        form.fields['company'].queryset = Company.objects.filter(
+                                              site_id=site_id
+                                          )
+        form.fields['category'].queryset = Category.objects.filter(
+                                               site_id=site_id
+                                           )
 
     context = {'form': form, 'job': job, 'title': title}
 

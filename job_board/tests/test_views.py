@@ -1,8 +1,14 @@
+from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.test import TestCase
 
-from job_board.models import Category, Company, Job, Site, SiteConfig, User
+from job_board.models.category import Category
+from job_board.models.company import Company
+from job_board.models.job import Job
+from job_board.models.site_config import SiteConfig
+
 
 # NOTE: This seems counter-intuitive as we do not set a SITE_ID in settings.py,
 #       however if we do not do this then the tests fail since the requests
