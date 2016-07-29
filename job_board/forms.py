@@ -1,12 +1,14 @@
 from django.forms import ModelForm
-from job_board.models import Company, Job
+
+from job_board.models.company import Company
+from job_board.models.job import Job
 
 
 class JobForm(ModelForm):
     class Meta:
         model = Job
         fields = ['company', 'title', 'description', 'application_info',
-                  'location', 'email', 'category', 'country']
+                  'country', 'location', 'email', 'category']
 
 
 class CompanyForm(ModelForm):

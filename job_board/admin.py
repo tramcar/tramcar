@@ -1,6 +1,10 @@
 from django.contrib import admin
 
-from .models import Category, Company, Country, Job, SiteConfig
+from job_board.models.category import Category
+from job_board.models.company import Company
+from job_board.models.country import Country
+from job_board.models.job import Job
+from job_board.models.site_config import SiteConfig
 
 admin.site.register(Category)
 admin.site.register(Company)
