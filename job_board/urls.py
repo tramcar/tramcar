@@ -2,6 +2,7 @@ from django.conf.urls import url
 
 from . import views
 
+
 urlpatterns = [
     url(r'^$', views.jobs_index, name='jobs_index'),
     url(r'^jobs/$', views.jobs_index, name='jobs_index'),
