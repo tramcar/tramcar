@@ -49,6 +49,9 @@ class Job(models.Model):
     expired_at = models.DateTimeField(null=True)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    remote = models.BooleanField(
+               help_text="Select if this job allows 100% remote working"
+             )
 
     def activate(self):
         if self.paid_at is None:
