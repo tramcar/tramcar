@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, render
 
 from job_board.forms import CompanyForm
 from job_board.models.company import Company
+from job_board.models.job import Job
 
 
 def companies_index(request):
