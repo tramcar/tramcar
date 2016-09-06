@@ -8,7 +8,7 @@ class JobForm(ModelForm):
     class Meta:
         model = Job
         fields = ['company', 'title', 'description', 'application_info',
-                  'country', 'location', 'email', 'category']
+                  'country', 'location', 'remote', 'email', 'category']
 
 
 class CompanyForm(ModelForm):
