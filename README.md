@@ -32,8 +32,12 @@ Superuser created successfully.
 (.venv) $ python manage.py runserver
 ```
 
-You can now browse http://127.0.0.1:8000/ to access your job board, and
-http://127.0.0.1:8000/admin/ to access the admin panel.
+The default site has a domain of example.com, this will need to be changed to
+localhost for testing.  From the shell, issue the following command:
+
+```
+(.venv) $ sqlite3 db.sqlite3 "UPDATE django_site SET domain='localhost' WHERE name='example.com';"
+```
 
 ## Fixtures
 
@@ -47,6 +51,17 @@ load into your database by running the following:
 This will save you having to import your own list of countries.  However, be
 aware that any changes made to the `job_board_country` table will be lost if
 you re-run the above.
+
+## Final Steps
+
+At this point, Tramcar should be up and running and ready to be used.  Before
+you can create a company and job, log into <http://localhost:8000/admin> using
+the username and password defined above.  Once in, click Categories under
+JOB_BOARD and add an appropriate category for the localhost site.
+
+That's it!  With those steps completed, you can now browse
+<http://localhost:8000> to create a new company, and then post a job with that
+newly created company.
 
 ## Job Expiration
 
