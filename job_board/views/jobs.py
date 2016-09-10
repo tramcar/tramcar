@@ -57,16 +57,16 @@ def jobs_new(request):
             job.save()
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
-        site_id = get_current_site(request).id
-        form = JobForm()
+        site = get_current_site(request)
+        form = JobForm(initial={'remote': site.siteconfig_set.first().remote})
         # NOTE: By default, the company and category dropdowns will contain all
         #       instances across all sites, and the following limits this to
         #       the site in question.
         form.fields['company'].queryset = Company.objects.filter(
-                                              site_id=site_id
+                                              site_id=site.id
                                           )
         form.fields['category'].queryset = Category.objects.filter(
-                                              site_id=site_id
+                                              site_id=site.id
                                            )
 
     context = {'form': form, 'title': title}
