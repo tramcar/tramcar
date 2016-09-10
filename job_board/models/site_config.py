@@ -26,6 +26,9 @@ class SiteConfig(models.Model):
     #       suitable default when we create the SiteConfig instance
     admin_email = models.EmailField(default='admin@site')
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    remote = models.BooleanField(
+               default=False,
+               help_text="Select if this job board is for remote jobs only")
 
     def __str__(self):
         return self.site.name
