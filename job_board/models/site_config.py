@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.dispatch import receiver
 from django.db import models
 from django.contrib.sites.models import Site
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils.encoding import python_2_unicode_compatible
 
 
@@ -10,13 +11,33 @@ from django.utils.encoding import python_2_unicode_compatible
 #       added.  This saves the admin from having to manually create the site's
 #       SiteConfig after a site is added.
 @receiver(models.signals.post_save, sender=Site)
-def generate_site_config(sender, **kwargs):
+def gen_site_config_post_save(sender, **kwargs):
     if kwargs.get('created', True):
         site = kwargs.get('instance')
         SiteConfig.objects.get_or_create(
             site=site,
             admin_email='admin@%s' % site.domain
         )
+
+
+# NOTE: The above (gen_site_config) used to work for the initial site created
+#       by the sites framework, however with the Django 1.10 upgrade this no
+#       worked.  This separate handler is to ensure that the initial
+#       example.com site gets a SiteConfig entry created also.
+@receiver(models.signals.post_migrate)
+def gen_site_config_post_migrate(plan, **kwargs):
+    # A migration of the `django.contrib.sites` app was applied.
+    if plan and any(migration.app_label == 'sites' for migration, _ in plan):
+        try:
+            site = Site.objects.get(name='example.com')
+        except ObjectDoesNotExist:
+            pass
+        else:
+            SiteConfig.objects.get_or_create(
+                site=site,
+                admin_email='admin@example.com',
+                remote=False
+            )
 
 
 @python_2_unicode_compatible
