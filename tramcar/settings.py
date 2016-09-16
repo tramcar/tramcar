@@ -30,7 +30,13 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# NOTE: We deliberately put django.contrib.sites before
+#       job_board.apps.JobBoardConfig so that sites' migrations run before
+#       job_board. This is a hack and we need to figure out how to add
+#       post_migrate signals to SitesConfig.
+
 INSTALLED_APPS = [
+    'django.contrib.sites',
     'job_board.apps.JobBoardConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
     'bootstrapform',
 ]
 
