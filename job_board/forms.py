@@ -34,7 +34,7 @@ class CompanyForm(forms.ModelForm):
         self.fields['url'].widget.attrs['class'] = 'form-control'
         self.fields['country'].widget.attrs['class'] = 'form-control'
         self.fields['twitter'].widget.attrs['class'] = 'form-control'
-        self.fields['site'].widget=forms.HiddenInput()
+        self.fields['site'].widget = forms.HiddenInput()
 
     class Meta:
         model = Company

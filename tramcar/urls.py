@@ -22,7 +22,12 @@ from job_board.forms import CssAuthenticationForm
 urlpatterns = [
     url(r'^', include('job_board.urls')),
     url(r'^admin/', admin.site.urls),
-    #url('^', include('django.contrib.auth.urls')),
-    url(r'^login/$', auth_views.login, {'authentication_form': CssAuthenticationForm}, name='login'),
+    # url('^', include('django.contrib.auth.urls')),
+    url(
+        r'^login/$',
+        auth_views.login,
+        {'authentication_form': CssAuthenticationForm},
+        name='login'
+    ),
     url(r'^logout/$', auth_views.logout, name='logout'),
 ]
