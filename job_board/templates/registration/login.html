@@ -2,18 +2,22 @@
 
 {% block header %}Login{% endblock %}
 
-{% load bootstrap %}
-
 {% block content %}
+{% include "job_board/errors.html" %}
+
 <form method="post" action="{% url 'login' %}">
   {% csrf_token %}
-
-  {{ form|bootstrap}}
-
+  {% for field in form %}
+  <div class="form-group">
+    {{ field.label_tag }}
+    {{ field }}
+    <p class="help-block">{{ field.help_text }}</p>
+  </div>
+  {% endfor %}
   <button type="submit" class="btn btn-default">Login</button>
   <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
 {# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+{# <p><a href="{% url 'password_reset' %}">Lost password?</a></p> #}
 {% endblock %}

@@ -31,17 +31,24 @@ def companies_index(request):
 @login_required(login_url='/login/')
 def companies_new(request):
     title = 'Add a Company'
+    site = get_current_site(request)
+
     if request.method == 'POST':
         form = CompanyForm(request.POST)
         if form.is_valid():
             company = form.save(commit=False)
-            company.site_id = get_current_site(request).id
+            company.site_id = site.id
             company.user_id = request.user.id
             company.save()
+
             return HttpResponseRedirect(reverse('companies_show',
                                                 args=(company.id,)))
     else:
-        form = CompanyForm()
+        # NOTE: site will be displayed in the HTML form as a hidden field, we
+        #       need to find a way to set this in CompanyForm so validation
+        #       passes, without actually putting it in the HTML
+        form = CompanyForm(initial={'site': site})
+
     context = {'form': form, 'title': title}
     return render(request, 'job_board/companies_new.html', context)
 
