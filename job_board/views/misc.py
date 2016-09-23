@@ -9,7 +9,7 @@ def register(request):
     if request.method == 'POST':
         form = CssUserCreationForm(request.POST)
         if form.is_valid():
-            new_user = form.save()
+            form.save()
             return HttpResponseRedirect(reverse('jobs_index'))
     else:
         form = CssUserCreationForm()
