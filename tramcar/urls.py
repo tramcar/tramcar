@@ -15,9 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
+
+from job_board.forms import CssAuthenticationForm
 
 urlpatterns = [
     url(r'^', include('job_board.urls')),
     url(r'^admin/', admin.site.urls),
-    url('^', include('django.contrib.auth.urls')),
+    #url('^', include('django.contrib.auth.urls')),
+    url(r'^login/$', auth_views.login, {'authentication_form': CssAuthenticationForm}, name='login'),
+    url(r'^logout/$', auth_views.logout, name='logout'),
 ]

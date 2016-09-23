@@ -1,0 +1,19 @@
+{% if form.errors %}
+<div class="panel panel-danger">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ form.errors|length }} error(s) prevented your resource from being saved</h3>
+  </div>
+  <div class="panel-body">
+    <ul>
+    {% for key, errors in form.errors.items %}
+      <li>{{ key|capfirst }}</li>
+      <ul>
+      {% for error in errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+      </ul>
+    {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %}

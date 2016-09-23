@@ -2,14 +2,18 @@
 
 {% block header %}Register{% endblock %}
 
-{% load bootstrap %}
-
 {% block content %}
+{% include "job_board/errors.html" %}
+
 <form action="{% url 'register' %}" method="post">
   {% csrf_token %}
-
-  {{ form|bootstrap }}
-
+  {% for field in form %}
+  <div class="form-group">
+    {{ field.label_tag }}
+    {{ field }}
+    <p class="help-block">{{ field.help_text }}</p>
+  </div>
+  {% endfor %}
   <input type="submit" class="btn btn-default" value="Create">
 </form>
 {% endblock %}
