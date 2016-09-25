@@ -1,9 +1,10 @@
 from datetime import timedelta
 
 from django.core.management.base import BaseCommand
+from django.contrib.sites.models import Site
 from django.utils import timezone
 
-from job_board.models import Job, Site
+from job_board.models.job import Job
 
 
 class Command(BaseCommand):
