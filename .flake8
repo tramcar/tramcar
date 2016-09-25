@@ -2,6 +2,4 @@
 exclude =
     .venv,
     job_board/migrations,
-    tramcar/settings.py,
-    # FIXME
-    job_board/views/__init__.py
+    tramcar/settings.py
