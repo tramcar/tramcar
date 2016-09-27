@@ -47,18 +47,22 @@ def jobs_mine(request):
 @login_required(login_url='/login/')
 def jobs_new(request):
     title = 'Add a Job'
+    site = get_current_site(request)
 
     if request.method == 'POST':
         form = JobForm(request.POST)
         if form.is_valid():
             job = form.save(commit=False)
-            job.site_id = get_current_site(request).id
+            if site.siteconfig_set.first().remote:
+                job.remote = True
+            job.site_id = site.id
             job.user_id = request.user.id
             job.save()
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
-        site = get_current_site(request)
-        form = JobForm(initial={'remote': site.siteconfig_set.first().remote})
+        form = JobForm()
+        if site.siteconfig_set.first().remote:
+            form.fields.pop('remote')
         # NOTE: By default, the company and category dropdowns will contain all
         #       instances across all sites, and the following limits this to
         #       the site in question.
@@ -77,6 +81,7 @@ def jobs_show(request, job_id):
     job = get_object_or_404(
               Job, pk=job_id, site_id=get_current_site(request).id
           )
+    site = get_current_site(request)
     # If the browsing user does not own the job, and the job has yet to be paid
     # for, then 404
     if job.user_id != request.user.id and job.paid_at is None:
@@ -90,16 +95,22 @@ def jobs_show(request, job_id):
     md = markdown.Markdown(safe_mode='remove')
     job.description_md = md.convert(job.description)
     job.application_info_md = md.convert(job.application_info)
+    job.remote = "Yes" if job.remote else "No"
     title = "%s @ %s" % (job.title, job.company.name)
+    remote = site.siteconfig_set.first().remote
 
-    context = {'job': job, 'post_date': post_date, 'title': title}
+    context = {'job': job,
+               'post_date': post_date,
+               'title': title,
+               'remote': remote}
     return render(request, 'job_board/jobs_show.html', context)
 
 
 @login_required(login_url='/login/')
 def jobs_edit(request, job_id):
+    site = get_current_site(request)
     job = get_object_or_404(
-              Job, pk=job_id, site_id=get_current_site(request).id
+              Job, pk=job_id, site_id=site.id
           )
     title = 'Edit a Job'
 
@@ -109,16 +120,23 @@ def jobs_edit(request, job_id):
     if request.method == 'POST':
         form = JobForm(request.POST, instance=job)
         if form.is_valid():
-            form.save()
+            job = form.save(commit=False)
+            if site.siteconfig_set.first().remote:
+                job.remote = True
+            job.site_id = site.id
+            job.user_id = request.user.id
+
+            job.save()
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
-        site_id = get_current_site(request).id
         form = JobForm(instance=job)
+        if site.siteconfig_set.first().remote:
+            form.fields.pop('remote')
         form.fields['company'].queryset = Company.objects.filter(
-                                              site_id=site_id
+                                              site_id=site.id
                                           )
         form.fields['category'].queryset = Category.objects.filter(
-                                               site_id=site_id
+                                               site_id=site.id
                                            )
 
     context = {'form': form, 'job': job, 'title': title}
