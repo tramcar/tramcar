@@ -14,6 +14,8 @@ class Company(models.Model):
     url = models.URLField(verbose_name="URL")
     twitter = models.CharField(
                   max_length=20,
+                  blank=True,
+                  null=True,
                   help_text="Please leave empty if none"
               )
     country = models.ForeignKey(
