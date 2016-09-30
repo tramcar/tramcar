@@ -42,7 +42,7 @@
       </thead>
       {% for job in jobs %}
       <tr>
-        <td>{{ job.paid_at|date:'Y-m-d H:i' }}</td>
+        <td>{{ job.paid_at|date:'Y-m-d' }}</td>
         <td><a href="{% url 'jobs_show' job.id %}">{{ job.title }}</a></td>
         <td>{{ job.format_country }}</td>
         <td><a href="{% url 'categories_show' job.category.id %}">{{ job.category.name }}</a></td>
