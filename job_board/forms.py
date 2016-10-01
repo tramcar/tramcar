@@ -14,6 +14,8 @@ class JobForm(forms.ModelForm):
         self.fields['description'].widget.attrs['class'] = 'form-control'
         self.fields['application_info'].widget.attrs['class'] = 'form-control'
         self.fields['country'].widget.attrs['class'] = 'form-control'
+        self.fields['city'].widget.attrs['class'] = 'form-control'
+        self.fields['state'].widget.attrs['class'] = 'form-control'
         self.fields['location'].widget.attrs['class'] = 'form-control'
         self.fields['remote'].widget.attrs['class'] = 'form-control'
         self.fields['email'].widget.attrs['class'] = 'form-control'
@@ -22,7 +24,27 @@ class JobForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = ['company', 'title', 'description', 'application_info',
-                  'country', 'location', 'remote', 'email', 'category']
+                  'city', 'state', 'country', 'remote', 'location', 'email',
+                  'category']
+
+
+class JobRemoteForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(JobRemoteForm, self).__init__(*args, **kwargs)
+        self.label_suffix = ''
+        self.fields['company'].widget.attrs['class'] = 'form-control'
+        self.fields['title'].widget.attrs['class'] = 'form-control'
+        self.fields['description'].widget.attrs['class'] = 'form-control'
+        self.fields['application_info'].widget.attrs['class'] = 'form-control'
+        self.fields['country'].widget.attrs['class'] = 'form-control'
+        self.fields['location'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['category'].widget.attrs['class'] = 'form-control'
+
+    class Meta:
+        model = Job
+        fields = ['company', 'title', 'description', 'application_info',
+                  'country', 'location', 'email', 'category']
 
 
 class CompanyForm(forms.ModelForm):

@@ -5,6 +5,7 @@ from django.test import TestCase
 
 from job_board.models.category import Category
 from job_board.models.company import Company
+from job_board.models.country import Country
 from job_board.models.job import Job
 
 
@@ -101,6 +102,8 @@ class JobViewAuthdTests(TestCase):
         user = User(username='admin')
         user.set_password('password')
         user.save()
+        country = Country(name='Canada')
+        country.save()
         company = Company(name='Tramcar', site_id=1, user_id=1)
         company.save()
         category = Category(name='Software Development', site_id=1)
@@ -130,7 +133,10 @@ class JobViewAuthdTests(TestCase):
             'application_info': 'testing',
             'email': 'admin@tramcar.org',
             'category': 1,
-            'company': 1
+            'company': 1,
+            'country': 1,
+            'state': 'Ontario',
+            'city': 'Guelph',
         }
         response = self.client.post(reverse('jobs_new'), job)
         # NOTE: We assume a redirect here is success, the response.url could be
@@ -172,7 +178,10 @@ class JobViewAuthdTests(TestCase):
             'application_info': 'testing',
             'email': 'admin@tramcar.org',
             'category': 1,
-            'company': 1
+            'company': 1,
+            'country': 1,
+            'state': 'Ontario',
+            'city': 'Guelph'
         }
         response = self.client.post(
                        reverse('jobs_edit', args=(self.job.id,)), job
