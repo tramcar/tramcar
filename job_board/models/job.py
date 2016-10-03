@@ -27,8 +27,10 @@ class Job(models.Model):
                            help_text="What's the best way to apply for this "
                                      "job? %s accepted" % markdown
                        )
-    location = models.TextField(
+    location = models.CharField(
+                   max_length=100,
                    blank=True,
+                   null=True,
                    help_text="Specify timezone requirements or other "
                              "location-related details"
                )
@@ -52,6 +54,8 @@ class Job(models.Model):
                default=False,
                help_text="Select if this job allows 100% remote working"
              )
+    city = models.CharField(max_length=50, null=True, default=None)
+    state = models.CharField(max_length=50, null=True, default=None)
 
     def activate(self):
         if self.paid_at is None:

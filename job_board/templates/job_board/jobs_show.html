@@ -69,12 +69,17 @@
         <h4><mark>Application Info</mark></h4>
         <p>{{ job.application_info_md | safe }}</p>
         {% if not remote %}
-        <h4><mark>Remote</mark></h4>
-        <p>{{ job.remote }}</p>
-        {% endif %}
-        {% if job.country %}
-        <h4><mark>Country</mark></h4>
-        <p>{{ job.country }}</p>
+          {% if job.remote != "No" %}
+          <h4><mark>Remote</mark></h4>
+          <p>{{ job.remote }}</p>
+          {% endif %}
+          <h4><mark>City</mark></h4>
+          <p>{{ job.city }}, {{ job.state }}, {{ job.country }}</p>
+        {% else %}
+          {% if job.country %}
+          <h4><mark>Country</mark></h4>
+          <p>{{ job.country }}</p>
+          {% endif %}
         {% endif %}
         {% if job.location %}
         <h4><mark>Location</mark></h4>

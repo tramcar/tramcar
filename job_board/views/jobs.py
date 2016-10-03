@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 
-from job_board.forms import JobForm
+from job_board.forms import JobForm, JobRemoteForm
 from job_board.models.category import Category
 from job_board.models.company import Company
 from job_board.models.job import Job
@@ -50,7 +50,14 @@ def jobs_new(request):
     site = get_current_site(request)
 
     if request.method == 'POST':
-        form = JobForm(request.POST)
+        if site.siteconfig_set.first().remote:
+            form = JobRemoteForm(request.POST)
+        else:
+            form = JobForm(request.POST)
+            # We cannot make country required on the model as this is optional
+            # when the job is remote
+            form.fields['country'].required = True
+
         if form.is_valid():
             job = form.save(commit=False)
             if site.siteconfig_set.first().remote:
@@ -60,18 +67,23 @@ def jobs_new(request):
             job.save()
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
-        form = JobForm()
         if site.siteconfig_set.first().remote:
-            form.fields.pop('remote')
-        # NOTE: By default, the company and category dropdowns will contain all
-        #       instances across all sites, and the following limits this to
-        #       the site in question.
-        form.fields['company'].queryset = Company.objects.filter(
-                                              site_id=site.id
-                                          )
-        form.fields['category'].queryset = Category.objects.filter(
-                                              site_id=site.id
-                                           )
+            form = JobRemoteForm()
+        else:
+            form = JobForm()
+            # We cannot make country required on the model as this is optional
+            # when the job is remote
+            form.fields['country'].required = True
+
+    # NOTE: By default, the company and category dropdowns will contain all
+    #       instances across all sites, and the following limits this to
+    #       the site in question.
+    form.fields['company'].queryset = Company.objects.filter(
+                                          site_id=site.id
+                                      )
+    form.fields['category'].queryset = Category.objects.filter(
+                                          site_id=site.id
+                                       )
 
     context = {'form': form, 'title': title}
     return render(request, 'job_board/jobs_new.html', context)
@@ -118,26 +130,38 @@ def jobs_edit(request, job_id):
         return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
 
     if request.method == 'POST':
-        form = JobForm(request.POST, instance=job)
+        if site.siteconfig_set.first().remote:
+            form = JobRemoteForm(request.POST, instance=job)
+        else:
+            form = JobForm(request.POST, instance=job)
+            # We cannot make country required on the model as this is optional
+            # when the job is remote
+            form.fields['country'].required = True
+
         if form.is_valid():
             job = form.save(commit=False)
-            if site.siteconfig_set.first().remote:
-                job.remote = True
             job.site_id = site.id
             job.user_id = request.user.id
+            if site.siteconfig_set.first().remote:
+                job.remote = True
 
             job.save()
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
-        form = JobForm(instance=job)
         if site.siteconfig_set.first().remote:
-            form.fields.pop('remote')
-        form.fields['company'].queryset = Company.objects.filter(
-                                              site_id=site.id
-                                          )
-        form.fields['category'].queryset = Category.objects.filter(
-                                               site_id=site.id
-                                           )
+            form = JobRemoteForm(instance=job)
+        else:
+            form = JobForm(instance=job)
+            # We cannot make country required on the model as this is optional
+            # when the job is remote
+            form.fields['country'].required = True
+
+    form.fields['company'].queryset = Company.objects.filter(
+                                          site_id=site.id
+                                      )
+    form.fields['category'].queryset = Category.objects.filter(
+                                           site_id=site.id
+                                       )
 
     context = {'form': form, 'job': job, 'title': title}
 
