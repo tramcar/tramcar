@@ -17,10 +17,12 @@
         </h4>
         <p>{{ company.country.name }}</p>
         {% endif %}
+        {% if company.twitter %}
         <h4>
           <mark>Twitter</mark>
         </h4>
         <p><a href="https://twitter.com/{{ company.twitter }}">{{ company.twitter }}</a></p>
+        {% endif %}
         {% if company.id == user.id or user.is_staff %}
         <a class="btn btn-primary btn-sm" href="{% url 'companies_edit' company.id %}">Edit Company</a>
         {% endif %}
