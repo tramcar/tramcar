@@ -12,8 +12,10 @@
       <div class="panel-body">
         <h4><mark>URL</mark></h4>
         <p><a href="{{ job.company.url }}">{{ job.company.url }}</a></p>
+        {% if job.company.twitter %}
         <h4><mark>Twitter</mark></h4>
         <p><a href="https://twitter.com/{{ job.company.twitter }}">{{ job.company.twitter }}</a></p>
+        {% endif %}
         <a href="{% url 'companies_show' job.company.id %}" title="View all of company's jobs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
       </div>
     </div>
