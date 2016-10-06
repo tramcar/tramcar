@@ -50,12 +50,24 @@ class CompanyViewTests(TestCase):
 class JobViewUnauthdTests(TestCase):
 
     def setUp(self):
-        company = Company(name='Tramcar', site_id=1, user_id=1)
+        user = User(username='admin')
+        user.set_password('password')
+        user.full_clean()
+        user.save()
+        company = Company(name='Tramcar', url='http://www.tramcar.org',
+                          site_id=1, user_id=user.id)
+        company.full_clean()
         company.save()
         category = Category(name='Software Development', site_id=1)
+        category.full_clean()
         category.save()
-        self.job = Job(title='Software Developer', category_id=category.id,
-                       company_id=company.id, site_id=1, user_id=1)
+        self.job = Job(title='Software Developer',
+                       description='Test description',
+                       application_info='test', category_id=category.id,
+                       company_id=company.id, site_id=1, user_id=user.id,
+                       city='Toronto', state='Ontario',
+                       email='admin@tramcar.org')
+        self.job.full_clean()
         self.job.save()
         self.job.activate()
 
@@ -101,15 +113,25 @@ class JobViewAuthdTests(TestCase):
     def setUp(self):
         user = User(username='admin')
         user.set_password('password')
+        user.full_clean()
         user.save()
         country = Country(name='Canada')
+        country.full_clean()
         country.save()
-        company = Company(name='Tramcar', site_id=1, user_id=1)
+        company = Company(name='Tramcar', site_id=1, user_id=user.id,
+                          url='http://www.tramcar.org')
+        company.full_clean()
         company.save()
         category = Category(name='Software Development', site_id=1)
+        category.full_clean()
         category.save()
-        self.job = Job(title='Software Developer', category_id=category.id,
-                       company_id=company.id, site_id=1, user_id=user.id)
+        self.job = Job(title='Software Developer',
+                       description='Test description',
+                       application_info='test', category_id=category.id,
+                       company_id=company.id, site_id=1, user_id=user.id,
+                       city='Toronto', state='Ontario',
+                       email='admin@tramcar.org')
+        self.job.full_clean()
         self.job.save()
         self.job.activate()
 
