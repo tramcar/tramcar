@@ -18,8 +18,8 @@ def jobs_index(request):
     jobs = Job.objects.filter(site_id=get_current_site(request).id) \
                       .filter(paid_at__isnull=False) \
                       .filter(expired_at__isnull=True) \
-                      .order_by('-paid_at')
-    title = 'Jobs'
+                      .order_by('-paid_at')[:10]
+    title = 'Latest Jobs'
     context = {'jobs': jobs, 'title': title}
     return render(request, 'job_board/jobs_index.html', context)
 
