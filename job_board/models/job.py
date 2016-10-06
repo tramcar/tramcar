@@ -46,8 +46,8 @@ class Job(models.Model):
                   help_text="Select if you're hiring within a specific country"
               )
     company = models.ForeignKey(Company)
-    paid_at = models.DateTimeField(null=True)
-    expired_at = models.DateTimeField(null=True)
+    paid_at = models.DateTimeField(null=True, blank=True)
+    expired_at = models.DateTimeField(null=True, blank=True)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     remote = models.BooleanField(

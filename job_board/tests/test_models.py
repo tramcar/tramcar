@@ -1,7 +1,9 @@
+from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.conf import settings
 from django.test import TestCase
 
+from job_board.models.category import Category
 from job_board.models.company import Company
 from job_board.models.job import Job
 from job_board.models.site_config import SiteConfig
@@ -19,6 +21,7 @@ class SiteMethodTests(TestCase):
         # Note that we're assigning non-existent values for country,
         # category, etc.
         site = Site(domain='tramcar.org', name='Tramcar')
+        site.full_clean()
         site.save()
 
     def test_site_config_entry_exists(self):
@@ -37,39 +40,66 @@ class SiteMethodTests(TestCase):
 
 class CompanyMethodTests(TestCase):
     def setUp(self):
-        # Note that we're assigning non-existent values for country,
-        # category, etc.
-        company = Company(name='Tramcar', site_id=1, user_id=1)
-        company.save()
+        self.user = User(username='admin')
+        self.user.set_password('password')
+        self.user.full_clean()
+        self.user.save()
+        self.company = Company(name='Tramcar', site_id=1, user_id=self.user.id,
+                               url='http://www.tramcar.org')
+        self.company.full_clean()
+        self.company.save()
+        self.category = Category(name='Software Development', site_id=1)
+        self.category.full_clean()
+        self.category.save()
 
     def test_active_jobs(self):
-        company = Company.objects.get(name='Tramcar')
-        job = Job(title='Software Developer', country_id=1,
-                  category_id=1, company_id=company.id, site_id=1,
-                  user_id=1)
+        job = Job(title='Software Developer',
+                  description='Test description',
+                  application_info='test', category_id=self.category.id,
+                  company_id=self.company.id, site_id=1, user_id=self.user.id,
+                  city='Toronto', state='Ontario',
+                  email='admin@tramcar.org')
+        job.full_clean()
         job.save()
-        self.assertEqual(len(company.active_jobs()), 0)
+        self.assertEqual(len(self.company.active_jobs()), 0)
         job.activate()
-        self.assertEqual(len(company.active_jobs()), 1)
+        self.assertEqual(len(self.company.active_jobs()), 1)
 
     def test_paid_jobs(self):
-        company = Company.objects.get(name='Tramcar')
-        job = Job(title='Software Developer', country_id=1,
-                  category_id=1, company_id=company.id, site_id=1,
-                  user_id=1)
+        job = Job(title='Software Developer',
+                  description='Test description',
+                  application_info='test', category_id=self.category.id,
+                  company_id=self.company.id, site_id=1, user_id=self.user.id,
+                  city='Toronto', state='Ontario',
+                  email='admin@tramcar.org')
+        job.full_clean()
         job.save()
-        self.assertEqual(len(company.paid_jobs()), 0)
+        self.assertEqual(len(self.company.paid_jobs()), 0)
         job.activate()
-        self.assertEqual(len(company.paid_jobs()), 1)
+        self.assertEqual(len(self.company.paid_jobs()), 1)
 
 
 class JobMethodTests(TestCase):
     def setUp(self):
-        # Note that we're assigning non-existent values for country,
-        # category, etc.
-        job = Job(title='Software Developer', country_id=1, category_id=1,
-                  company_id=1, site_id=1, user_id=1)
+        user = User(username='admin')
+        user.set_password('password')
+        user.full_clean()
+        user.save()
+        company = Company(name='Tramcar', url='http://www.tramcar.org',
+                          site_id=1, user_id=user.id)
+        company.full_clean()
+        company.save()
+        category = Category(name='Software Development', site_id=1)
+        category.full_clean()
+        category.save()
+        job = Job(title='Software Developer',
+                  description='Test description',
+                  application_info='test', category_id=category.id,
+                  company_id=company.id, site_id=1, user_id=user.id,
+                  city='Toronto', state='Ontario',
+                  email='admin@tramcar.org')
         job.paid_at = job.created_at
+        job.full_clean()
         job.save()
 
     def test_activate_on_unactivated_job(self):
