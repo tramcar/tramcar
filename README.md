@@ -18,6 +18,17 @@ $ source .venv/bin/activate
 (.venv) $ pip install -r requirements.txt
 ```
 
+Tramcar defaults `SECRET_KEY` in `tramcar/settings.py` to an empty string
+which will prevent Django from starting up.  This is done to ensure that
+deployers do not accidentally deploy with a default value.  Before proceeding,
+set a unique value for `SECRET_KEY` in `tramcar/settings.py`.  If you have `pwgen`
+installed, simply do this:
+
+```
+$ PWD=$(pwgen -s 50 1)
+$ sed -i.bak "s/^SECRET_KEY = ''$/SECRET_KEY = '$PWD'/g" tramcar/settings.py
+```
+
 Now, apply database migrations, create an admin user, and start the
 development server:
 
