@@ -18,6 +18,10 @@ settings.SITE_ID = 1
 
 
 class CategoryViewTests(TestCase):
+    def setUp(self):
+        category = Category(name='Software Development', site_id=1)
+        category.full_clean()
+        category.save()
 
     def test_index_view(self):
         response = self.client.get(reverse('categories_index'))
