@@ -88,7 +88,9 @@
         <p>{{ job.location }}</p>
         {% endif %}
         <h4><mark>Category</mark></h4>
-        <p><a href="{% url 'categories_show' job.category.id %}">{{ job.category }}</a></p>
+        <p>
+          <a href="{% url 'categories_show' job.category.id %}"><span class="label label-primary">{{ job.category.name }}</span></a>
+        </p>
         {% if user.id == job.id or user.is_staff %}
         <h4><mark>E-mail</mark></h4>
         <p>{{ job.email }}</p>
