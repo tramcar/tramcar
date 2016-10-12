@@ -5,21 +5,24 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Post Date</th>
+      <th>Date</th>
       <th>Title</th>
-      <th>Company</th>
-      <th>Country</th>
-      <th>Category</th>
+      <th class="hidden-xs hidden-sm">Country</th>
+      <th class="hidden-xs hidden-sm">Category</th>
       <th>Expired</th>
     </tr>
   </thead>
   {% for job in jobs %}
   <tr>
     <td>{{ job.created_at|date:'Y-m-d' }}</td>
-    <td><a href="{% url 'jobs_show' job.id %}">{{ job.title }}</a></td>
-    <td><a href="{% url 'companies_show' job.company.id %}">{{ job.company.name }}</a></td>
-    <td>{{ job.format_country }}</td>
-    <td><a href="{% url 'categories_show' job.category.id %}">{{ job.category.name }}</a></td>
+    <td>
+      <p><a href="{% url 'jobs_show' job.id %}">{{ job.title }}</a></p>
+      <p><small><strong>@&nbsp;{{ job.company.name }}</strong></small></p>
+    </td>
+    <td class="hidden-xs hidden-sm">{{ job.format_country }}</td>
+    <td class="hidden-xs hidden-sm">
+      <a href="{% url 'categories_show' job.category.id %}"><span class="label label-primary">{{ job.category.name }}</span></a>
+    </td>
     <td>
       {% if not job.paid_at and not job.expired_at %}
       <span class="label label-warning %>">Unpaid</span>
