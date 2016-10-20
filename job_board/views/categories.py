@@ -7,6 +7,11 @@ from job_board.models.job import Job
 
 def categories_index(request):
     categories = Category.objects.filter(site_id=get_current_site(request).id)
+
+    for c in categories:
+        if len(c.active_jobs()) == 0:
+            categories = categories.exclude(id=c.id)
+
     title = 'Categories'
     context = {'categories': categories, 'title': title}
     return render(request, 'job_board/categories_index.html', context)
