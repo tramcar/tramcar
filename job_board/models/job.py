@@ -6,14 +6,12 @@ from django.contrib.sites.models import Site
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 
 from job_board.models.category import Category
 from job_board.models.company import Company
 from job_board.models.country import Country
 
 
-@python_2_unicode_compatible
 class Job(models.Model):
     url = "http://daringfireball.net/projects/markdown/syntax"
     markdown = "<a href='%s'>Markdown</a>" % url

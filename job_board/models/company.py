@@ -3,12 +3,10 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.utils.encoding import python_2_unicode_compatible
 
 from job_board.models.country import Country
 
 
-@python_2_unicode_compatible
 class Company(models.Model):
     name = models.CharField(max_length=50)
     url = models.URLField(verbose_name="URL")

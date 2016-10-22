@@ -7,7 +7,7 @@ installs.
 
 ## Development Installation
 
-First, clone and install dependencies.  This requires python 2.7, pip, and
+First, clone and install dependencies.  This requires python 3.5, pip, and
 virtualenv to already be installed.
 
 ```
