@@ -7,6 +7,7 @@ import job_board.views.misc as misc
 
 urlpatterns = [
     url(r'^$', jobs.jobs_index, name='jobs_index'),
+    url(r'^contact/$', misc.contact, name='contact'),
     url(r'^jobs/$', jobs.jobs_index, name='jobs_index'),
     url(r'^jobs/new/$', jobs.jobs_new, name='jobs_new'),
     url(r'^jobs/mine/$', jobs.jobs_mine, name='jobs_mine'),
