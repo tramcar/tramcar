@@ -5,6 +5,19 @@ from job_board.models.company import Company
 from job_board.models.job import Job
 
 
+class ContactForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(ContactForm, self).__init__(*args, **kwargs)
+        self.label_suffix = ''
+        self.fields['subject'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['message'].widget.attrs['class'] = 'form-control'
+
+    email = forms.EmailField(label='Your e-mail address')
+    subject = forms.CharField(max_length=100)
+    message = forms.CharField(widget=forms.Textarea)
+
+
 class JobForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(JobForm, self).__init__(*args, **kwargs)
@@ -51,7 +64,6 @@ class CompanyForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CompanyForm, self).__init__(*args, **kwargs)
         self.label_suffix = ''
-        self.fields['name'].widget.attrs['class'] = 'form-control'
         self.fields['name'].widget.attrs['class'] = 'form-control'
         self.fields['url'].widget.attrs['class'] = 'form-control'
         self.fields['country'].widget.attrs['class'] = 'form-control'
