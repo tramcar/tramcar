@@ -65,8 +65,8 @@ class Job(models.Model):
 
     def expire(self):
         if self.paid_at is not None and self.expired_at is None:
-            context = {'job': self}
             sc = self.site.siteconfig_set.first()
+            context = {'job': self, 'protocol': sc.protocol}
             self.expired_at = timezone.now()
             self.save()
             send_mail(
