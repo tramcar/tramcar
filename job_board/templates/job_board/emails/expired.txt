@@ -1,6 +1,6 @@
 Hi there!
 
-Thank you for using {{ job.site.domain }}.  This e-mail is to notify you that
+Thank you for using {{ job.site.name }}.  This e-mail is to notify you that
 the following post has now expired:
 
 {{ protocol }}://{{ job.site.domain }}{% url 'jobs_show' job.id %}
