@@ -16,8 +16,8 @@
   <tr>
     <td>{{ job.created_at|date:'Y-m-d' }}</td>
     <td>
-      <p><a href="{% url 'jobs_show' job.id %}">{{ job.title }}</a></p>
-      <p><small><strong>@&nbsp;{{ job.company.name }}</strong></small></p>
+      <a href="{% url 'jobs_show' job.id %}">{{ job.title }}</a><br>
+      <small><strong>@&nbsp;{{ job.company.name }}</strong></small>
     </td>
     <td class="hidden-xs hidden-sm">{{ job.format_country }}</td>
     <td class="hidden-xs hidden-sm">
