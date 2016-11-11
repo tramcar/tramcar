@@ -48,6 +48,7 @@ def jobs_mine(request):
 def jobs_new(request):
     title = 'Add a Job'
     site = get_current_site(request)
+    protocol = site.siteconfig_set.first().protocol
 
     if request.method == 'POST':
         if site.siteconfig_set.first().remote:
@@ -85,7 +86,7 @@ def jobs_new(request):
                                           site_id=site.id
                                        )
 
-    context = {'form': form, 'title': title}
+    context = {'form': form, 'title': title, 'protocol': protocol}
     return render(request, 'job_board/jobs_new.html', context)
 
 
@@ -121,6 +122,7 @@ def jobs_show(request, job_id):
 @login_required(login_url='/login/')
 def jobs_edit(request, job_id):
     site = get_current_site(request)
+    protocol = site.siteconfig_set.first().protocol
     job = get_object_or_404(
               Job, pk=job_id, site_id=site.id
           )
@@ -163,7 +165,7 @@ def jobs_edit(request, job_id):
                                            site_id=site.id
                                        )
 
-    context = {'form': form, 'job': job, 'title': title}
+    context = {'form': form, 'job': job, 'title': title, 'protocol': protocol}
 
     return render(request, 'job_board/jobs_edit.html', context)
 

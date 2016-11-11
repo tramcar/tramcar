@@ -11,8 +11,16 @@ class SiteConfig(models.Model):
     admin_email = models.EmailField(default='admin@site')
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
     remote = models.BooleanField(
-               default=False,
-               help_text="Select if this job board is for remote jobs only")
+                 default=False,
+                 help_text="Select if this job board is for remote jobs only"
+             )
+    protocol = models.CharField(
+                   default='http',
+                   choices=(('http', 'http'), ('https', 'https')),
+                   max_length=5,
+                   help_text="The protocol to use when building links in "
+                             "e-mail templates, etc."
+               )
 
     def __str__(self):
         return self.site.name
