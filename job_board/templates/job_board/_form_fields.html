@@ -1,0 +1,15 @@
+{% for field in form %}
+{% if field.is_hidden %}
+{{ field }}
+{% else %}
+<div class="form-group {% if field.errors %}has-error{% endif %}">
+  {# We generate the label manually here as it's not clear how to set class the label_tag #}
+  <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
+  {{ field }}
+  <div class="help-block">
+    {% if field.help_text %}<p>{{ field.help_text|safe }}</p>{% endif %}
+    {{ field.errors }}
+  </div>
+</div>
+{% endif %}
+{% endfor %}
