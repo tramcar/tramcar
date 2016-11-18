@@ -19,13 +19,12 @@
         <a href="{% url 'companies_show' job.company.id %}" title="View all of company's jobs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
       </div>
     </div>
-    {% if user.id == job.id or user.is_staff %}
+    {% if user.id == job.user_id or user.is_staff %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Job Admin</h3>
       </div>
       <div class="panel-body">
-
         {% if user.is_staff %}
         <h4><mark>Posted By</mark></h4>
         <p>{{ user.username }} (UID: {{ user.id }})</p>
