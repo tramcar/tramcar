@@ -69,14 +69,17 @@
         <p>{{ job.description_md | safe }}</p>
         <h4><mark>Application Info</mark></h4>
         <p>{{ job.application_info_md | safe }}</p>
+        {# If site is remote then we do not indicate that the job is remote since all jobs on that site are remote #}
         {% if not remote %}
-          {% if job.remote != "No" %}
+          {% if job.remote == "Yes" %}
           <h4><mark>Remote</mark></h4>
           <p>{{ job.remote }}</p>
-          {% endif %}
+          {% else %}
           <h4><mark>City</mark></h4>
           <p>{{ job.city }}, {{ job.state }}, {{ job.country }}</p>
-        {% else %}
+          {% endif %}
+        {% endif %}
+        {% if remote or job.remote == "Yes" %}
           {% if job.country %}
           <h4><mark>Country</mark></h4>
           <p>{{ job.country }}</p>
@@ -90,7 +93,7 @@
         <p>
           <a href="{% url 'categories_show' job.category.id %}"><span class="label label-primary">{{ job.category.name }}</span></a>
         </p>
-        {% if user.id == job.id or user.is_staff %}
+        {% if user.id == job.user_id or user.is_staff %}
         <h4><mark>E-mail</mark></h4>
         <p>{{ job.email }}</p>
         {% endif %}

@@ -41,6 +41,29 @@ class JobForm(forms.ModelForm):
                   'remote', 'city', 'state', 'country', 'location', 'email',
                   'category']
 
+    def clean(self):
+        cleaned_data = super(JobForm, self).clean()
+        city = cleaned_data.get("city")
+        state = cleaned_data.get("state")
+        country = cleaned_data.get("country")
+        remote = cleaned_data.get("remote")
+        if not remote:
+            if not city:
+                self.add_error(
+                    "city",
+                    "City is required when the job is note remote"
+                )
+            if not state:
+                self.add_error(
+                    "state",
+                    "State is required when the job is not remote"
+                )
+            if not country:
+                self.add_error(
+                    "country",
+                    "Country is required when the job is not remote"
+                )
+
 
 class JobRemoteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
