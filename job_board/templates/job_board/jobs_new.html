@@ -10,9 +10,47 @@
   <div class="col-md-8">
     <form action="{% url 'jobs_new' %}" method="post">
       {% csrf_token %}
-      {% include "job_board/_form_fields.html" %}
+      {% for field in form %}
+      {% if field.is_hidden %}
+      {{ field }}
+      {% else %}
+      <div class="form-group {% if field.errors %}has-error{% endif %}" {% if field.name == 'city' %}id="togglecity"{% elif field.name == 'state' %}id="togglestate"{% endif %}>
+        {# We generate the label manually here as it's not clear how to set class the label_tag #}
+        <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
+        {{ field }}
+        <div class="help-block">
+          {% if field.help_text %}<p>{{ field.help_text|safe }}</p>{% endif %}
+          {{ field.errors }}
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
       <input type="submit" class="btn btn-default" value="Submit" />
     </form>
   </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+  $( document ).ready(function() {
+    if ($( "#id_remote" ).is( ":checked" )) {
+      $( "#togglecity" ).hide();
+      $( "#togglestate" ).hide();
+    } else {
+      $( "#togglecity" ).show();
+      $( "#togglestate" ).show();
+    };
+
+    $( "input" ).on( "click", function() {
+      if ($( "#id_remote" ).is( ":checked" )) {
+        $( "#togglecity" ).hide();
+        $( "#togglestate" ).hide();
+      } else {
+        $( "#togglecity" ).show();
+        $( "#togglestate" ).show();
+      };
+    });
+  });
+</script>
 {% endblock %}
