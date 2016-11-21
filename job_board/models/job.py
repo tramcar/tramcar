@@ -52,8 +52,17 @@ class Job(models.Model):
                default=False,
                help_text="Select if this job allows 100% remote working"
              )
-    city = models.CharField(max_length=50, null=True, default=None)
-    state = models.CharField(max_length=50, null=True, default=None)
+    city = models.CharField(
+               max_length=50,
+               blank=True,
+               null=True,
+               default=None
+           )
+    state = models.CharField(
+                max_length=50,
+                blank=True,
+                null=True,
+                default=None)
 
     def activate(self):
         if self.paid_at is None:

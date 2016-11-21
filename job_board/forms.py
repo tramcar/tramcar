@@ -38,7 +38,7 @@ class JobForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = ['company', 'title', 'description', 'application_info',
-                  'city', 'state', 'country', 'remote', 'location', 'email',
+                  'remote', 'city', 'state', 'country', 'location', 'email',
                   'category']
 
 
