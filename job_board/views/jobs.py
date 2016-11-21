@@ -55,9 +55,6 @@ def jobs_new(request):
             form = JobRemoteForm(request.POST)
         else:
             form = JobForm(request.POST)
-            # We cannot make country required on the model as this is optional
-            # when the job is remote
-            form.fields['country'].required = True
 
         if form.is_valid():
             job = form.save(commit=False)
@@ -72,9 +69,6 @@ def jobs_new(request):
             form = JobRemoteForm()
         else:
             form = JobForm()
-            # We cannot make country required on the model as this is optional
-            # when the job is remote
-            form.fields['country'].required = True
 
     # NOTE: By default, the company and category dropdowns will contain all
     #       instances across all sites, and the following limits this to
@@ -136,9 +130,6 @@ def jobs_edit(request, job_id):
             form = JobRemoteForm(request.POST, instance=job)
         else:
             form = JobForm(request.POST, instance=job)
-            # We cannot make country required on the model as this is optional
-            # when the job is remote
-            form.fields['country'].required = True
 
         if form.is_valid():
             job = form.save(commit=False)
@@ -154,9 +145,6 @@ def jobs_edit(request, job_id):
             form = JobRemoteForm(instance=job)
         else:
             form = JobForm(instance=job)
-            # We cannot make country required on the model as this is optional
-            # when the job is remote
-            form.fields['country'].required = True
 
     form.fields['company'].queryset = Company.objects.filter(
                                           site_id=site.id
