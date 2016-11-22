@@ -26,6 +26,10 @@ class SiteConfig(models.Model):
                            blank=True,
                            help_text="Google Analytics Tracking ID"
                        )
+    twitter = models.CharField(
+                  max_length=15,
+                  blank=True
+              )
 
     def __str__(self):
         return self.site.name
