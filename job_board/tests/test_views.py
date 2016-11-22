@@ -219,6 +219,19 @@ class JobViewAuthdTests(TestCase):
 
 class MiscViewTests(TestCase):
 
+    def test_contact_get_view(self):
+        response = self.client.get(reverse('contact'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_contact_post_view(self):
+        feedback = {
+            'email': 'admin@tramcar.org',
+            'subject': 'Hi there!',
+            'message': 'How are you?'
+        }
+        response = self.client.post(reverse('contact'), feedback)
+        self.assertRedirects(response, reverse('jobs_index'))
+
     def test_register_view(self):
         response = self.client.get(reverse('register'))
         self.assertEqual(response.status_code, 200)
