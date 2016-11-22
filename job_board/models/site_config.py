@@ -21,6 +21,11 @@ class SiteConfig(models.Model):
                    help_text="The protocol to use when building links in "
                              "e-mail templates, etc."
                )
+    google_analytics = models.CharField(
+                           max_length=20,
+                           blank=True,
+                           help_text="Google Analytics Tracking ID"
+                       )
 
     def __str__(self):
         return self.site.name
