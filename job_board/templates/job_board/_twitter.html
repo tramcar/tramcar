@@ -1,3 +1,3 @@
-{% if current_site.siteconfig_set.first.twitter %}
-<a href="https://twitter.com/{{ current_site.siteconfig_set.first.twitter }}" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false" data-size="large">Follow @{{ current_site.siteconfig_set.first.twitter }}</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+{% if current_site.siteconfig_set.first.twitter_user %}
+<a href="https://twitter.com/{{ current_site.siteconfig_set.first.twitter_user }}" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false" data-size="large">Follow @{{ current_site.siteconfig_set.first.twitter_user }}</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 {% endif %}
