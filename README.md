@@ -40,11 +40,12 @@ Email address: admin@tramcar.org
 Password:
 Password (again):
 Superuser created successfully.
-(.venv) $ python manage.py runserver
 ```
 
-The default site has a domain of example.com, this will need to be changed to
-localhost for testing.  From the shell, issue the following command:
+The default site has a domain of `example.com`, this will need to be changed to
+`localhost` for development testing or to whatever live domain you will be
+using in production.  For example, to test Tramcar locally, issue the following
+command:
 
 ```
 (.venv) $ sqlite3 db.sqlite3 "UPDATE django_site SET domain='localhost' WHERE name='example.com';"
@@ -63,6 +64,17 @@ This will save you having to import your own list of countries.  However, be
 aware that any changes made to the `job_board_country` table will be lost if
 you re-run the above.
 
+## Start Tramcar
+
+To run Tramcar in a development environment, you can now start it using the
+light-weight development web server:
+
+(.venv) $ python manage.py runserver
+
+To run Tramcar using Apache2 and mod_wsgi, see the
+[following](https://github.com/wfhio/tramcar/wiki/Production-Deployment-Notes)
+for more information.
+
 ## Final Steps
 
 At this point, Tramcar should be up and running and ready to be used.  Before
@@ -73,6 +85,9 @@ JOB_BOARD and add an appropriate category for the localhost site.
 That's it!  With those steps completed, you can now browse
 <http://localhost:8000> to create a new company, and then post a job with that
 newly created company.
+
+(If deploying with a non-localhost domain, replace `localhost` above with
+the domain you are using)
 
 ## Job Expiration
 
