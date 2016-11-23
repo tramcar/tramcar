@@ -69,7 +69,9 @@ you re-run the above.
 To run Tramcar in a development environment, you can now start it using the
 light-weight development web server:
 
+```
 (.venv) $ python manage.py runserver
+```
 
 To run Tramcar using Apache2 and mod_wsgi, see the
 [following](https://github.com/wfhio/tramcar/wiki/Production-Deployment-Notes)
