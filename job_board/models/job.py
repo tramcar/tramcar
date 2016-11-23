@@ -1,10 +1,13 @@
 from __future__ import unicode_literals
 
+import tweepy
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.conf import settings
 from django.utils import timezone
 
 from job_board.models.category import Category
@@ -97,6 +100,37 @@ class Job(models.Model):
                 return 'Anywhere*'
             else:
                 return 'Anywhere'
+
+    def send_tweet(self):
+        if not settings.DEBUG:
+            sc = self.site.siteconfig_set.first().protocol
+
+            auth = tweepy.OAuthHandler(
+                       sc.twitter_consumer_key,
+                       sc.twitter_consumer_secret
+                   )
+            auth.set_access_token(
+                sc.twitter_access_token,
+                sc.twitter_access_token_secret
+            )
+
+            api = tweepy.API(auth)
+
+            if self.company.twitter:
+                twitter = "@%s" % self.company.twitter
+            else:
+                twitter = self.company.name
+
+            post = "[%s] %s at %s %s://%s/jobs/%s/" % (
+                       self.format_country,
+                       self.title,
+                       twitter,
+                       sc.protocol,
+                       self.site.domain,
+                       id
+                   )
+
+            api.update_status(post)
 
     def __str__(self):
         return self.title
