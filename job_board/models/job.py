@@ -71,6 +71,7 @@ class Job(models.Model):
         if self.paid_at is None:
             self.paid_at = timezone.now()
             self.save()
+            self.send_tweet()
             return True
         else:
             return False
@@ -102,9 +103,10 @@ class Job(models.Model):
                 return 'Anywhere'
 
     def send_tweet(self):
-        if not settings.DEBUG:
-            sc = self.site.siteconfig_set.first().protocol
-
+        sc = self.site.siteconfig_set.first()
+        if (not settings.DEBUG and sc.twitter_consumer_key and
+                sc.twitter_consumer_secret and sc.twitter_access_token and
+                sc.twitter_access_token_secret):
             auth = tweepy.OAuthHandler(
                        sc.twitter_consumer_key,
                        sc.twitter_consumer_secret
@@ -122,12 +124,12 @@ class Job(models.Model):
                 twitter = self.company.name
 
             post = "[%s] %s at %s %s://%s/jobs/%s/" % (
-                       self.format_country,
+                       self.format_country(),
                        self.title,
                        twitter,
                        sc.protocol,
                        self.site.domain,
-                       id
+                       self.id
                    )
 
             api.update_status(post)
