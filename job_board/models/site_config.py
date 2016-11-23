@@ -26,10 +26,16 @@ class SiteConfig(models.Model):
                            blank=True,
                            help_text="Google Analytics Tracking ID"
                        )
-    twitter = models.CharField(
-                  max_length=15,
-                  blank=True
-              )
+    twitter_user = models.CharField(
+                       max_length=15,
+                       blank=True,
+                       help_text="Your site's Twitter username, fill in to "
+                                 "have a Follow icon appear on select pages"
+                   )
+    twitter_consumer_key = models.CharField(max_length=100, blank=True)
+    twitter_consumer_secret = models.CharField(max_length=100, blank=True)
+    twitter_access_token = models.CharField(max_length=100, blank=True)
+    twitter_access_token_secret = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.site.name
