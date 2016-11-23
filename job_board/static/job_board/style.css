@@ -1,3 +1,7 @@
-.panel-body  {
+.panel-body {
   word-break: break-word;
+}
+
+#markdown {
+  font-size: 75%;
 }
