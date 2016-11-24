@@ -1,0 +1,7 @@
+Hi there!
+
+Good news, {{ job.user.name }} posted a new job under {{ job.category.name }}.
+
+Details here:
+
+{{ protocol }}://{{ job.site.domain }}{% url 'jobs_show' job.id %}

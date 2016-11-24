@@ -1,10 +1,12 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.template.loader import render_to_string
 
 from job_board.forms import JobForm, JobRemoteForm
 from job_board.models.category import Category
@@ -48,7 +50,7 @@ def jobs_mine(request):
 def jobs_new(request):
     title = 'Add a Job'
     site = get_current_site(request)
-    protocol = site.siteconfig_set.first().protocol
+    sc = site.siteconfig_set.first()
 
     if request.method == 'POST':
         if site.siteconfig_set.first().remote:
@@ -58,14 +60,27 @@ def jobs_new(request):
 
         if form.is_valid():
             job = form.save(commit=False)
-            if site.siteconfig_set.first().remote:
+            if sc.remote:
                 job.remote = True
             job.site_id = site.id
             job.user_id = request.user.id
             job.save()
+
+            context = {'job': job, 'protocol': sc.protocol}
+            send_mail(
+                '[%s] New job posting' % site.name.upper(),
+                render_to_string(
+                    'job_board/emails/new_job_notification.txt',
+                    context
+                ),
+                sc.admin_email,
+                [sc.admin_email],
+                fail_silently=True,
+            )
+
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
-        if site.siteconfig_set.first().remote:
+        if sc.remote:
             form = JobRemoteForm()
         else:
             form = JobForm()
@@ -80,7 +95,7 @@ def jobs_new(request):
                                           site_id=site.id
                                        )
 
-    context = {'form': form, 'title': title, 'protocol': protocol}
+    context = {'form': form, 'title': title, 'protocol': sc.protocol}
     return render(request, 'job_board/jobs_new.html', context)
 
 
