@@ -5,7 +5,7 @@ Tramcar is a _multi-site_, _self-hosted_ __job board__ built using
 but we welcome your involvement to help us get Tramcar ready for production
 installs.
 
-## Development Installation
+## Installation
 
 First, clone and install dependencies.  This requires python 3.5, pip, and
 virtualenv to already be installed.
