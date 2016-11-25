@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -40,6 +41,11 @@ def companies_new(request):
             company.site_id = site.id
             company.user_id = request.user.id
             company.save()
+
+            messages.success(
+                request,
+                'Your company has been successfully added'
+            )
 
             return HttpResponseRedirect(reverse('companies_show',
                                                 args=(company.id,)))
@@ -86,6 +92,12 @@ def companies_edit(request, company_id):
         form = CompanyForm(request.POST, instance=company)
         if form.is_valid():
             form.save()
+
+            messages.success(
+                request,
+                'Your company has been successfully updated'
+            )
+
             return HttpResponseRedirect(reverse('companies_show',
                                                 args=(company.id,)))
     else:

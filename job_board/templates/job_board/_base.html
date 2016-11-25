@@ -52,6 +52,11 @@
       </div>
     </nav>
     <div class="container">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+      {% endfor %}
+      {% endif %}
       <h1>{{ title|default:current_site.name }}</h1>
       {% block content %}{% endblock %}
       <p class="text-center">

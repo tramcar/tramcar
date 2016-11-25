@@ -1,12 +1,14 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import send_mail
+from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
+
+from utils.misc import send_mail_with_helper
 
 from job_board.forms import JobForm, JobRemoteForm
 from job_board.models.category import Category
@@ -65,18 +67,18 @@ def jobs_new(request):
             job.site_id = site.id
             job.user_id = request.user.id
             job.save()
-
             context = {'job': job, 'protocol': sc.protocol}
-            send_mail(
+            send_mail_with_helper(
                 '[%s] New job posting' % site.name.upper(),
                 render_to_string(
                     'job_board/emails/new_job_notification.txt',
                     context
                 ),
                 sc.admin_email,
-                [sc.admin_email],
-                fail_silently=True,
+                [sc.admin_email]
             )
+
+            messages.success(request, 'Your job has been successfully added')
 
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
@@ -154,6 +156,9 @@ def jobs_edit(request, job_id):
                 job.remote = True
 
             job.save()
+
+            messages.success(request, 'Your job has been successfully updated')
+
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
         if site.siteconfig_set.first().remote:
