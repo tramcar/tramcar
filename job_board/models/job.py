@@ -5,10 +5,11 @@ import tweepy
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.utils import timezone
+
+from utils.misc import send_mail_with_helper
 
 from job_board.models.category import Category
 from job_board.models.company import Company
@@ -82,12 +83,11 @@ class Job(models.Model):
             context = {'job': self, 'protocol': sc.protocol}
             self.expired_at = timezone.now()
             self.save()
-            send_mail(
+            send_mail_with_helper(
                 'Your %s job has expired' % self.site.name,
                 render_to_string('job_board/emails/expired.txt', context),
                 sc.admin_email,
-                [self.email],
-                fail_silently=True,
+                [self.email]
             )
             return True
         else:
