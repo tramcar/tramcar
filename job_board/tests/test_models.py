@@ -16,6 +16,23 @@ from job_board.models.site_config import SiteConfig
 settings.SITE_ID = 1
 
 
+class SiteConfigMethodTests(TestCase):
+    def setUp(self):
+        # Note that we're assigning non-existent values for country,
+        # category, etc.
+        site = Site(domain='tramcar.org', name='Tramcar')
+        site.full_clean()
+        site.save()
+        self.sc = SiteConfig.objects.filter(site=site).first()
+        self.sc.price = 50.25
+        self.sc.full_clean()
+        self.sc.save()
+
+    def test_price_in_cents_returns_correct_value(self):
+        self.assertEqual(self.sc.price_in_cents(), 5025)
+        self.assertIsInstance(self.sc.price_in_cents(), int)
+
+
 class SiteMethodTests(TestCase):
     def setUp(self):
         # Note that we're assigning non-existent values for country,

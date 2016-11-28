@@ -33,6 +33,7 @@ urlpatterns = [
         categories.categories_show,
         name='categories_show'
     ),
+    url(r'^charge$', misc.charge, name='charge'),
     url(r'^companies/$', companies.companies_index, name='companies_index'),
     url(r'^companies/new$', companies.companies_new, name='companies_new'),
     url(

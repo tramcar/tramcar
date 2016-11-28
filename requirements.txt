@@ -1,4 +1,5 @@
 Django==1.10.2
 Markdown==2.6.6
+stripe==1.42.0
 tweepy==3.5.0
 wheel==0.24.0

@@ -219,6 +219,15 @@ class JobViewAuthdTests(TestCase):
 
 class MiscViewTests(TestCase):
 
+    def test_charge_view(self):
+        # This is just testing that the view itself responds, we pass in a
+        # non-existent job and the view will then redirect with a 404
+        response = self.client.post(
+                       reverse('charge'),
+                       {'job_id': 1000}
+                   )
+        self.assertEqual(response.status_code, 404)
+
     def test_contact_get_view(self):
         response = self.client.get(reverse('contact'))
         self.assertEqual(response.status_code, 200)
