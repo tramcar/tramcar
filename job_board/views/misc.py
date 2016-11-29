@@ -2,12 +2,60 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from utils.misc import send_mail_with_helper
 
 from job_board.forms import ContactForm, CssUserCreationForm
+from job_board.models.job import Job
 from job_board.models.site_config import SiteConfig
+
+import stripe
+
+
+def charge(request):
+    if request.method == 'POST':
+        site = get_current_site(request)
+        sc = SiteConfig.objects.filter(site=site).first()
+        stripe.api_key = sc.stripe_secret_key
+        job = get_object_or_404(
+                  Job,
+                  pk=request.POST['job_id'],
+                  site_id=site.id,
+                  user_id=request.user.id
+              )
+
+        token = request.POST['stripeToken']
+
+        try:
+            desc = '%s Job Posting (%s://%s/jobs/%s)' % (
+                       site.name, sc.protocol, site.domain, job.id
+                   )
+            charge = stripe.Charge.create(
+                source=token,
+                amount=sc.price_in_cents(),
+                currency='usd',
+                description=desc,
+                receipt_email=request.user.email
+            )
+        # NOTE: With checkout.js, it seems that all the error handling is
+        #       handled on the front-end, so perhaps we do not need to worry
+        #       about handling this exception.
+        except stripe.error.CardError as e:
+            body = e.json_body
+            err = body['error']
+            messages.error(request, err['message'])
+            return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+        else:
+            if charge['paid']:
+                job.activate()
+                messages.success(
+                    request,
+                    ("Thank you, your payment of $%s has been received and "
+                     "your job is now active" % sc.price)
+                )
+
+        return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
 
 
 def contact(request):

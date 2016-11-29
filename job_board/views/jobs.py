@@ -106,6 +106,7 @@ def jobs_show(request, job_id):
               Job, pk=job_id, site_id=get_current_site(request).id
           )
     site = get_current_site(request)
+    sc = site.siteconfig_set.first()
     # If the browsing user does not own the job, and the job has yet to be paid
     # for, then 404
     if job.user_id != request.user.id and job.paid_at is None:
@@ -121,12 +122,14 @@ def jobs_show(request, job_id):
     job.application_info_md = md.convert(job.application_info)
     job.remote = "Yes" if job.remote else "No"
     title = "%s @ %s" % (job.title, job.company.name)
-    remote = site.siteconfig_set.first().remote
 
     context = {'job': job,
                'post_date': post_date,
                'title': title,
-               'remote': remote}
+               'remote': sc.remote,
+               'stripe_publishable_key': sc.stripe_publishable_key,
+               'price': sc.price,
+               'price_in_cents': sc.price_in_cents()}
     return render(request, 'job_board/jobs_show.html', context)
 
 

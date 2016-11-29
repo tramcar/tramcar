@@ -36,6 +36,19 @@ class SiteConfig(models.Model):
     twitter_consumer_secret = models.CharField(max_length=100, blank=True)
     twitter_access_token = models.CharField(max_length=100, blank=True)
     twitter_access_token_secret = models.CharField(max_length=100, blank=True)
+    stripe_secret_key = models.CharField(max_length=100, blank=True)
+    stripe_publishable_key = models.CharField(max_length=100, blank=True)
+    price = models.DecimalField(
+                max_digits=5,
+                decimal_places=2,
+                default=0,
+                help_text="Price to charge for posting a job, "
+                          "set to 0 to disable charging"
+            )
+
+    def price_in_cents(self):
+        # Stripe expects an integer
+        return int(self.price * 100)
 
     def __str__(self):
         return self.site.name

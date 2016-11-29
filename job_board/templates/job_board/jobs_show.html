@@ -5,7 +5,7 @@
 <hr>
 
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">{{ job.company.name }}</h3>
@@ -52,7 +52,35 @@
     </div>
     {% endif %}
   </div>
-  <div class="col-md-8">
+  <div class="col-md-9">
+    {% if not job.paid_at and price > 0 %}
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Payment is required for this job to become visible</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{% url 'charge' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name='job_id' value='{{ job.id }}'>
+          <article>
+            <label>
+              <span>Price is ${{ price }}</span>
+            </label>
+          </article>
+
+          <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                  data-key="{{ stripe_publishable_key }}"
+                  data-description="{{ job.site.name }} Job Payment"
+                  data-amount="{{ price_in_cents }}"
+                  data-locale="auto"
+                  data-zip-code="true"
+                  data-billing-address="true"
+                  data-email="{{ request.user.email }}"
+                  data-allow-remember-me="false"></script>
+        </form>
+      </div>
+    </div>
+    {% endif %}
     {% if job.paid_at and job.expired_at %}
     <div class="alert alert-info alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
