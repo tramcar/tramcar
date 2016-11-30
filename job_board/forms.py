@@ -4,6 +4,7 @@ from django import forms
 
 from job_board.models.company import Company
 from job_board.models.job import Job
+from job_board.models.site_config import SiteConfig
 
 
 class ContactForm(forms.Form):
@@ -97,6 +98,34 @@ class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = ['name', 'url', 'country', 'twitter', 'site']
+
+
+class SiteConfigForm(forms.ModelForm):
+    class Meta:
+        model = SiteConfig
+        widgets = {
+            'stripe_secret_key': forms.PasswordInput(
+                                     render_value=True,
+                                     attrs={'class': 'vTextField'}
+                                 ),
+            'twitter_consumer_key': forms.PasswordInput(
+                                     render_value=True,
+                                     attrs={'class': 'vTextField'}
+                                 ),
+            'twitter_consumer_secret': forms.PasswordInput(
+                                           render_value=True,
+                                           attrs={'class': 'vTextField'}
+                                       ),
+            'twitter_access_token': forms.PasswordInput(
+                                        render_value=True,
+                                        attrs={'class': 'vTextField'}
+                                    ),
+            'twitter_access_token_secret': forms.PasswordInput(
+                                               render_value=True,
+                                               attrs={'class': 'vTextField'}
+                                           ),
+        }
+        fields = ('__all__')
 
 
 class CssAuthenticationForm(AuthenticationForm):
