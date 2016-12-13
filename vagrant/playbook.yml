@@ -1,0 +1,38 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - raw: sudo apt-get install -y python
+
+- hosts: all
+  user: root
+  tasks:
+    - apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - tmux
+        - sqlite3
+        - python3
+        - python3-dev
+        - python-virtualenv
+        - mysql-server
+        - libmysqlclient-dev
+        - apache2
+        - libapache2-mod-wsgi-py3
+      become: yes
+    - git:
+        repo: https://github.com/wfhio/tramcar
+        dest: ~/tramcar
+    - pip:
+        requirements: ~/tramcar/requirements.txt
+        virtualenv: ~/tramcar/.venv
+        virtualenv_python: python3
+    - shell: |
+        . .venv/bin/activate
+        sed -i "s/SECRET_KEY = ''/SECRET_KEY = 'vagrant'/" tramcar/settings.py
+        python manage.py migrate
+        sqlite3 db.sqlite3 "UPDATE django_site SET domain='localhost' WHERE name='example.com';"
+        tmux new -d -s tramcar python manage.py runserver 0.0.0.0:8080
+      args:
+        chdir: ~/tramcar
