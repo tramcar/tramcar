@@ -2,4 +2,5 @@
 exclude =
     .venv,
     job_board/migrations,
-    tramcar/settings.py
+    tramcar/settings.py,
+    vagrant/settings.py

@@ -11,28 +11,65 @@
         name: "{{ item }}"
         state: present
       with_items:
-        - tmux
-        - sqlite3
+        - build-essential
         - python3
         - python3-dev
         - python-virtualenv
+        - python-mysqldb    # This is for the mysql ansible modules
         - mysql-server
         - libmysqlclient-dev
         - apache2
         - libapache2-mod-wsgi-py3
       become: yes
+    - stat:
+        path: ~/tramcar
+      register: tramcar_checkout
+    - debug: var=tramcar_checkout
     - git:
         repo: https://github.com/wfhio/tramcar
         dest: ~/tramcar
+      when: not tramcar_checkout.stat.exists
     - pip:
         requirements: ~/tramcar/requirements.txt
         virtualenv: ~/tramcar/.venv
         virtualenv_python: python3
+    - mysql_db:
+        name: tramcar
+      become: yes
+    - mysql_user:
+        name: tramcar
+        password: vagrant
+        priv: 'tramcar.*:ALL'
+      become: yes
+    - file:
+        path: /var/www/html
+        owner: ubuntu
+        group: ubuntu
+        state: directory
+      become: yes
+    - copy:
+        src: settings.py
+        dest: ~/tramcar/tramcar/settings.py
     - shell: |
         . .venv/bin/activate
-        sed -i "s/SECRET_KEY = ''/SECRET_KEY = 'vagrant'/" tramcar/settings.py
+        pip install mysqlclient
         python manage.py migrate
-        sqlite3 db.sqlite3 "UPDATE django_site SET domain='localhost' WHERE name='example.com';"
-        tmux new -d -s tramcar python manage.py runserver 0.0.0.0:8080
+        python manage.py loaddata countries.json
+        python manage.py collectstatic --noinput
       args:
         chdir: ~/tramcar
+    - command: |
+        mysql tramcar -e "UPDATE django_site SET domain='localhost' WHERE name='example.com'"
+      become: yes
+    - copy:
+        src: 000-default.conf
+        dest: /etc/apache2/sites-available/000-default.conf
+      notify:
+        - restart Apache2
+      become: yes
+  handlers:
+    - name: restart Apache2
+      service:
+        name: apache2
+        state: restarted
+      become: yes
