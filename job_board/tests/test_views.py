@@ -121,7 +121,7 @@ class CompanyAuthdViewTests(TestCase):
                        reverse('companies_show', args=(self.company1.id,))
                    )
         url = reverse('companies_edit', args=(self.company1.id,))
-        edit = '<a class="btn btn-primary btn-sm" ' \
+        edit = '<a class="btn btn-default btn-sm" ' \
                'href="%s">Edit Company</a>' % url
         self.assertContains(response, edit)
 

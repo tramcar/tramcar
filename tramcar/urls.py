@@ -26,7 +26,10 @@ urlpatterns = [
     url(
         r'^login/$',
         auth_views.login,
-        {'authentication_form': CssAuthenticationForm},
+        {
+            'authentication_form': CssAuthenticationForm,
+            'extra_context': {'title': 'Login'}
+        },
         name='login'
     ),
     url(r'^logout/$', auth_views.logout, name='logout'),

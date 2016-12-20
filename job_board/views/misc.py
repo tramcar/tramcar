@@ -105,6 +105,8 @@ def register(request):
             return HttpResponseRedirect(reverse('jobs_index'))
     else:
         form = CssUserCreationForm()
+
+    title = 'Register'
     return render(request, "registration/register.html", {
-        'form': form,
+        'form': form, 'title': title
     })

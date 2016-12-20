@@ -1,11 +1,24 @@
 {% extends "job_board/_base.html" %}
 
 {% block content %}
-{% include "job_board/_errors.html" %}
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    {% include "job_board/_header.html" %}
+  </div>
+  <div class="col-md-4"></div>
+</div>
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    {% include "job_board/_errors.html" %}
 
-<form action="{% url 'companies_edit' company.id %}" method="post">
-  {% csrf_token %}
-  {% include "job_board/_form_fields.html" %}
-  <input type="submit" class="btn btn-default" value="Submit" />
-</form>
+    <form action="{% url 'companies_edit' company.id %}" method="post">
+      {% csrf_token %}
+      {% include "job_board/_form_fields.html" %}
+      <input type="submit" class="btn btn-success" value="Update" />
+    </form>
+  </div>
+  <div class="col-md-4"></div>
+</div>
 {% endblock %}
