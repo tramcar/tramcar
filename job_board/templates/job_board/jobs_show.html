@@ -21,7 +21,7 @@
         <a href="{% url 'companies_show' job.company.id %}" title="View all of company's jobs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
       </div>
     </div>
-    {% if user.id == job.user_id or user.is_staff %}
+    {% if user.id == job.user.id or user.is_staff %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Job Admin</h3>
@@ -123,7 +123,7 @@
         <p>
           <a href="{% url 'categories_show' job.category.id %}"><span class="label label-primary">{{ job.category.name }}</span></a>
         </p>
-        {% if user.id == job.user_id or user.is_staff %}
+        {% if user.id == job.user.id or user.is_staff %}
         <h4><mark>E-mail</mark></h4>
         <p>{{ job.email }}</p>
         {% endif %}
