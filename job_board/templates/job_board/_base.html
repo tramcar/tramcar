@@ -36,8 +36,8 @@
             <li role="presentation"><a href="{% url 'contact' %}">Contact Us</a></li>
             {% if user.is_authenticated %}
             <li role="presentation"><a href="{% url 'companies_new' %}">Add Company</a></li>
-            <li role="presentation"><a href="{% url 'jobs_new' %}">Post Job</a></li>
             {% endif %}
+            <li role="presentation"><a href="{% url 'jobs_new' %}">Post Job</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
@@ -52,12 +52,6 @@
       </div>
     </nav>
     <div class="container">
-      {% if messages %}
-      {% for message in messages %}
-      <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
-      {% endfor %}
-      {% endif %}
-      <h1>{{ title|default:current_site.name }}</h1>
       {% block content %}{% endblock %}
       <p class="text-center">
         <small><a href="https://github.com/wfhio/tramcar">Powered by Tramcar</a></small>

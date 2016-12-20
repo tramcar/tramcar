@@ -1,16 +1,35 @@
 {% extends "job_board/_base.html" %}
 
-{% block header %}Login{% endblock %}
-
 {% block content %}
-{% include "job_board/_errors.html" %}
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    {% include "job_board/_header.html" %}
+  </div>
+  <div class="col-md-4"></div>
+</div>
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    {% include "job_board/_errors.html" %}
 
-<form method="post" action="{% url 'login' %}">
-  {% csrf_token %}
-  {% include "job_board/_form_fields.html" %}
-  <button type="submit" class="btn btn-default">Login</button>
-  <input type="hidden" name="next" value="{{ next }}" />
-</form>
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      {% include "job_board/_form_fields.html" %}
+      <button type="submit" class="btn btn-success">Login</button>
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+    <br />
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+        New to {{ current_site.name }}? <a href="{% url 'register' %}">Register here</a>.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4"></div>
+</div>
 
 {# Assumes you setup the password_reset view in your URLconf #}
 {# <p><a href="{% url 'password_reset' %}">Lost password?</a></p> #}

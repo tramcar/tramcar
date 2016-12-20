@@ -1,6 +1,7 @@
 {% extends "job_board/_base.html" %}
 
 {% block content %}
+{% include "job_board/_header.html" %}
 {% include "job_board/_twitter.html" %}
 <hr>
 
@@ -25,7 +26,7 @@
         <p><a href="https://twitter.com/{{ company.twitter }}">{{ company.twitter }}</a></p>
         {% endif %}
         {% if company.id == user.id or user.is_staff %}
-        <a class="btn btn-primary btn-sm" href="{% url 'companies_edit' company.id %}">Edit Company</a>
+        <a class="btn btn-default btn-sm" href="{% url 'companies_edit' company.id %}">Edit Company</a>
         {% endif %}
       </div>
     </div>
