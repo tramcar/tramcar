@@ -11,6 +11,8 @@ installs.
 * Allow free or paid job postings, with paid postings using Stripe Checkout for payment processing
 * Automatically tweet job details when a post is activated
 * Automatically expire jobs after an admin-defined period
+* E-mail notifications alert the admin when a post is made and the job owner when their job has expired
+* Job posts support Markdown for creating rich text descriptions and application information
 
 ## Installation
 
