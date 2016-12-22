@@ -116,4 +116,4 @@ scheduled with cron so that jobs are expired in a consistent manner.
 
 ## Support
 
-Found a bug or need help with installation?  Please feel free to create an [issue](https://github.com/wfhio/tramcar/issues/new) or drop into [Slack](http://tramcar.slack.com/) and we will assist when we are online.
+Found a bug or need help with installation?  Please feel free to create an [issue](https://github.com/wfhio/tramcar/issues/new) or drop into [Slack](http://tramcar.slack.com/) and we will assist as soon as possible.
