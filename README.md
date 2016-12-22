@@ -113,3 +113,7 @@ solution is to run this instead:
 The above will scan through all jobs across all sites and expire out any jobs
 older than the site's `expire_after` value.  Ideally, the above should be
 scheduled with cron so that jobs are expired in a consistent manner.
+
+## Support
+
+Found a bug or need help with installation?  Please feel free to create an [issue](https://github.com/wfhio/tramcar/issues/new) or drop into [Slack](http://tramcar.slack.com/) and we will assist when we are online.
