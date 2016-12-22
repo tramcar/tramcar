@@ -5,6 +5,13 @@ Tramcar is a _multi-site_, _self-hosted_ __job board__ built using
 but we welcome your involvement to help us get Tramcar ready for production
 installs.
 
+## Features
+
+* Host multiple job boards on the same instance using Django's "sites" framework
+* Allow free or paid job postings, with paid postings using Stripe Checkout for payment processing
+* Automatically tweet job details when a post is activated
+* Automatically expire jobs after an admin-defined period
+
 ## Installation
 
 First, clone and install dependencies.  This requires python 3.5, pip, and
