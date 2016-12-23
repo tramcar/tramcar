@@ -14,6 +14,11 @@ from job_board.models.job import Job
 def companies_index(request):
     companies_list = Company.objects \
                             .filter(site_id=get_current_site(request).id)
+
+    for c in companies_list:
+        if len(c.paid_jobs()) == 0:
+            companies_list = companies_list.exclude(id=c.id)
+
     paginator = Paginator(companies_list, 25)
     page = request.GET.get('page')
     title = 'Companies'
