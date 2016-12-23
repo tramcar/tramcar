@@ -47,6 +47,16 @@
             <li role="presentation"><a href="{% url 'register' %}">Register</a></li>
             <li role="presentation"><a href="{% url 'login' %}?next={% url 'jobs_index' %}">Login</a></li>
             {% endif %}
+            {% if current_site.siteconfig_set.first.twitter_user %}
+            <li role="presentation" id="twitter-button">
+                <a href="https://twitter.com/{{ current_site.siteconfig_set.first.twitter_user }}"
+                   class="twitter-follow-button"
+                   data-show-count="false"
+                   data-show-screen-name="false"
+                   data-size="small">Follow @{{ current_site.siteconfig_set.first.twitter_user }}</a>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+           </li>
+           {% endif %}
           </ul>
         </div>
       </div>
