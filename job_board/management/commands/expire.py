@@ -12,8 +12,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for site in Site.objects.all():
-            sc = site.siteconfig_set.first()
-            days_ago = timezone.now() - timedelta(days=sc.expire_after)
+            td = timedelta(days=site.siteconfig.expire_after)
+            days_ago = timezone.now() - td
             jobs = Job.objects.filter(site=site) \
                               .filter(paid_at__lt=days_ago) \
                               .filter(expired_at__isnull=True)
