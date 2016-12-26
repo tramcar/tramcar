@@ -52,37 +52,36 @@ def jobs_mine(request):
 def jobs_new(request):
     title = 'Add a Job'
     site = get_current_site(request)
-    sc = site.siteconfig_set.first()
 
     if request.method == 'POST':
-        if site.siteconfig_set.first().remote:
+        if site.siteconfig.remote:
             form = JobRemoteForm(request.POST)
         else:
             form = JobForm(request.POST)
 
         if form.is_valid():
             job = form.save(commit=False)
-            if sc.remote:
+            if site.siteconfig.remote:
                 job.remote = True
             job.site_id = site.id
             job.user_id = request.user.id
             job.save()
-            context = {'job': job, 'protocol': sc.protocol}
+            context = {'job': job, 'protocol': site.siteconfig.protocol}
             send_mail_with_helper(
                 '[%s] New job posting' % site.name.upper(),
                 render_to_string(
                     'job_board/emails/new_job_notification.txt',
                     context
                 ),
-                sc.admin_email,
-                [sc.admin_email]
+                site.siteconfig.admin_email,
+                [site.siteconfig.admin_email]
             )
 
             messages.success(request, 'Your job has been successfully added')
 
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
-        if sc.remote:
+        if site.siteconfig.remote:
             form = JobRemoteForm()
         else:
             form = JobForm()
@@ -97,7 +96,9 @@ def jobs_new(request):
                                           site_id=site.id
                                        )
 
-    context = {'form': form, 'title': title, 'protocol': sc.protocol}
+    context = {'form': form,
+               'title': title,
+               'protocol': site.siteconfig.protocol}
     return render(request, 'job_board/jobs_new.html', context)
 
 
@@ -106,7 +107,6 @@ def jobs_show(request, job_id):
               Job, pk=job_id, site_id=get_current_site(request).id
           )
     site = get_current_site(request)
-    sc = site.siteconfig_set.first()
     # If the browsing user does not own the job, and the job has yet to be paid
     # for, then 404
     if job.user_id != request.user.id and job.paid_at is None:
@@ -122,21 +122,22 @@ def jobs_show(request, job_id):
     job.application_info_md = md.convert(job.application_info)
     job.remote = "Yes" if job.remote else "No"
     title = "%s @ %s" % (job.title, job.company.name)
+    stripe_key = site.siteconfig.stripe_publishable_key
 
     context = {'job': job,
                'post_date': post_date,
                'title': title,
-               'remote': sc.remote,
-               'stripe_publishable_key': sc.stripe_publishable_key,
-               'price': sc.price,
-               'price_in_cents': sc.price_in_cents()}
+               'remote': site.siteconfig.remote,
+               'stripe_publishable_key': stripe_key,
+               'price': site.siteconfig.price,
+               'price_in_cents': site.siteconfig.price_in_cents()}
     return render(request, 'job_board/jobs_show.html', context)
 
 
 @login_required(login_url='/login/')
 def jobs_edit(request, job_id):
     site = get_current_site(request)
-    protocol = site.siteconfig_set.first().protocol
+    protocol = site.siteconfig.protocol
     job = get_object_or_404(
               Job, pk=job_id, site_id=site.id
           )
@@ -146,7 +147,7 @@ def jobs_edit(request, job_id):
         return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
 
     if request.method == 'POST':
-        if site.siteconfig_set.first().remote:
+        if site.siteconfig.remote:
             form = JobRemoteForm(request.POST, instance=job)
         else:
             form = JobForm(request.POST, instance=job)
@@ -155,7 +156,7 @@ def jobs_edit(request, job_id):
             job = form.save(commit=False)
             job.site_id = site.id
             job.user_id = request.user.id
-            if site.siteconfig_set.first().remote:
+            if site.siteconfig.remote:
                 job.remote = True
 
             job.save()
@@ -164,7 +165,7 @@ def jobs_edit(request, job_id):
 
             return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
     else:
-        if site.siteconfig_set.first().remote:
+        if site.siteconfig.remote:
             form = JobRemoteForm(instance=job)
         else:
             form = JobForm(instance=job)

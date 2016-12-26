@@ -79,14 +79,13 @@ class Job(models.Model):
 
     def expire(self):
         if self.paid_at is not None and self.expired_at is None:
-            sc = self.site.siteconfig_set.first()
-            context = {'job': self, 'protocol': sc.protocol}
+            context = {'job': self, 'protocol': self.site.siteconfig.protocol}
             self.expired_at = timezone.now()
             self.save()
             send_mail_with_helper(
                 'Your %s job has expired' % self.site.name,
                 render_to_string('job_board/emails/expired.txt', context),
-                sc.admin_email,
+                self.site.siteconfig.admin_email,
                 [self.email]
             )
             return True
@@ -103,7 +102,7 @@ class Job(models.Model):
                 return 'Anywhere'
 
     def send_tweet(self):
-        sc = self.site.siteconfig_set.first()
+        sc = self.site.siteconfig
         if (not settings.DEBUG and sc.twitter_consumer_key and
                 sc.twitter_consumer_secret and sc.twitter_access_token and
                 sc.twitter_access_token_secret):

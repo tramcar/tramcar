@@ -11,14 +11,14 @@
     <link rel="stylesheet" type="text/css" href="{% static 'job_board/style.css' %}" />
   </head>
   <body>
-    {% if current_site.siteconfig_set.first.google_analytics %}
+    {% if current_site.siteconfig.google_analytics %}
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      ga('create', '{{ current_site.siteconfig_set.first.google_analytics }}', 'auto');
+      ga('create', '{{ current_site.siteconfig.google_analytics }}', 'auto');
       ga('send', 'pageview');
 
     </script>
@@ -47,13 +47,13 @@
             <li role="presentation"><a href="{% url 'register' %}">Register</a></li>
             <li role="presentation"><a href="{% url 'login' %}?next={% url 'jobs_index' %}">Login</a></li>
             {% endif %}
-            {% if current_site.siteconfig_set.first.twitter_user %}
+            {% if current_site.siteconfig.twitter_user %}
             <li role="presentation" id="twitter-button">
-                <a href="https://twitter.com/{{ current_site.siteconfig_set.first.twitter_user }}"
+                <a href="https://twitter.com/{{ current_site.siteconfig.twitter_user }}"
                    class="twitter-follow-button"
                    data-show-count="false"
                    data-show-screen-name="false"
-                   data-size="small">Follow @{{ current_site.siteconfig_set.first.twitter_user }}</a>
+                   data-size="small">Follow @{{ current_site.siteconfig.twitter_user }}</a>
                 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
            </li>
            {% endif %}
