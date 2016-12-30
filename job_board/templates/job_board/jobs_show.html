@@ -28,16 +28,16 @@
       <div class="panel-body">
         {% if user.is_staff %}
         <h4><mark>Posted By</mark></h4>
-        <p>{{ user.username }} (UID: {{ user.id }})</p>
+        <p>{{ job.user.username }} (UID: {{ job.user.id }})</p>
         {% endif %}
         <h4><mark>Status</mark></h4>
         <p>
           {% if not job.paid_at and not job.expired_at %}
-          <span class="label label-warning %>">Unpaid</span>
+          <span class="label label-warning">Unpaid</span>
           {% elif job.paid_at and not job.expired_at %}
-          <span class="label label-success %>">Paid</span>
+          <span class="label label-success">Paid</span>
           {% elif job.paid_at and job.expired_at %}
-          <span class="label label-warning %>">Expired</span>
+          <span class="label label-warning">Expired</span>
           {% endif %}
         </p>
         <div class="btn-group btn-group-sm button-group-margin">
