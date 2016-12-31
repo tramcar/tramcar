@@ -109,11 +109,12 @@ def jobs_show(request, job_id):
     site = get_current_site(request)
     # If the browsing user does not own the job, and the job has yet to be paid
     # for, then 404
-    if job.user_id != request.user.id and job.paid_at is None:
+    if (job.user.id != request.user.id and not request.user.is_staff and
+            job.paid_at is None):
         raise Http404("No Job matches the given query.")
     # If the browsing user owns the job, and the job is unpaid for, display the
     # job's created_at date instead of paid_at
-    if job.user_id == request.user.id and job.paid_at is None:
+    if job.user.id == request.user.id and job.paid_at is None:
         post_date = job.created_at
     else:
         post_date = job.paid_at
