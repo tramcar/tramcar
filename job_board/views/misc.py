@@ -1,16 +1,18 @@
+import requests.exceptions
+import stripe
+
+from mailchimp3 import MailChimp
+
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 
-from utils.misc import send_mail_with_helper
-
-from job_board.forms import ContactForm, CssUserCreationForm
+from job_board.forms import ContactForm, CssUserCreationForm, SubscribeForm
 from job_board.models.job import Job
 from job_board.models.site_config import SiteConfig
-
-import stripe
+from utils.misc import send_mail_with_helper
 
 
 def charge(request):
@@ -110,3 +112,57 @@ def register(request):
     return render(request, "registration/register.html", {
         'form': form, 'title': title
     })
+
+
+def subscribe(request):
+    site = get_current_site(request)
+    if (request.method == 'POST' and site.siteconfig.mailchimp_username and
+            site.siteconfig.mailchimp_api_key and
+            site.siteconfig.mailchimp_list_id):
+        form = SubscribeForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            client = MailChimp(
+                         site.siteconfig.mailchimp_username,
+                         site.siteconfig.mailchimp_api_key
+                     )
+
+            try:
+                client.lists.members.get(
+                    site.siteconfig.mailchimp_list_id,
+                    cd['email']
+                )
+            except requests.exceptions.HTTPError as e:
+                if e.response.status_code == 404:
+                    client.lists.members.create(
+                        site.siteconfig.mailchimp_list_id,
+                        {
+                            'email_address': cd['email'],
+                            'status': 'pending',
+                            'merge_fields': {
+                                'FNAME': cd['fname']
+                            },
+                        }
+                    )
+                    messages.success(
+                        request,
+                        'Thanks, you have been subscribed to our list!'
+                    )
+                else:
+                    messages.failure(
+                        request,
+                        'Something went wrong, please try again'
+                    )
+            else:
+                messages.warning(
+                    request,
+                    'Looks like this address is already subscribed to '
+                    'our list!'
+                )
+        else:
+            messages.warning(
+                request,
+                'There was a problem with the form, please try again'
+            )
+
+    return HttpResponseRedirect(reverse('jobs_index'))

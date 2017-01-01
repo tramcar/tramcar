@@ -1,0 +1,20 @@
+{% if current_site.siteconfig.mailchimp_username and current_site.siteconfig.mailchimp_api_key and current_site.siteconfig.mailchimp_list_id %}
+<div class="panel panel-default">
+  <div class="panel-body" id="centered">
+    <form action="{% url 'subscribe' %}"
+          method="post"
+          class="form-inline">
+      {% csrf_token %}
+      <div class="form-group">
+        <strong>Join our mailing list</strong>
+      </div>
+      {% for field in form %}
+      <div class="form-group">
+        {{ field }}
+      </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-success">Subscribe</button>
+    </form>
+  </div>
+</div>
+{% endif %}
