@@ -6,6 +6,10 @@
   font-size: 75%;
 }
 
+#centered {
+  text-align: center;
+}
+
 #twitter-button {
   margin-top:15px;
   margin-left:10px;

@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 
 from utils.misc import send_mail_with_helper
 
-from job_board.forms import JobForm, JobRemoteForm
+from job_board.forms import JobForm, JobRemoteForm, SubscribeForm
 from job_board.models.category import Category
 from job_board.models.company import Company
 from job_board.models.job import Job
@@ -24,7 +24,8 @@ def jobs_index(request):
                       .filter(expired_at__isnull=True) \
                       .order_by('-paid_at')[:10]
     title = 'Latest Jobs'
-    context = {'jobs': jobs, 'title': title}
+    form = SubscribeForm()
+    context = {'form': form, 'jobs': jobs, 'title': title}
     return render(request, 'job_board/jobs_index.html', context)
 
 

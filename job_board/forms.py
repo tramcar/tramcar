@@ -124,8 +124,24 @@ class SiteConfigForm(forms.ModelForm):
                                                render_value=True,
                                                attrs={'class': 'vTextField'}
                                            ),
+            'mailchimp_api_key': forms.PasswordInput(
+                                     render_value=True,
+                                     attrs={'class': 'vTextField'}
+                                 ),
         }
         fields = ('__all__')
+
+
+class SubscribeForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(SubscribeForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['placeholder'] = 'E-mail address*'
+        self.fields['fname'].widget.attrs['class'] = 'form-control'
+        self.fields['fname'].widget.attrs['placeholder'] = 'First name*'
+
+    email = forms.EmailField()
+    fname = forms.CharField(max_length=20)
 
 
 class CssAuthenticationForm(AuthenticationForm):

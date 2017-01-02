@@ -47,4 +47,5 @@ urlpatterns = [
         name='companies_edit'
     ),
     url(r'^register$', misc.register, name='register'),
+    url(r'^subscribe$', misc.subscribe, name='subscribe'),
 ]

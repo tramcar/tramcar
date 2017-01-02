@@ -45,6 +45,9 @@ class SiteConfig(models.Model):
                 help_text="Price to charge for posting a job, "
                           "set to 0 to disable charging"
             )
+    mailchimp_username = models.CharField(max_length=20, blank=True)
+    mailchimp_api_key = models.CharField(max_length=50, blank=True)
+    mailchimp_list_id = models.CharField(max_length=20, blank=True)
 
     def price_in_cents(self):
         # Stripe expects an integer
