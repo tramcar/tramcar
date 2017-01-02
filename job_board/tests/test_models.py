@@ -6,7 +6,6 @@ from django.test import TestCase
 from job_board.models.category import Category
 from job_board.models.company import Company
 from job_board.models.job import Job
-from job_board.models.site_config import SiteConfig
 
 # NOTE: This seems counter-intuitive as we do not set a SITE_ID in settings.py,
 #       however if we do not do this then the tests fail since the requests
@@ -20,17 +19,16 @@ class SiteConfigMethodTests(TestCase):
     def setUp(self):
         # Note that we're assigning non-existent values for country,
         # category, etc.
-        site = Site(domain='tramcar.org', name='Tramcar')
-        site.full_clean()
-        site.save()
-        self.sc = SiteConfig.objects.filter(site=site).first()
-        self.sc.price = 50.25
-        self.sc.full_clean()
-        self.sc.save()
+        self.site = Site(domain='tramcar.org', name='Tramcar')
+        self.site.full_clean()
+        self.site.save()
+        self.site.siteconfig.price = 50.25
+        self.site.siteconfig.full_clean()
+        self.site.siteconfig.save()
 
     def test_price_in_cents_returns_correct_value(self):
-        self.assertEqual(self.sc.price_in_cents(), 5025)
-        self.assertIsInstance(self.sc.price_in_cents(), int)
+        self.assertEqual(self.site.siteconfig.price_in_cents(), 5025)
+        self.assertIsInstance(self.site.siteconfig.price_in_cents(), int)
 
 
 class SiteMethodTests(TestCase):
@@ -45,14 +43,12 @@ class SiteMethodTests(TestCase):
         site = Site.objects.get(name='Tramcar')
         # NOTE: We use .first() here so we get None when there is no match,
         #       rather than an exception being raised.
-        sc = SiteConfig.objects.filter(site=site).first()
-        self.assertIsNotNone(sc)
+        self.assertIsNotNone(site.siteconfig)
 
     def test_site_config_has_correct_defaults(self):
         site = Site.objects.get(name='Tramcar')
-        sc = SiteConfig.objects.filter(site=site).first()
-        self.assertEqual(sc.expire_after, 30)
-        self.assertEqual(sc.admin_email, 'admin@tramcar.org')
+        self.assertEqual(site.siteconfig.expire_after, 30)
+        self.assertEqual(site.siteconfig.admin_email, 'admin@tramcar.org')
 
 
 class CompanyMethodTests(TestCase):
