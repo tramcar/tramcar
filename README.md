@@ -114,6 +114,19 @@ The above will scan through all jobs across all sites and expire out any jobs
 older than the site's `expire_after` value.  Ideally, the above should be
 scheduled with cron so that jobs are expired in a consistent manner.
 
+## Mailshot Automation
+
+If a site has `mailchimp_username`, `mailchimp_api_key`, and `mailchimp_list_id`
+set, run the following to create and send a Mailchimp campaign containing a list
+of all jobs posted in the last 7 days:
+
+```
+(.venv) $ python manage.py send_mailshot
+```
+
+Again, cron the above to run once a week so that these campaigns are built and
+sent automatically.
+
 ## Support
 
 Found a bug or need help with installation?  Please feel free to create an [issue](https://github.com/wfhio/tramcar/issues/new) or drop into [Slack](http://tramcar.slack.com/) and we will assist as soon as possible.

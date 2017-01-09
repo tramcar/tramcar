@@ -1,0 +1,33 @@
+Hi *|FNAME|*,
+
+Here's *ALL* jobs posted to {{ site.name }} in the last 7 days.
+
+{% for category, j in jobs.items %}
+{{ category|upper }}
+----
+{% for job in j %}
+{{ job.title }} @ {{ job.company.name }} [{{ job.format_country }}]
+{{ site.siteconfig.protocol }}://{{ job.site.domain }}{% url 'jobs_show' job.id %}
+{% endfor %}
+{% endfor %}
+
+As always, please give us a shout if you have any questions or suggestions.
+
+Thanks!
+
+The {{ site.name }} Team
+
+==============================================
+*|LIST:DESCRIPTION|*
+
+Unsubscribe *|EMAIL|* from this list:
+*|UNSUB|*
+
+Our mailing address is:
+*|LIST:ADDRESS|*
+
+Forward this email to a friend:
+*|FORWARD|*
+
+Update your profile:
+*|UPDATE_PROFILE|*
