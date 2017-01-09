@@ -13,6 +13,7 @@ installs.
 * Automatically expire jobs after an admin-defined period
 * E-mail notifications alert the admin when a post is made and the job owner when their job has expired
 * Job posts support Markdown for creating rich text descriptions and application information
+* Send weekly Mailchimp e-mail containing list of jobs posted in last 7 days
 
 ## Installation
 
