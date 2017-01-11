@@ -1,4 +1,4 @@
-Django==1.10.2
+Django==1.10.5
 Markdown==2.6.6
 mailchimp3==2.0.3
 stripe==1.42.0
