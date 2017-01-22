@@ -15,7 +15,7 @@
   </thead>
   {% for company in companies %}
   <tr>
-    <td><a href="{% url 'companies_show' company.id %}">{{ company.name }}</a></td>
+    <td><a href="{% url 'companies_show_slug' company.id company.slug %}">{{ company.name }}</a></td>
     <td class="hidden-xs hidden-sm"><a href="{{ company.url }}">{{ company.url }}</a></td>
     <td class="hidden-xs hidden-sm"><a href="https://www.twitter.com/{{ company.twitter }}">{{ company.twitter }}</a></td>
     <td>{{ company.paid_jobs.count }}</td>

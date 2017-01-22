@@ -52,8 +52,12 @@ def companies_new(request):
                 'Your company has been successfully added'
             )
 
-            return HttpResponseRedirect(reverse('companies_show',
-                                                args=(company.id,)))
+            return HttpResponseRedirect(
+                       reverse(
+                           'companies_show_slug',
+                           args=(company.id, company.slug(),)
+                       )
+                   )
     else:
         # NOTE: site will be displayed in the HTML form as a hidden field, we
         #       need to find a way to set this in CompanyForm so validation
@@ -64,7 +68,7 @@ def companies_new(request):
     return render(request, 'job_board/companies_new.html', context)
 
 
-def companies_show(request, company_id):
+def companies_show(request, company_id, slug=None):
     company = get_object_or_404(
                   Company,
                   pk=company_id,
@@ -90,8 +94,12 @@ def companies_edit(request, company_id):
     title = 'Edit a Company'
 
     if request.user.id != company.user.id:
-        return HttpResponseRedirect(reverse('companies_show',
-                                            args=(company.id,)))
+        return HttpResponseRedirect(
+                   reverse(
+                       'companies_show_slug',
+                       args=(company.id, company.slug(),)
+                   )
+               )
 
     if request.method == 'POST':
         form = CompanyForm(request.POST, instance=company)
@@ -103,8 +111,12 @@ def companies_edit(request, company_id):
                 'Your company has been successfully updated'
             )
 
-            return HttpResponseRedirect(reverse('companies_show',
-                                                args=(company.id,)))
+            return HttpResponseRedirect(
+                       reverse(
+                           'companies_show_slug',
+                           args=(company.id, company.slug(),)
+                       )
+                   )
     else:
         form = CompanyForm(instance=company)
 

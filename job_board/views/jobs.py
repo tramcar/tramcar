@@ -80,7 +80,12 @@ def jobs_new(request):
 
             messages.success(request, 'Your job has been successfully added')
 
-            return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+            return HttpResponseRedirect(
+                       reverse(
+                           'jobs_show_slug',
+                           args=(job.id, job.slug(),)
+                       )
+                   )
     else:
         if site.siteconfig.remote:
             form = JobRemoteForm()
@@ -103,7 +108,7 @@ def jobs_new(request):
     return render(request, 'job_board/jobs_new.html', context)
 
 
-def jobs_show(request, job_id):
+def jobs_show(request, job_id, slug=None):
     job = get_object_or_404(
               Job, pk=job_id, site_id=get_current_site(request).id
           )
@@ -146,7 +151,12 @@ def jobs_edit(request, job_id):
     title = 'Edit a Job'
 
     if request.user.id != job.user.id:
-        return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+        return HttpResponseRedirect(
+                   reverse(
+                       'jobs_show_slug',
+                       args=(job.id, job.slug(),)
+                   )
+               )
 
     if request.method == 'POST':
         if site.siteconfig.remote:
@@ -165,7 +175,12 @@ def jobs_edit(request, job_id):
 
             messages.success(request, 'Your job has been successfully updated')
 
-            return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+            return HttpResponseRedirect(
+                       reverse(
+                           'jobs_show_slug',
+                           args=(job.id, job.slug(),)
+                       )
+                   )
     else:
         if site.siteconfig.remote:
             form = JobRemoteForm(instance=job)
@@ -190,7 +205,12 @@ def jobs_activate(request, job_id):
               Job, pk=job_id, site_id=get_current_site(request).id
           )
     job.activate()
-    return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+    return HttpResponseRedirect(
+               reverse(
+                   'jobs_show_slug',
+                   args=(job.id, job.slug(),)
+               )
+           )
 
 
 @login_required(login_url='/login/')
@@ -200,7 +220,17 @@ def jobs_expire(request, job_id):
           )
 
     if request.user.id != job.user.id:
-        return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+        return HttpResponseRedirect(
+                   reverse(
+                       'jobs_show_slug',
+                       args=(job.id, job.slug(),)
+                   )
+               )
 
     job.expire()
-    return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+    return HttpResponseRedirect(
+               reverse(
+                   'jobs_show_slug',
+                   args=(job.id, job.slug(),)
+               )
+           )

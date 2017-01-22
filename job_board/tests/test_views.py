@@ -383,7 +383,8 @@ class JobViewAuthdTests(TestCase):
                        reverse('jobs_expire', args=(self.job1.id,))
                    )
         self.assertRedirects(
-            response, reverse('jobs_show', args=(self.job1.id,))
+            response,
+            reverse('jobs_show_slug', args=(self.job1.id, self.job1.slug()))
         )
 
     def test_edit_get_view(self):
@@ -403,10 +404,15 @@ class JobViewAuthdTests(TestCase):
             'city': 'Guelph'
         }
         response = self.client.post(
-                       reverse('jobs_edit', args=(self.job1.id,)), job
+                       reverse('jobs_edit', args=(self.job1.id,)),
+                       job
                    )
+        # Here we refresh the object otherwise it will show the old content
+        # from before the update
+        self.job1.refresh_from_db()
         self.assertRedirects(
-            response, reverse('jobs_show', args=(self.job1.id,))
+            response,
+            reverse('jobs_show_slug', args=(self.job1.id, self.job1.slug()))
         )
 
 
@@ -457,11 +463,15 @@ class JobViewAdminTests(TestCase):
                         reverse('jobs_activate', args=(self.job.id,))
                     )
         self.assertRedirects(
-            response1, reverse('jobs_show', args=(self.job.id,))
+            response1,
+            reverse('jobs_show_slug', args=(self.job.id, self.job.slug()))
         )
 
         response2 = self.client.get(
-                        reverse('jobs_show', args=(self.job.id,))
+                        reverse(
+                            'jobs_show_slug',
+                            args=(self.job.id, self.job.slug())
+                        )
                     )
         self.assertContains(
             response2,
