@@ -35,8 +35,8 @@ set a unique value for `SECRET_KEY` in `tramcar/settings.py`.  If you have `pwge
 installed, simply do this:
 
 ```
-$ PWD=$(pwgen -s 50 1)
-$ sed -i.bak "s/^SECRET_KEY = ''$/SECRET_KEY = '$PWD'/g" tramcar/settings.py
+$ RANDOM_PWD=$(pwgen -s 50 1)
+$ sed -i.bak "s/^SECRET_KEY = ''$/SECRET_KEY = '$RANDOM_PWD'/g" tramcar/settings.py
 ```
 
 Now, apply database migrations, create an admin user, and start the
