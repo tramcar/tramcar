@@ -1,6 +1,7 @@
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import get_object_or_404, render
 
+from job_board.forms import SubscribeForm
 from job_board.models.category import Category
 from job_board.models.job import Job
 
@@ -29,5 +30,6 @@ def categories_show(request, category_id):
                       .filter(paid_at__isnull=False) \
                       .filter(expired_at__isnull=True) \
                       .order_by('-paid_at')
-    context = {'jobs': jobs, 'title': '%s Jobs' % category.name}
+    form = SubscribeForm()
+    context = {'form': form, 'jobs': jobs, 'title': '%s Jobs' % category.name}
     return render(request, 'job_board/jobs_index.html', context)
