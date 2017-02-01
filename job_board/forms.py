@@ -27,7 +27,9 @@ class JobForm(forms.ModelForm):
         self.fields['company'].widget.attrs['class'] = 'form-control'
         self.fields['title'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['class'] = 'form-control'
+        self.fields['description'].widget.attrs['rows'] = 15
         self.fields['application_info'].widget.attrs['class'] = 'form-control'
+        self.fields['application_info'].widget.attrs['rows'] = 5
         self.fields['country'].widget.attrs['class'] = 'form-control'
         self.fields['city'].widget.attrs['class'] = 'form-control'
         self.fields['state'].widget.attrs['class'] = 'form-control'
