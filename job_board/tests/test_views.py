@@ -19,17 +19,25 @@ settings.SITE_ID = 1
 
 class CategoryViewTests(TestCase):
     def setUp(self):
-        category = Category(name='Software Development', site_id=1)
-        category.full_clean()
-        category.save()
+        self.category = Category(name='Software Development', site_id=1)
+        self.category.full_clean()
+        self.category.save()
 
     def test_index_view(self):
         response = self.client.get(reverse('categories_index'))
         self.assertEqual(response.status_code, 200)
 
     def test_show_view(self):
-        response = self.client.get(reverse('categories_show', args=(1,)))
+        response = self.client.get(self.category.get_absolute_url())
         self.assertEqual(response.status_code, 200)
+
+    def test_show_view_without_slug_redirects_to_slug(self):
+        response = self.client.get(
+                       reverse('categories_show', args=(self.category.id,))
+                   )
+        self.assertRedirects(
+            response, self.category.get_absolute_url(), status_code=301
+        )
 
 
 class CompanyUnauthdViewTests(TestCase):
