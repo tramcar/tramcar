@@ -52,15 +52,17 @@ class CompanyUnauthdViewTests(TestCase):
         self.assertRedirects(response, '/login/?next=/companies/new')
 
     def test_show_view(self):
-        response = self.client.get(
-                       reverse('companies_show', args=(self.company.id,))
-                   )
+        response = self.client.get(self.company.get_absolute_url())
         self.assertEqual(response.status_code, 200)
 
-    def test_show_view_does_not_display_edit_link(self):
+    def test_show_view_without_slug_redirects_to_slug(self):
         response = self.client.get(
                        reverse('companies_show', args=(self.company.id,))
                    )
+        self.assertRedirects(response, self.company.get_absolute_url(), status_code=301)
+
+    def test_show_view_does_not_display_edit_link(self):
+        response = self.client.get(self.company.get_absolute_url())
         url = reverse('companies_edit', args=(self.company.id,))
         edit = '<a class="btn btn-primary btn-sm" ' \
                'href="%s">Edit Company</a>' % url
@@ -111,24 +113,18 @@ class CompanyAuthdViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_show_view(self):
-        response = self.client.get(
-                       reverse('companies_show', args=(self.company1.id,))
-                   )
+        response = self.client.get(self.company1.get_absolute_url())
         self.assertEqual(response.status_code, 200)
 
     def test_show_view_on_own_company_shows_edit_link(self):
-        response = self.client.get(
-                       reverse('companies_show', args=(self.company1.id,))
-                   )
+        response = self.client.get(self.company1.get_absolute_url())
         url = reverse('companies_edit', args=(self.company1.id,))
         edit = '<a class="btn btn-default btn-sm" ' \
                'href="%s">Edit Company</a>' % url
         self.assertContains(response, edit)
 
     def test_show_view_on_other_company_does_not_show_edit_link(self):
-        response = self.client.get(
-                       reverse('companies_show', args=(self.company2.id,))
-                   )
+        response = self.client.get(self.company2.get_absolute_url())
         url = reverse('companies_edit', args=(self.company2.id,))
         edit = '<a class="btn btn-primary btn-sm" ' \
                'href="%s">Edit Company</a>' % url
@@ -178,15 +174,21 @@ class JobViewUnauthdTests(TestCase):
         self.assertRedirects(response, '/login/?next=/jobs/mine/')
 
     def test_show_view(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job.id,)))
+        response = self.client.get(self.job.get_absolute_url())
         self.assertEqual(response.status_code, 200)
 
+    def test_show_view_without_slug_redirects_to_slug(self):
+        response = self.client.get(
+                       reverse('jobs_show', args=(self.job.id,))
+                   )
+        self.assertRedirects(response, self.job.get_absolute_url(), status_code=301)
+
     def test_show_view_does_not_show_job_admin(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job.id,)))
+        response = self.client.get(self.job.get_absolute_url())
         self.assertNotContains(response, 'Job Admin')
 
     def test_show_view_does_not_show_owner_email_address(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job.id,)))
+        response = self.client.get(self.job.get_absolute_url())
         self.assertNotContains(response, self.job.email)
 
     def test_activate_view(self):
@@ -315,59 +317,59 @@ class JobViewAuthdTests(TestCase):
         self.assertNotContains(response, self.job2.title)
 
     def test_show_view_on_own_paid_job(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job1.id,)))
+        response = self.client.get(self.job1.get_absolute_url())
         self.assertEqual(response.status_code, 200)
 
     def test_show_view_on_own_unpaid_job(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job4.id,)))
+        response = self.client.get(self.job4.get_absolute_url())
         self.assertEqual(response.status_code, 200)
 
     def test_show_view_on_own_unpaid_job_shows_unpaid_status(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job4.id,)))
+        response = self.client.get(self.job4.get_absolute_url())
         self.assertContains(
             response,
             '<span class="label label-warning">Unpaid</span>'
         )
 
     def test_show_view_on_other_users_paid_job(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job2.id,)))
+        response = self.client.get(self.job2.get_absolute_url())
         self.assertEqual(response.status_code, 200)
 
     def test_show_view_on_other_users_unpaid_job(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job3.id,)))
+        response = self.client.get(self.job3.get_absolute_url())
         self.assertEqual(response.status_code, 404)
 
     def test_show_view_on_own_job_shows_job_admin(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job1.id,)))
+        response = self.client.get(self.job1.get_absolute_url())
         self.assertContains(response, 'Job Admin')
 
     def test_show_view_on_own_job_does_not_show_posted_by(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job1.id,)))
+        response = self.client.get(self.job1.get_absolute_url())
         posted_by = '<h4><mark>Posted By</mark></h4>'
         self.assertNotContains(response, posted_by)
 
     def test_show_view_on_own_job_shows_expire_button(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job1.id,)))
+        response = self.client.get(self.job1.get_absolute_url())
         url = reverse('jobs_expire', args=(self.job1.id,))
         expire = '<a href="%s" class="btn btn-default">Expire</a>' % url
         self.assertContains(response, expire)
 
     def test_show_view_on_own_job_does_not_show_admin_activate_button(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job1.id,)))
+        response = self.client.get(self.job1.get_absolute_url())
         url = reverse('jobs_activate', args=(self.job1.id,))
         activate = '<a href="%s" class="btn btn-default">Activate</a>' % url
         self.assertNotContains(response, activate)
 
     def test_show_view_on_own_job_shows_email_address(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job1.id,)))
+        response = self.client.get(self.job1.get_absolute_url())
         self.assertContains(response, self.job1.email)
 
     def test_show_view_on_other_job_does_not_show_job_admin(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job2.id,)))
+        response = self.client.get(self.job2.get_absolute_url())
         self.assertNotContains(response, 'Job Admin')
 
     def test_show_view_on_other_job_does_not_show_email_address(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job2.id,)))
+        response = self.client.get(self.job2.get_absolute_url())
         self.assertNotContains(response, self.job2.email)
 
     def test_activate_view(self):
@@ -382,10 +384,7 @@ class JobViewAuthdTests(TestCase):
         response = self.client.get(
                        reverse('jobs_expire', args=(self.job1.id,))
                    )
-        self.assertRedirects(
-            response,
-            reverse('jobs_show_slug', args=(self.job1.id, self.job1.slug()))
-        )
+        self.assertRedirects(response, self.job1.get_absolute_url())
 
     def test_edit_get_view(self):
         response = self.client.get(reverse('jobs_edit', args=(self.job1.id,)))
@@ -410,10 +409,7 @@ class JobViewAuthdTests(TestCase):
         # Here we refresh the object otherwise it will show the old content
         # from before the update
         self.job1.refresh_from_db()
-        self.assertRedirects(
-            response,
-            reverse('jobs_show_slug', args=(self.job1.id, self.job1.slug()))
-        )
+        self.assertRedirects(response, self.job1.get_absolute_url())
 
 
 class JobViewAdminTests(TestCase):
@@ -462,17 +458,9 @@ class JobViewAdminTests(TestCase):
         response1 = self.client.get(
                         reverse('jobs_activate', args=(self.job.id,))
                     )
-        self.assertRedirects(
-            response1,
-            reverse('jobs_show_slug', args=(self.job.id, self.job.slug()))
-        )
+        self.assertRedirects(response1, self.job.get_absolute_url())
 
-        response2 = self.client.get(
-                        reverse(
-                            'jobs_show_slug',
-                            args=(self.job.id, self.job.slug())
-                        )
-                    )
+        response2 = self.client.get(self.job.get_absolute_url())
         self.assertContains(
             response2,
             '<span class="label label-success">Paid</span>'
@@ -485,7 +473,7 @@ class JobViewAdminTests(TestCase):
         )
 
     def test_show_view_shows_posted_by(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job.id,)))
+        response = self.client.get(self.job.get_absolute_url())
         header = '<h4><mark>Posted By</mark></h4>'
         posted_by = '<p>%s (UID: %s)</p>' % (self.other.username,
                                              self.other.id)
@@ -493,15 +481,15 @@ class JobViewAdminTests(TestCase):
         self.assertContains(response, posted_by)
 
     def test_show_view_on_other_users_unpaid_job(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job.id,)))
+        response = self.client.get(self.job.get_absolute_url())
         self.assertEqual(response.status_code, 200)
 
     def test_show_view_on_other_users_job_shows_email_address(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job.id,)))
+        response = self.client.get(self.job.get_absolute_url())
         self.assertContains(response, self.job.email)
 
     def test_show_view_on_other_users_job_shows_admin_activate_button(self):
-        response = self.client.get(reverse('jobs_show', args=(self.job.id,)))
+        response = self.client.get(self.job.get_absolute_url())
         url = reverse('jobs_activate', args=(self.job.id,))
         activate = '<a href="%s" class="btn btn-default">Activate</a>' % url
         self.assertContains(response, activate)
