@@ -59,7 +59,9 @@ class CompanyUnauthdViewTests(TestCase):
         response = self.client.get(
                        reverse('companies_show', args=(self.company.id,))
                    )
-        self.assertRedirects(response, self.company.get_absolute_url(), status_code=301)
+        self.assertRedirects(
+            response, self.company.get_absolute_url(), status_code=301
+        )
 
     def test_show_view_does_not_display_edit_link(self):
         response = self.client.get(self.company.get_absolute_url())
@@ -181,7 +183,9 @@ class JobViewUnauthdTests(TestCase):
         response = self.client.get(
                        reverse('jobs_show', args=(self.job.id,))
                    )
-        self.assertRedirects(response, self.job.get_absolute_url(), status_code=301)
+        self.assertRedirects(
+            response, self.job.get_absolute_url(), status_code=301
+        )
 
     def test_show_view_does_not_show_job_admin(self):
         response = self.client.get(self.job.get_absolute_url())
