@@ -5,9 +5,11 @@ import tweepy
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.utils import timezone
+from django.utils.text import slugify
 
 from utils.misc import send_mail_with_helper
 
@@ -132,6 +134,12 @@ class Job(models.Model):
                    )
 
             api.update_status(post)
+
+    def slug(self):
+        return slugify('%s-%s' % (self.title, self.company.name))
+
+    def get_absolute_url(self):
+        return reverse('jobs_show_slug', args=(self.id, self.slug(),))
 
     def __str__(self):
         return self.title

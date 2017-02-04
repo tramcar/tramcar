@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.urlresolvers import reverse
-from django.http import Http404, HttpResponseRedirect
+from django.http import (Http404, HttpResponseRedirect,
+                         HttpResponsePermanentRedirect)
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 
@@ -80,7 +80,7 @@ def jobs_new(request):
 
             messages.success(request, 'Your job has been successfully added')
 
-            return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+            return HttpResponseRedirect(job.get_absolute_url())
     else:
         if site.siteconfig.remote:
             form = JobRemoteForm()
@@ -103,10 +103,14 @@ def jobs_new(request):
     return render(request, 'job_board/jobs_new.html', context)
 
 
-def jobs_show(request, job_id):
+def jobs_show(request, job_id, slug=None):
     job = get_object_or_404(
               Job, pk=job_id, site_id=get_current_site(request).id
           )
+
+    if slug is None:
+        return HttpResponsePermanentRedirect(job.get_absolute_url())
+
     site = get_current_site(request)
     # If the browsing user does not own the job, and the job has yet to be paid
     # for, then 404
@@ -146,7 +150,7 @@ def jobs_edit(request, job_id):
     title = 'Edit a Job'
 
     if request.user.id != job.user.id:
-        return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+        return HttpResponseRedirect(job.get_absolute_url())
 
     if request.method == 'POST':
         if site.siteconfig.remote:
@@ -165,7 +169,7 @@ def jobs_edit(request, job_id):
 
             messages.success(request, 'Your job has been successfully updated')
 
-            return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+            return HttpResponseRedirect(job.get_absolute_url())
     else:
         if site.siteconfig.remote:
             form = JobRemoteForm(instance=job)
@@ -190,7 +194,7 @@ def jobs_activate(request, job_id):
               Job, pk=job_id, site_id=get_current_site(request).id
           )
     job.activate()
-    return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+    return HttpResponseRedirect(job.get_absolute_url())
 
 
 @login_required(login_url='/login/')
@@ -200,7 +204,7 @@ def jobs_expire(request, job_id):
           )
 
     if request.user.id != job.user.id:
-        return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+        return HttpResponseRedirect(job.get_absolute_url())
 
     job.expire()
-    return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+    return HttpResponseRedirect(job.get_absolute_url())

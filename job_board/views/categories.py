@@ -1,4 +1,5 @@
 from django.contrib.sites.shortcuts import get_current_site
+from django.http import HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404, render
 
 from job_board.forms import SubscribeForm
@@ -18,12 +19,15 @@ def categories_index(request):
     return render(request, 'job_board/categories_index.html', context)
 
 
-def categories_show(request, category_id):
+def categories_show(request, category_id, slug=None):
     category = get_object_or_404(
                    Category,
                    pk=category_id,
                    site_id=get_current_site(request).id
     )
+
+    if slug is None:
+        return HttpResponsePermanentRedirect(category.get_absolute_url())
 
     jobs = Job.objects.filter(site_id=get_current_site(request).id) \
                       .filter(category_id=category_id) \

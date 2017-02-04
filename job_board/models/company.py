@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
+from django.utils.text import slugify
 
 from job_board.models.country import Country
 
@@ -39,3 +41,9 @@ class Company(models.Model):
 
     def paid_jobs(self):
         return self.job_set.filter(paid_at__isnull=False)
+
+    def slug(self):
+        return slugify(self.name)
+
+    def get_absolute_url(self):
+        return reverse('companies_show_slug', args=(self.id, self.slug(),))

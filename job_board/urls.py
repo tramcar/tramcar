@@ -13,6 +13,11 @@ urlpatterns = [
     url(r'^jobs/mine/$', jobs.jobs_mine, name='jobs_mine'),
     url(r'^jobs/(?P<job_id>[0-9]+)/$', jobs.jobs_show, name='jobs_show'),
     url(
+        r'^jobs/(?P<job_id>[0-9]+)-(?P<slug>[-\w\d]+)/$',
+        jobs.jobs_show,
+        name='jobs_show_slug'
+    ),
+    url(
         r'^jobs/(?P<job_id>[0-9]+)/activate$',
         jobs.jobs_activate,
         name='jobs_activate'
@@ -33,6 +38,11 @@ urlpatterns = [
         categories.categories_show,
         name='categories_show'
     ),
+    url(
+        r'^categories/(?P<category_id>[0-9]+)-(?P<slug>[-\w\d]+)/$',
+        categories.categories_show,
+        name='categories_show_slug'
+    ),
     url(r'^charge$', misc.charge, name='charge'),
     url(r'^companies/$', companies.companies_index, name='companies_index'),
     url(r'^companies/new$', companies.companies_new, name='companies_new'),
@@ -40,6 +50,11 @@ urlpatterns = [
         r'^companies/(?P<company_id>[0-9]+)/$',
         companies.companies_show,
         name='companies_show'
+    ),
+    url(
+        r'^companies/(?P<company_id>[0-9]+)-(?P<slug>[-\w\d]+)/$',
+        companies.companies_show,
+        name='companies_show_slug'
     ),
     url(
         r'^companies/(?P<company_id>[0-9]+)/edit$',
