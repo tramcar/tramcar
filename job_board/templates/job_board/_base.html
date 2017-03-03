@@ -34,9 +34,6 @@
             <li role="presentation"><a href="{% url 'categories_index' %}">Categories</a></li>
             <li role="presentation"><a href="{% url 'companies_index' %}">Companies</a></li>
             <li role="presentation"><a href="{% url 'contact' %}">Contact Us</a></li>
-            {% if user.is_authenticated %}
-            <li role="presentation"><a href="{% url 'companies_new' %}">Add Company</a></li>
-            {% endif %}
             <li role="presentation"><a href="{% url 'jobs_new' %}">Post Job</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">

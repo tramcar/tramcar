@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 
 from utils.misc import send_mail_with_helper
 
-from job_board.forms import JobForm, JobRemoteForm, SubscribeForm
+from job_board.forms import CompanyForm, JobForm, JobRemoteForm, SubscribeForm
 from job_board.models.category import Category
 from job_board.models.company import Company
 from job_board.models.job import Job
@@ -60,6 +60,8 @@ def jobs_new(request):
         else:
             form = JobForm(request.POST)
 
+        company_form = CompanyForm(initial={'site': site})
+
         if form.is_valid():
             job = form.save(commit=False)
             if site.siteconfig.remote:
@@ -87,6 +89,8 @@ def jobs_new(request):
         else:
             form = JobForm()
 
+        company_form = CompanyForm(initial={'site': site})
+
     # NOTE: By default, the company and category dropdowns will contain all
     #       instances across all sites, and the following limits this to
     #       the site in question.
@@ -98,6 +102,7 @@ def jobs_new(request):
                                        )
 
     context = {'form': form,
+               'company_form': company_form,
                'title': title,
                'protocol': site.siteconfig.protocol}
     return render(request, 'job_board/jobs_new.html', context)

@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
+from django.http import (HttpResponseRedirect, HttpResponsePermanentRedirect,
+                         JsonResponse)
 from django.shortcuts import get_object_or_404, render
 
 from job_board.forms import CompanyForm
@@ -46,12 +47,23 @@ def companies_new(request):
             company.user_id = request.user.id
             company.save()
 
-            messages.success(
-                request,
-                'Your company has been successfully added'
-            )
+            if request.is_ajax():
+                return JsonResponse({'id': company.id, 'name': company.name})
+            else:
+                messages.success(
+                    request,
+                    'Your company has been successfully added'
+                )
+                return HttpResponseRedirect(company.get_absolute_url())
 
-            return HttpResponseRedirect(company.get_absolute_url())
+        else:
+            if request.is_ajax():
+                return render(
+                    request,
+                    'job_board/_errors.html',
+                    {'form': form},
+                    status=400
+                )
     else:
         # NOTE: site will be displayed in the HTML form as a hidden field, we
         #       need to find a way to set this in CompanyForm so validation

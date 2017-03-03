@@ -2,14 +2,47 @@
 
 {% block content %}
 {% include "job_board/_header.html" %}
-{% include "job_board/_errors.html" %}
-
 <div class="row">
   <div class="col-md-4">
     {% include "job_board/_markdown.html" %}
   </div>
   <div class="col-md-8">
-    <form action="{% url 'jobs_new' %}" method="post">
+    <div id="error-messages">
+    {% include "job_board/_errors.html" %}
+    </div>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Add a new company
+          </a>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            <form action="{% url 'companies_new' %}" method="post" id="add-company">
+              {% csrf_token %}
+              {% for field in company_form %}
+              {% if field.is_hidden %}
+              {{ field }}
+              {% else %}
+              <div class="form-group {% if field.errors %}has-error{% endif %}">
+                {# We generate the label manually here as it's not clear how to set class the label_tag #}
+                <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
+                {{ field }}
+                <div class="help-block">
+                  {% if field.help_text %}<p>{{ field.help_text|safe }}</p>{% endif %}
+                  {{ field.errors }}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+              <input type="submit" class="btn btn-success" value="Add Company" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form action="" method="post">
       {% csrf_token %}
       {% for field in form %}
       {% if field.is_hidden %}
@@ -26,7 +59,7 @@
       </div>
       {% endif %}
       {% endfor %}
-      <input type="submit" class="btn btn-success" value="Post" />
+      <input type="submit" class="btn btn-success" value="Post Job" />
     </form>
   </div>
 </div>
@@ -35,6 +68,28 @@
 {% block javascript %}
 <script>
   $( document ).ready(function() {
+    $('#add-company').on('submit', function(e){
+        // http://stackoverflow.com/questions/20195483/jquery-ajax-form-submits-twice
+        e.preventDefault();
+        $.ajax({
+            url : "{% url 'companies_new' %}", // the endpoint
+            type : "POST", // http method
+            data : $(this).serialize(), // data sent with the post request
+
+            // handle a successful response
+            success : function(json) {
+                $('#accordion').hide();
+                $('#error-messages').hide();
+                $('#id_company').append('<option value="' + json.id + '">' + json.name + '</option>"').val(json.id);
+            },
+
+            // handle a non-successful response
+            error : function(xhr,errmsg,err) {
+                $(xhr.responseText).appendTo("#error-messages");
+            }
+        });
+    });
+
     if ($( "#id_remote" ).is( ":checked" )) {
       $( "#togglecity" ).hide();
       $( "#togglestate" ).hide();
