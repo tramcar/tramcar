@@ -103,7 +103,7 @@ def companies_edit(request, company_id):
               )
     title = 'Edit a Company'
 
-    if request.user.id != company.user.id:
+    if (request.user.id != company.user.id) and not request.user.is_staff:
         return HttpResponseRedirect(company.get_absolute_url())
 
     if request.method == 'POST':
