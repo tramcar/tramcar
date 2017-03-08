@@ -122,9 +122,9 @@ def jobs_show(request, job_id, slug=None):
     if (job.user.id != request.user.id and not request.user.is_staff and
             job.paid_at is None):
         raise Http404("No Job matches the given query.")
-    # If the browsing user owns the job, and the job is unpaid for, display the
-    # job's created_at date instead of paid_at
-    if job.user.id == request.user.id and job.paid_at is None:
+    # If someone views an unpaid job (job owner or admin), display the job's
+    # created_at date instead of paid_at
+    if job.paid_at is None:
         post_date = job.created_at
     else:
         post_date = job.paid_at
@@ -154,7 +154,7 @@ def jobs_edit(request, job_id):
           )
     title = 'Edit a Job'
 
-    if request.user.id != job.user.id:
+    if (request.user.id != job.user.id) and not request.user.is_staff:
         return HttpResponseRedirect(job.get_absolute_url())
 
     if request.method == 'POST':
