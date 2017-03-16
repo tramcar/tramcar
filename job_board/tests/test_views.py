@@ -147,6 +147,53 @@ class CompanyAuthdViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+class CompanyAdminViewTests(TestCase):
+    def setUp(self):
+        password = 'password'
+        owner = User(username='owner')
+        owner.set_password(password)
+        owner.full_clean()
+        owner.save()
+
+        admin = User(username='admin')
+        admin.is_staff = True
+        admin.set_password(password)
+        admin.full_clean()
+        admin.save()
+
+        self.company = Company(name='Tramcar', url='http://www.tramcar.org',
+                               site_id=1, user_id=owner.id)
+        self.company.full_clean()
+        self.company.save()
+
+        self.client.post(
+          '/login/',
+          {'username': admin.username, 'password': password}
+        )
+
+    def test_edit_get_view(self):
+        response = self.client.get(
+                       reverse('companies_edit', args=(self.company.id,))
+                   )
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_post_view(self):
+        company = {
+            'name': 'Tramcar',
+            'url': 'https://www.tramcar.org',
+            'site': 1,
+            'user': 1
+        }
+        response = self.client.post(
+                       reverse('companies_edit', args=(self.company.id,)),
+                       company
+                   )
+        # Here we refresh the object otherwise it will show the old content
+        # from before the update
+        self.company.refresh_from_db()
+        self.assertRedirects(response, self.company.get_absolute_url())
+
+
 class JobViewUnauthdTests(TestCase):
 
     def setUp(self):
@@ -483,6 +530,31 @@ class JobViewAdminTests(TestCase):
             response2,
             expire
         )
+
+    def test_edit_get_view(self):
+        response = self.client.get(reverse('jobs_edit', args=(self.job.id,)))
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_post_view(self):
+        job = {
+            'title': 'Software Engineer',
+            'description': 'testing',
+            'application_info': 'testing',
+            'email': 'admin@tramcar.org',
+            'category': 1,
+            'company': 1,
+            'country': 1,
+            'state': 'Ontario',
+            'city': 'Guelph'
+        }
+        response = self.client.post(
+                       reverse('jobs_edit', args=(self.job.id,)),
+                       job
+                   )
+        # Here we refresh the object otherwise it will show the old content
+        # from before the update
+        self.job.refresh_from_db()
+        self.assertRedirects(response, self.job.get_absolute_url())
 
     def test_show_view_shows_posted_by(self):
         response = self.client.get(self.job.get_absolute_url())
