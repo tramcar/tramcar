@@ -130,4 +130,4 @@ sent automatically.
 
 ## Support
 
-Found a bug or need help with installation?  Please feel free to create an [issue](https://github.com/wfhio/tramcar/issues/new) or drop into [Slack](http://tramcar.slack.com/) and we will assist as soon as possible.
+Found a bug or need help with installation?  Please feel free to create an [issue](https://github.com/wfhio/tramcar/issues/new) or drop into [Slack](http://tramcar.now.sh/) and we will assist as soon as possible.
