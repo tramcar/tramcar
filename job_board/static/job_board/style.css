@@ -16,4 +16,8 @@
   margin-right:10px;
 }
 
+#payment-form {
+  display: inline;
+}
+
 body { padding-top: 70px; }

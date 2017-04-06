@@ -7,6 +7,7 @@ from job_board.models.category import Category
 from job_board.models.company import Company
 from job_board.models.country import Country
 from job_board.models.job import Job
+from job_board.models.user_token import UserToken
 
 
 # NOTE: This seems counter-intuitive as we do not set a SITE_ID in settings.py,
@@ -581,14 +582,13 @@ class JobViewAdminTests(TestCase):
 
 class MiscViewTests(TestCase):
 
-    def test_charge_view(self):
-        # This is just testing that the view itself responds, we pass in a
-        # non-existent job and the view will then redirect with a 404
-        response = self.client.post(
-                       reverse('charge'),
-                       {'job_id': 1000}
-                   )
-        self.assertEqual(response.status_code, 404)
+    def test_charge_card_get_view(self):
+        response = self.client.get(reverse('charge_card'))
+        self.assertRedirects(response, '/login/?next=/charge_card')
+
+    def test_charge_token_get_view(self):
+        response = self.client.get(reverse('charge_token'))
+        self.assertRedirects(response, '/login/?next=/charge_token')
 
     def test_contact_get_view(self):
         response = self.client.get(reverse('contact'))
@@ -606,3 +606,52 @@ class MiscViewTests(TestCase):
     def test_register_view(self):
         response = self.client.get(reverse('register'))
         self.assertEqual(response.status_code, 200)
+
+
+class MiscAuthdViewTests(TestCase):
+
+    def setUp(self):
+        password = 'password'
+        user = User(username='owner')
+        user.set_password(password)
+        user.full_clean()
+        user.save()
+        ut = UserToken(user=user, tokens=1)
+        ut.full_clean()
+        ut.save()
+        company = Company(name='Tramcar', url='http://www.tramcar.org',
+                          site_id=1, user_id=user.id)
+        company.full_clean()
+        company.save()
+        category = Category(name='Software Development', site_id=1)
+        category.full_clean()
+        category.save()
+        self.job = Job(title='Software Developer',
+                       description='Test description',
+                       application_info='test', category_id=category.id,
+                       company_id=company.id, site_id=1, user_id=user.id,
+                       city='Toronto', state='Ontario',
+                       email='admin@tramcar.org')
+        self.job.full_clean()
+        self.job.save()
+
+        self.client.post(
+          '/login/',
+          {'username': user.username, 'password': password}
+        )
+
+    def test_charge_token_post_view(self):
+        # We add follow=True here so we can follow the redirection and check
+        # content of page without having to request it again
+        response = self.client.post(
+                       reverse('charge_token'),
+                       {'job_id': self.job.id},
+                       follow=True
+                   )
+        self.assertRedirects(
+            response, self.job.get_absolute_url(), 302
+        )
+        self.assertContains(
+            response,
+            '<span class="label label-success">Paid</span>'
+        )
