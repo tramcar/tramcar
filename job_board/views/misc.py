@@ -5,6 +5,7 @@ from mailchimp3 import MailChimp
 
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -14,7 +15,8 @@ from job_board.models.job import Job
 from utils.misc import send_mail_with_helper
 
 
-def charge(request):
+@login_required(login_url='/login/')
+def charge_card(request):
     if request.method == 'POST':
         site = get_current_site(request)
         stripe.api_key = site.siteconfig.stripe_secret_key
@@ -45,7 +47,7 @@ def charge(request):
             body = e.json_body
             err = body['error']
             messages.error(request, err['message'])
-            return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+            return HttpResponseRedirect(job.get_absolute_url())
         else:
             if charge['paid']:
                 job.activate()
@@ -55,7 +57,40 @@ def charge(request):
                      "your job is now active" % site.siteconfig.price)
                 )
 
-        return HttpResponseRedirect(reverse('jobs_show', args=(job.id,)))
+        return HttpResponseRedirect(job.get_absolute_url())
+
+
+@login_required(login_url='/login/')
+def charge_token(request):
+    if request.method == 'POST':
+        user = request.user
+        site = get_current_site(request)
+        job = get_object_or_404(
+                  Job,
+                  pk=request.POST['job_id'],
+                  site_id=site.id,
+                  user_id=request.user.id
+              )
+
+        if (user.id != job.user.id):
+            return HttpResponseRedirect(job.get_absolute_url())
+
+        if not hasattr(user, 'usertoken') or user.usertoken.tokens == 0:
+            messages.error(
+                request,
+                "We were unable to find an available token, please get in "
+                "touch so we can investigate"
+            )
+            return HttpResponseRedirect(job.get_absolute_url())
+
+        job.activate()
+        user.usertoken.deduct()
+        messages.success(
+            request,
+            "Thank you, your token has been used and your job is now active"
+        )
+
+        return HttpResponseRedirect(job.get_absolute_url())
 
 
 def contact(request):
@@ -146,7 +181,7 @@ def subscribe(request):
                         'Thanks, you have been subscribed to our list!'
                     )
                 else:
-                    messages.failure(
+                    messages.error(
                         request,
                         'Something went wrong, please try again'
                     )

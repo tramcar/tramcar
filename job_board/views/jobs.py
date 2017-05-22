@@ -53,6 +53,7 @@ def jobs_mine(request):
 def jobs_new(request):
     title = 'Add a Job'
     site = get_current_site(request)
+    msg = 'Your job has been successfully added'
 
     if request.method == 'POST':
         if site.siteconfig.remote:
@@ -80,7 +81,11 @@ def jobs_new(request):
                 [site.siteconfig.admin_email]
             )
 
-            messages.success(request, 'Your job has been successfully added')
+            if site.siteconfig.price == 0:
+                msg += ', however it does require verification ' \
+                       'before being activated'
+
+            messages.success(request, msg)
 
             return HttpResponseRedirect(job.get_absolute_url())
     else:
@@ -135,13 +140,19 @@ def jobs_show(request, job_id, slug=None):
     title = "%s @ %s" % (job.title, job.company.name)
     stripe_key = site.siteconfig.stripe_publishable_key
 
+    tokens = 0
+    if hasattr(job.user, 'usertoken'):
+        if job.user.usertoken.tokens > 0:
+            tokens = job.user.usertoken.tokens
+
     context = {'job': job,
                'post_date': post_date,
                'title': title,
                'remote': site.siteconfig.remote,
                'stripe_publishable_key': stripe_key,
                'price': site.siteconfig.price,
-               'price_in_cents': site.siteconfig.price_in_cents()}
+               'price_in_cents': site.siteconfig.price_in_cents(),
+               'tokens': tokens}
     return render(request, 'job_board/jobs_show.html', context)
 
 

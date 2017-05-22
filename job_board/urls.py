@@ -43,7 +43,8 @@ urlpatterns = [
         categories.categories_show,
         name='categories_show_slug'
     ),
-    url(r'^charge$', misc.charge, name='charge'),
+    url(r'^charge_card$', misc.charge_card, name='charge_card'),
+    url(r'^charge_token$', misc.charge_token, name='charge_token'),
     url(r'^companies/$', companies.companies_index, name='companies_index'),
     url(r'^companies/new$', companies.companies_new, name='companies_new'),
     url(

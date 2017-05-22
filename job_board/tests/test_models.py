@@ -6,6 +6,7 @@ from django.test import TestCase
 from job_board.models.category import Category
 from job_board.models.company import Company
 from job_board.models.job import Job
+from job_board.models.user_token import UserToken
 
 # NOTE: This seems counter-intuitive as we do not set a SITE_ID in settings.py,
 #       however if we do not do this then the tests fail since the requests
@@ -145,3 +146,20 @@ class JobMethodTests(TestCase):
         job = Job.objects.get(title='Software Developer')
         self.assertFalse(job.expire())
         self.assertIsNone(job.expired_at)
+
+
+class UserTokenMethodTests(TestCase):
+    def setUp(self):
+        self.user = User(username='admin')
+        self.user.set_password('password')
+        self.user.full_clean()
+        self.user.save()
+
+    def test_deduct_token(self):
+        self.tokens = UserToken(user=self.user, tokens=10)
+        self.tokens.full_clean()
+        self.tokens.save()
+
+        self.tokens.deduct()
+
+        self.assertEqual(9, self.tokens.tokens)

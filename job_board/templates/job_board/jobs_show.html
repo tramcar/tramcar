@@ -61,7 +61,7 @@
         <h3 class="panel-title">Payment is required for this job to become visible</h3>
       </div>
       <div class="panel-body">
-        <form action="{% url 'charge' %}" method="post">
+        <form action="{% url 'charge_card' %}" method="post" id="payment-form">
           {% csrf_token %}
           <input type="hidden" name='job_id' value='{{ job.id }}'>
           <article>
@@ -80,6 +80,15 @@
                   data-email="{{ request.user.email }}"
                   data-allow-remember-me="false"></script>
         </form>
+        {% if tokens > 0 %}
+        <form action="{% url 'charge_token' %}" method="post" id="payment-form">
+          {% csrf_token %}
+          <input type="hidden" name='job_id' value='{{ job.id }}'>
+          <button class="stripe-button-el" name="pay-with-token" type="submit">
+            <span>Pay with Token</span>
+          </button>
+        </form>
+        {% endif %}
       </div>
     </div>
     {% endif %}
