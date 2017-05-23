@@ -8,12 +8,14 @@
       <tr>
         <th>Name</th>
         <th>Jobs</th>
+        <th>&nbsp;</th>
       </tr>
     </thead>
     {% for category in categories %}
     <tr>
       <td><a href="{% url 'categories_show_slug' category.id category.slug %}">{{ category.name }}</a></td>
       <td>{{ category.active_jobs.count }}</td>
+      <td><a href="{% url 'categories_feed' category.id category.slug %}"><i class="fa fa-rss" aria-hidden="true" /></a></td>
     </tr>
     {% endfor %}
   </table>
