@@ -4,6 +4,7 @@ import job_board.views.jobs as jobs
 import job_board.views.categories as categories
 import job_board.views.companies as companies
 import job_board.views.misc as misc
+import job_board.views.feeds as feeds
 
 urlpatterns = [
     url(r'^$', jobs.jobs_index, name='jobs_index'),
@@ -42,6 +43,11 @@ urlpatterns = [
         r'^categories/(?P<category_id>[0-9]+)-(?P<slug>[-\w\d]+)/$',
         categories.categories_show,
         name='categories_show_slug'
+    ),
+    url(
+        r'^categories/(?P<category_id>[0-9]+)-(?P<slug>[-\w\d]+)/rss$',
+        feeds.CategoryFeed(),
+        name='categories_feed'
     ),
     url(r'^charge_card$', misc.charge_card, name='charge_card'),
     url(r'^charge_token$', misc.charge_token, name='charge_token'),
