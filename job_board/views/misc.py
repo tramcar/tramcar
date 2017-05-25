@@ -94,6 +94,9 @@ def charge_token(request):
 
 
 def contact(request):
+    meta_desc = "Questions? Comments? Good or bad, we'd love to hear from you!"
+    title = 'Contact Us'
+
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -118,10 +121,8 @@ def contact(request):
     else:
         form = ContactForm()
 
-    title = 'Contact Us'
-    return render(request, "job_board/contact.html", {
-        'form': form, 'title': title,
-    })
+    context = {'meta_desc': meta_desc, 'title': title, 'form': form}
+    return render(request, "job_board/contact.html", context)
 
 
 def register(request):
@@ -140,10 +141,10 @@ def register(request):
     else:
         form = CssUserCreationForm()
 
+    meta_desc = 'Create an account to post a job'
     title = 'Register'
-    return render(request, "registration/register.html", {
-        'form': form, 'title': title
-    })
+    context = {'meta_desc': meta_desc, 'title': title, 'form': form}
+    return render(request, "registration/register.html", context)
 
 
 def subscribe(request):

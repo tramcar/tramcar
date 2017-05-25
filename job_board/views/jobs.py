@@ -19,13 +19,17 @@ import markdown
 
 
 def jobs_index(request):
+    meta_desc = 'Browse a list of the most recently posted jobs'
+    title = 'Latest Jobs'
+    form = SubscribeForm()
     jobs = Job.objects.filter(site_id=get_current_site(request).id) \
                       .filter(paid_at__isnull=False) \
                       .filter(expired_at__isnull=True) \
                       .order_by('-paid_at')[:10]
-    title = 'Latest Jobs'
-    form = SubscribeForm()
-    context = {'form': form, 'jobs': jobs, 'title': title}
+    context = {'meta_desc': meta_desc,
+               'title': title,
+               'form': form,
+               'jobs': jobs}
     return render(request, 'job_board/jobs_index.html', context)
 
 
@@ -137,6 +141,12 @@ def jobs_show(request, job_id, slug=None):
     job.description_md = md.convert(job.description)
     job.application_info_md = md.convert(job.application_info)
     job.remote = "Yes" if job.remote else "No"
+    if job.remote == "Yes":
+        meta_desc = '%s is hiring a remote %s. Apply today!' % \
+                    (job.company.name, job.title)
+    else:
+        meta_desc = '%s is hiring a %s in %s, %s. Apply today!' % \
+                    (job.company.name, job.title, job.city, job.state)
     title = "%s @ %s" % (job.title, job.company.name)
     stripe_key = site.siteconfig.stripe_publishable_key
 
@@ -147,6 +157,7 @@ def jobs_show(request, job_id, slug=None):
 
     context = {'job': job,
                'post_date': post_date,
+               'meta_desc': meta_desc,
                'title': title,
                'remote': site.siteconfig.remote,
                'stripe_publishable_key': stripe_key,
