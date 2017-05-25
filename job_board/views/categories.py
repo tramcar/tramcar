@@ -14,8 +14,11 @@ def categories_index(request):
         if len(c.active_jobs()) == 0:
             categories = categories.exclude(id=c.id)
 
+    meta_desc = 'Browse a list of all categories with active jobs'
     title = 'Categories'
-    context = {'categories': categories, 'title': title}
+    context = {'meta_desc': meta_desc,
+               'title': title,
+               'categories': categories}
     return render(request, 'job_board/categories_index.html', context)
 
 
@@ -35,5 +38,10 @@ def categories_show(request, category_id, slug=None):
                       .filter(expired_at__isnull=True) \
                       .order_by('-paid_at')
     form = SubscribeForm()
-    context = {'form': form, 'jobs': jobs, 'title': '%s Jobs' % category.name}
+    meta_desc = 'Browse a list of all active %s jobs' % category.name
+    title = '%s Jobs' % category.name
+    context = {'meta_desc': meta_desc,
+               'title': title,
+               'form': form,
+               'jobs': jobs}
     return render(request, 'job_board/jobs_index.html', context)

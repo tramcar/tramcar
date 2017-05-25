@@ -21,6 +21,8 @@ def companies_index(request):
 
     paginator = Paginator(companies_list, 25)
     page = request.GET.get('page')
+    meta_desc = 'Browse an extensive list of companies with active and ' \
+                'expired jobs'
     title = 'Companies'
     try:
         companies = paginator.page(page)
@@ -30,7 +32,7 @@ def companies_index(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         companies = paginator.page(paginator.num_pages)
-    context = {'companies': companies, 'title': title}
+    context = {'meta_desc': meta_desc, 'title': title, 'companies': companies}
     return render(request, 'job_board/companies_index.html', context)
 
 
@@ -92,7 +94,12 @@ def companies_show(request, company_id, slug=None):
                       .filter(paid_at__isnull=False) \
                       .order_by('-paid_at')
     title = company.name
-    context = {'company': company, 'jobs': jobs, 'title': title}
+    meta_desc = 'Browse a list of all active and expired %s jobs' % \
+                company.name
+    context = {'meta_desc': meta_desc,
+               'title': title,
+               'company': company,
+               'jobs': jobs}
     return render(request, 'job_board/companies_show.html', context)
 
 
