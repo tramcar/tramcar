@@ -1,6 +1,7 @@
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 
 from job_board.forms import SubscribeForm
 from job_board.models.category import Category
@@ -39,8 +40,10 @@ def categories_show(request, category_id, slug=None):
                       .order_by('-paid_at')
     form = SubscribeForm()
     meta_desc = 'Browse a list of all active %s jobs' % category.name
+    feed_url = reverse('categories_feed', args=(category.id, category.slug(),))
     title = '%s Jobs' % category.name
     context = {'meta_desc': meta_desc,
+               'link_rss': feed_url,
                'title': title,
                'form': form,
                'jobs': jobs}
