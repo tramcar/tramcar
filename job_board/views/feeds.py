@@ -3,6 +3,8 @@ from django.contrib.syndication.views import Feed
 from job_board.models.category import Category
 from job_board.models.job import Job
 
+import markdown
+
 
 class CategoryFeed(Feed):
     def title(self, obj):
@@ -29,4 +31,5 @@ class CategoryFeed(Feed):
         return '%s @ %s' % (item.title, item.company.name)
 
     def item_description(self, item):
-        return item.description
+        md = markdown.Markdown(safe_mode='remove')
+        return md.convert(item.description)
