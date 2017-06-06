@@ -128,6 +128,17 @@ of all jobs posted in the last 7 days:
 Again, cron the above to run once a week so that these campaigns are built and
 sent automatically.
 
+If you're unsure what the `mailchimp_list_id` is for the list in question,
+populate `mailchimp_username` and `mailchimp_api_key` for the site and then run
+the following command to display all lists on this site's MailChimp account:
+
+```
+(.venv) $ python manage.py display_lists <site_domain>
+```
+
+The value under the ID column for the associated list is what should get
+assigned to `mailchimp_list_id`.
+
 ## Support
 
 Found a bug or need help with installation?  Please feel free to create an [issue](https://github.com/wfhio/tramcar/issues/new) or drop into [Slack](http://tramcar.now.sh/) and we will assist as soon as possible.
