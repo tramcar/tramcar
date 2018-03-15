@@ -31,7 +31,7 @@ class Command(BaseCommand):
 
                 try:
                     lists = client.lists.all()
-                except:
+                except Exception:
                     raise CommandError(
                             'There was a problem connecting to the MailChimp '
                             'API, check your credentials and try again'
