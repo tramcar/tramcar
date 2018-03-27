@@ -141,4 +141,4 @@ assigned to `mailchimp_list_id`.
 
 ## Support
 
-Found a bug or need help with installation?  Please feel free to create an [issue](https://github.com/wfhio/tramcar/issues/new) or drop into [Slack](http://tramcar.now.sh/) and we will assist as soon as possible.
+Found a bug or need help with installation?  Please feel free to create an [issue](https://github.com/wfhio/tramcar/issues/new) and we will assist as soon as possible.
