@@ -9,7 +9,7 @@ class Command(BaseCommand):
     help = 'Display all MailChimp lists'
 
     def add_arguments(self, parser):
-            parser.add_argument('site_domain', nargs=1, type=str)
+        parser.add_argument('site_domain', nargs=1, type=str)
 
     def handle(self, *args, **options):
         site_domain = options['site_domain'][0]
