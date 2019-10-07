@@ -1,6 +1,6 @@
-Django==1.11.15
+Django==1.11.17
 Markdown==2.6.6
 mailchimp3==2.0.3
 stripe==1.42.0
-tweepy==3.5.0
+tweepy==3.7.0
 wheel==0.24.0
