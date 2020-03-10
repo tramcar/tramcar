@@ -26,7 +26,7 @@
       register: tramcar_checkout
     - debug: var=tramcar_checkout
     - git:
-        repo: https://github.com/wfhio/tramcar
+        repo: https://github.com/tramcar/tramcar
         dest: ~/tramcar
       when: not tramcar_checkout.stat.exists
     - pip:
