@@ -21,7 +21,7 @@ First, clone and install dependencies.  This requires python 3.5, pip, and
 virtualenv to already be installed.
 
 ```
-$ git clone https://github.com/wfhio/tramcar
+$ git clone https://github.com/tramcar/tramcar
 $ cd tramcar
 $ virtualenv .venv
 $ source .venv/bin/activate
@@ -84,7 +84,7 @@ light-weight development web server:
 ```
 
 To run Tramcar using Apache2 and mod_wsgi, see the
-[following](https://github.com/wfhio/tramcar/wiki/Production-Deployment-Notes)
+[following](https://github.com/tramcar/tramcar/wiki/Production-Deployment-Notes)
 for more information.
 
 ## Final Steps
@@ -141,4 +141,4 @@ assigned to `mailchimp_list_id`.
 
 ## Support
 
-Found a bug or need help with installation?  Please feel free to create an [issue](https://github.com/wfhio/tramcar/issues/new) and we will assist as soon as possible.
+Found a bug or need help with installation?  Please feel free to create an [issue](https://github.com/tramcar/tramcar/issues/new) and we will assist as soon as possible.
