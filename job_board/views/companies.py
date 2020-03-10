@@ -67,10 +67,7 @@ def companies_new(request):
                     status=400
                 )
     else:
-        # NOTE: site will be displayed in the HTML form as a hidden field, we
-        #       need to find a way to set this in CompanyForm so validation
-        #       passes, without actually putting it in the HTML
-        form = CompanyForm(initial={'site': site})
+        form = CompanyForm()
 
     context = {'form': form, 'title': title}
     return render(request, 'job_board/companies_new.html', context)
