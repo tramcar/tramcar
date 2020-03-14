@@ -3,12 +3,12 @@ import stripe
 
 from mailchimp3 import MailChimp
 
-from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 
 from job_board.forms import ContactForm, CssUserCreationForm, SubscribeForm
 from job_board.models.job import Job

@@ -25,12 +25,11 @@ urlpatterns = [
     # url('^', include('django.contrib.auth.urls')),
     url(
         r'^login/$',
-        auth_views.login,
-        {
-            'authentication_form': CssAuthenticationForm,
-            'extra_context': {'title': 'Login'}
-        },
+        auth_views.LoginView.as_view(
+            authentication_form=CssAuthenticationForm,
+            extra_context={'title': 'Login'}
+        ),
         name='login'
     ),
-    url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
 ]
