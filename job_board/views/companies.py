@@ -50,7 +50,12 @@ def companies_new(request):
             company.save()
 
             if request.is_ajax():
-                return JsonResponse({'id': company.id, 'name': company.name})
+                # NOTE: CockroachDB's int is larger than JavaScript's number
+                #       precision (53 bits), which results in the id getting
+                #       rounded. Instead, we just convert the id to a string.
+                return JsonResponse(
+                    {'id': str(company.id), 'name': company.name}
+                )
             else:
                 messages.success(
                     request,
