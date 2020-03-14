@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.text import slugify
 
 from job_board.models.country import Country
@@ -22,7 +22,8 @@ class Company(models.Model):
                   Country,
                   blank=True,
                   null=True,
-                  help_text="Please leave empty if 100% virtual"
+                  help_text="Please leave empty if 100% virtual",
+                  on_delete=models.PROTECT
               )
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.test import TestCase
+from django.urls import reverse
 
 from job_board.models.category import Category
 from job_board.models.company import Company

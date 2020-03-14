@@ -5,9 +5,9 @@ import tweepy
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 
@@ -42,14 +42,16 @@ class Job(models.Model):
                 help_text="This is the address we will use to contact you; "
                           "it will be not be visible on the public site"
             )
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
     country = models.ForeignKey(
                   Country,
                   blank=True,
                   null=True,
-                  help_text="Select if you're hiring within a specific country"
+                  help_text="Select if you're hiring within a specific "
+                            "country",
+                  on_delete=models.PROTECT
               )
-    company = models.ForeignKey(Company)
+    company = models.ForeignKey(Company, on_delete=models.PROTECT)
     paid_at = models.DateTimeField(null=True, blank=True)
     expired_at = models.DateTimeField(null=True, blank=True)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
