@@ -16,7 +16,7 @@
     <form action="{% url 'companies_edit' company.id %}" method="post">
       {% csrf_token %}
       {% include "job_board/_form_fields.html" %}
-      <input type="submit" class="btn btn-success" value="Update" />
+      <input type="submit" class="btn btn-primary" value="Update" />
     </form>
   </div>
   <div class="col-md-4"></div>
