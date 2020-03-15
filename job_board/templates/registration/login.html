@@ -16,7 +16,7 @@
     <form method="post" action="{% url 'login' %}">
       {% csrf_token %}
       {% include "job_board/_form_fields.html" %}
-      <button type="submit" class="btn btn-success">Login</button>
+      <button type="submit" class="btn btn-primary">Login</button>
       <input type="hidden" name="next" value="{{ next }}" />
     </form>
 

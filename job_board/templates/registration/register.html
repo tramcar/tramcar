@@ -18,7 +18,7 @@
     <form action="{% url 'register' %}" method="post">
       {% csrf_token %}
       {% include "job_board/_form_fields.html" %}
-      <input type="submit" class="btn btn-success" value="Register">
+      <input type="submit" class="btn btn-primary" value="Register">
     </form>
   </div>
   <div class="col-md-4"></div>
