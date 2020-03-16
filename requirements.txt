@@ -1,5 +1,7 @@
 Django==2.2.11
-Markdown==2.6.6
+Markdown==3.2.1
+bleach==3.1.1
+bleach-whitelist==0.0.10
 mailchimp3==2.0.3
 stripe==1.42.0
 tweepy==3.7.0
