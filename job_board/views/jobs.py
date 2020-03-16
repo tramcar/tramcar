@@ -8,14 +8,12 @@ from django.http import (Http404, HttpResponseRedirect,
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 
-from utils.misc import send_mail_with_helper
+from utils.misc import convert_markdown, send_mail_with_helper
 
 from job_board.forms import CompanyForm, JobForm, JobRemoteForm, SubscribeForm
 from job_board.models.category import Category
 from job_board.models.company import Company
 from job_board.models.job import Job
-
-import markdown
 
 
 def jobs_index(request):
@@ -137,9 +135,8 @@ def jobs_show(request, job_id, slug=None):
         post_date = job.created_at
     else:
         post_date = job.paid_at
-    md = markdown.Markdown(safe_mode='remove')
-    job.description_md = md.convert(job.description)
-    job.application_info_md = md.convert(job.application_info)
+    job.description_md = convert_markdown(job.description)
+    job.application_info_md = convert_markdown(job.application_info)
     job.remote = "Yes" if job.remote else "No"
     if job.remote == "Yes":
         meta_desc = '%s is hiring a remote %s. Apply today!' % \
