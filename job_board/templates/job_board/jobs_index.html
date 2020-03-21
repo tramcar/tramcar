@@ -17,10 +17,23 @@
   <tr>
     <td>{{ job.paid_at|date:'Y-m-d' }}</td>
     <td>
-      <a href="{% url 'jobs_show_slug' job.id job.slug %}">{{ job.title }}</a><br>
-      <small><strong>@&nbsp;{{ job.company.name }}</strong></small>
+      <a href="{% url 'jobs_show_slug' job.id job.slug %}">{{ job.title }}</a> <small><strong>@&nbsp;{{ job.company.name }}</strong></small>
     </td>
-    <td>{{ job.format_country }}</td>
+    <td>
+      {% if job.site.siteconfig.remote %}
+        {{ job.format_country }}
+      {% else %}
+        {% if job.remote %}
+          {% if job.country %}
+            {{ job.format_country }} <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+          {% else %}
+            <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+          {% endif %}
+        {% else %}
+          {{ job.format_country }}
+        {% endif %}
+      {% endif %}
+    </td>
     <td>
       <a href="{% url 'categories_show' job.category.id %}"><span class="label label-primary">{{ job.category.name }}</span></a>
     </td>

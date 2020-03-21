@@ -13,8 +13,7 @@ Here's *ALL* jobs posted to {{ site.name }} in the last 7 days.
 
 As always, please give us a shout if you have any questions or suggestions.
 
-Thanks!
-
+Thanks,
 The {{ site.name }} Team
 
 ==============================================
