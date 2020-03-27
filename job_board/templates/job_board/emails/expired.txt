@@ -1,15 +1,12 @@
 Hi there!
 
-Thank you for using {{ job.site.name }}.  This e-mail is to notify you that
-the following post has now expired:
+Thank you for using {{ job.site.name }}.  This e-mail is to notify you that the following post has now expired:
 
 {{ protocol }}://{{ job.site.domain }}{% url 'jobs_show' job.id %}
 
-If you are still hiring for this position, please log into {{ protocol }}://{{ job.site.domain }}/
-and then re-post this job.
+If you are still hiring for this position, please log into {{ protocol }}://{{ job.site.domain }}/ and then re-post this job.
 
-As always, let us know if you have any questions or comments, and thank you again
-for using {{ job.site.name }}!
+As always, let us know if you have any questions or comments, and thank you again for using {{ job.site.name }}!
 
-Kind Regards,
+Thanks,
 The {{ job.site.name }} Team
