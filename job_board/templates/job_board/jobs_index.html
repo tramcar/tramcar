@@ -23,9 +23,10 @@
       {% if job.site.siteconfig.remote %}
         {{ job.format_country }}
       {% else %}
+        {{ job.format_country }}
         {% if job.remote %}
           {% if job.country %}
-            {{ job.format_country }} <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
           {% else %}
             <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
           {% endif %}
