@@ -271,6 +271,41 @@ class JobViewUnauthdTests(TestCase):
             response, '/login/?next=/jobs/%s/edit' % self.job.id
         )
 
+    def test_search_jobs_by_known_title(self):
+        search = {
+            'query': 'Software Developer',
+        }
+        response = self.client.get(reverse('jobs_search'), search)
+
+        url = reverse('jobs_show_slug', args=(self.job.id, self.job.slug(),))
+        found = '<a href="%s">%s</a>' % (url, self.job.title)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, found)
+
+    def test_search_jobs_by_known_desc(self):
+        search = {
+            'query': 'Test description',
+        }
+        response = self.client.get(reverse('jobs_search'), search)
+
+        url = reverse('jobs_show_slug', args=(self.job.id, self.job.slug(),))
+        found = '<a href="%s">%s</a>' % (url, self.job.title)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, found)
+
+    def test_search_jobs_by_unknown_title_or_desc(self):
+        search = {
+            'query': 'Database Administrator',
+        }
+        response = self.client.get(reverse('jobs_search'), search)
+
+        not_found = '<p>No jobs found.</p>'
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, not_found)
+
 
 class JobViewAuthdTests(TestCase):
 
