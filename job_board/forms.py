@@ -133,6 +133,15 @@ class SiteConfigForm(forms.ModelForm):
         fields = ('__all__')
 
 
+class SearchForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(SearchForm, self).__init__(*args, **kwargs)
+        self.fields['query'].widget.attrs['class'] = 'form-control'
+        self.fields['query'].widget.attrs['placeholder'] = 'Search'
+
+    query = forms.CharField(label='Search', max_length=50)
+
+
 class SubscribeForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(SubscribeForm, self).__init__(*args, **kwargs)

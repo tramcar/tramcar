@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from django.http import (Http404, HttpResponseRedirect,
                          HttpResponsePermanentRedirect)
 from django.shortcuts import get_object_or_404, render
@@ -10,7 +11,11 @@ from django.template.loader import render_to_string
 
 from utils.misc import convert_markdown, send_mail_with_helper
 
-from job_board.forms import CompanyForm, JobForm, JobRemoteForm, SubscribeForm
+from job_board.forms import (CompanyForm,
+                             JobForm,
+                             JobRemoteForm,
+                             SearchForm,
+                             SubscribeForm)
 from job_board.models.category import Category
 from job_board.models.company import Company
 from job_board.models.job import Job
@@ -162,6 +167,28 @@ def jobs_show(request, job_id, slug=None):
                'price_in_cents': site.siteconfig.price_in_cents(),
                'tokens': tokens}
     return render(request, 'job_board/jobs_show.html', context)
+
+
+def jobs_search(request):
+    form = SearchForm(request.GET)
+    if form.is_valid():
+        cd = form.cleaned_data
+        jobs = Job.objects.filter(site_id=get_current_site(request).id) \
+                          .filter(paid_at__isnull=False) \
+                          .filter(expired_at__isnull=True) \
+                          .filter(
+                              Q(title__icontains=cd['query']) |
+                              Q(description__icontains=cd['query'])
+                          ).order_by('-paid_at')
+
+        meta_desc = 'Search Results'
+        title = 'Search Results'
+        context = {'meta_desc': meta_desc,
+                   'title': title,
+                   'form': form,
+                   'jobs': jobs}
+
+        return render(request, 'job_board/jobs_index.html', context)
 
 
 @login_required(login_url='/login/')

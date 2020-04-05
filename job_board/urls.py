@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^contact/$', misc.contact, name='contact'),
     url(r'^jobs/$', jobs.jobs_index, name='jobs_index'),
     url(r'^jobs/new/$', jobs.jobs_new, name='jobs_new'),
+    url(r'^jobs/search/$', jobs.jobs_search, name='jobs_search'),
     url(r'^jobs/mine/$', jobs.jobs_mine, name='jobs_mine'),
     url(r'^jobs/(?P<job_id>[0-9]+)/$', jobs.jobs_show, name='jobs_show'),
     url(

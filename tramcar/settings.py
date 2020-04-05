@@ -70,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'job_board.context_processors.get_site',
+                'job_board.context_processors.search_form',
             ],
         },
     },
