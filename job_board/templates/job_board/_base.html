@@ -37,10 +37,10 @@
         </div>
         <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li role="presentation"><a href="{% url 'jobs_index' %}">Jobs</a></li>
+            <li role="presentation"><a href="{% url 'jobs_index' %}">JOBS</a></li>
             <!-- li role="presentation"><a href="{% url 'categories_index' %}">Categories</a></li -->
-            <li role="presentation"><a href="{% url 'companies_index' %}">Companies</a></li>
-            <li role="presentation"><a href="{% url 'contact' %}">Contact Us</a></li>
+            <li role="presentation"><a href="{% url 'companies_index' %}">COMPANIES</a></li>
+            <li role="presentation"><a href="{% url 'contact' %}">CONTACT</a></li>
             <!-- li role="presentation"><a href="{% url 'jobs_new' %}">Post Job</a></li -->
           </ul>
           <!-- form action="{% url 'jobs_search' %}" method="GET" class="navbar-form navbar-left">
@@ -53,8 +53,8 @@
           </form -->
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-            <li role="presentation"><a href="{% url 'jobs_mine' %}">My Jobs</a></li>
-            <li role="presentation"><a href="{% url 'logout' %}?next={% url 'jobs_index' %}">Logout</a></li>
+            <!--li role="presentation"><a href="{% url 'jobs_mine' %}">My Jobs</a></li-->
+            <li role="presentation"><a href="{% url 'logout' %}?next={% url 'jobs_index' %}">SIGN OUT</a></li>
             {% else %}
             <li role="presentation"><a href="{% url 'register' %}">Register</a></li>
             <li role="presentation"><a href="{% url 'login' %}?next={% url 'jobs_index' %}">Login</a></li>
