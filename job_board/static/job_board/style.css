@@ -21,3 +21,29 @@
 }
 
 body { padding-top: 70px; }
+
+.navbar-fixed-top {
+  height: 145px;
+}
+
+#navbar {
+  margin-top: 60px;
+  margin-left: 200px;
+}
+
+#navbar.in, #navbar.collapsing {
+  margin-top: 0px;
+}
+
+.nav li a {
+  font-weight: bold;
+  color: black !important;
+}
+
+.nav li a:hover {
+  color: #E9CC1E !important;
+}
+
+.container {
+  margin-top: 100px;
+}
