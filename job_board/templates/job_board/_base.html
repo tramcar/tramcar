@@ -38,19 +38,19 @@
         <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li role="presentation"><a href="{% url 'jobs_index' %}">Jobs</a></li>
-            <li role="presentation"><a href="{% url 'categories_index' %}">Categories</a></li>
+            <!-- li role="presentation"><a href="{% url 'categories_index' %}">Categories</a></li -->
             <li role="presentation"><a href="{% url 'companies_index' %}">Companies</a></li>
             <li role="presentation"><a href="{% url 'contact' %}">Contact Us</a></li>
-            <li role="presentation"><a href="{% url 'jobs_new' %}">Post Job</a></li>
+            <!-- li role="presentation"><a href="{% url 'jobs_new' %}">Post Job</a></li -->
           </ul>
-          <form action="{% url 'jobs_search' %}" method="GET" class="navbar-form navbar-left">
+          <!-- form action="{% url 'jobs_search' %}" method="GET" class="navbar-form navbar-left">
             {% for field in search_form %}
             <div class="form-group">
               {{ field }}
             </div>
             {% endfor %}
             <button type="submit" class="btn btn-default">Submit</button>
-          </form>
+          </form -->
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
             <li role="presentation"><a href="{% url 'jobs_mine' %}">My Jobs</a></li>
