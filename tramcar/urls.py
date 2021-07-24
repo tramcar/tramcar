@@ -19,6 +19,10 @@ from django.contrib.auth import views as auth_views
 
 from job_board.forms import CssAuthenticationForm
 
+admin.site.site_header = "YMI Job Board Administration"
+admin.site.site_title = "YMI Job Board Administration"
+admin.site.index_title = "YMI Job Board Administration"
+
 urlpatterns = [
     url(r'^', include('job_board.urls')),
     url(r'^admin/', admin.site.urls),
