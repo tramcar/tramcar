@@ -1,4 +1,5 @@
 *.pyc
 *.swp
+.venv/*
 db.sqlite3
 vagrant/.vagrant/
