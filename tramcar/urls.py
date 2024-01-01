@@ -13,17 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import include, url
+from django.urls import include, re_path
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
 from job_board.forms import CssAuthenticationForm
 
 urlpatterns = [
-    url(r'^', include('job_board.urls')),
-    url(r'^admin/', admin.site.urls),
-    # url('^', include('django.contrib.auth.urls')),
-    url(
+    re_path(r'^', include('job_board.urls')),
+    re_path(r'^admin/', admin.site.urls),
+    # re_path('^', include('django.contrib.auth.urls')),
+    re_path(
         r'^login/$',
         auth_views.LoginView.as_view(
             authentication_form=CssAuthenticationForm,
@@ -31,5 +31,5 @@ urlpatterns = [
         ),
         name='login'
     ),
-    url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
+    re_path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
 ]
