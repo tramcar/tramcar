@@ -29,7 +29,11 @@ urlpatterns = [
         jobs.jobs_expire,
         name='jobs_expire'
     ),
-    re_path(r'^jobs/(?P<job_id>[0-9]+)/edit$', jobs.jobs_edit, name='jobs_edit'),
+    re_path(
+        r'^jobs/(?P<job_id>[0-9]+)/edit$',
+        jobs.jobs_edit,
+        name='jobs_edit'
+    ),
     re_path(
         r'^categories/$',
         categories.categories_index,
@@ -52,7 +56,11 @@ urlpatterns = [
     ),
     re_path(r'^charge_card$', misc.charge_card, name='charge_card'),
     re_path(r'^charge_token$', misc.charge_token, name='charge_token'),
-    re_path(r'^companies/$', companies.companies_index, name='companies_index'),
+    re_path(
+        r'^companies/$',
+        companies.companies_index,
+        name='companies_index'
+    ),
     re_path(r'^companies/new$', companies.companies_new, name='companies_new'),
     re_path(
         r'^companies/(?P<company_id>[0-9]+)/$',
