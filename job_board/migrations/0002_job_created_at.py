@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 
 import datetime
 from django.db import migrations, models
-from django.utils.timezone import utc
 
 
 class Migration(migrations.Migration):
@@ -17,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='job',
             name='created_at',
-            field=models.DateTimeField(auto_now_add=True, default=datetime.datetime(2016, 5, 28, 21, 30, 26, 983912, tzinfo=utc)),
+            field=models.DateTimeField(auto_now_add=True, default=datetime.datetime(2016, 5, 28, 21, 30, 26, 983912, tzinfo=datetime.timezone.utc)),
             preserve_default=False,
         ),
     ]
