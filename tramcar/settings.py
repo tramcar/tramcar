@@ -131,3 +131,5 @@ STATIC_URL = '/static/'
 # NOTE: We leave SITE_ID unset so that it will be looked up based on the
 #       hostname in the request
 #SITE_ID = 1
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
