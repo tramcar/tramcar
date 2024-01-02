@@ -43,13 +43,15 @@ def companies_new(request):
 
     if request.method == 'POST':
         form = CompanyForm(request.POST)
+        # The request.is_ajax() method is removed in Django 4.0
+        is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
         if form.is_valid():
             company = form.save(commit=False)
             company.site_id = site.id
             company.user_id = request.user.id
             company.save()
 
-            if request.is_ajax():
+            if is_ajax:
                 # NOTE: CockroachDB's id is larger than JavaScript's number
                 #       precision (53 bits), which results in the id getting
                 #       rounded. Instead, we just convert the id to a string.
@@ -64,7 +66,7 @@ def companies_new(request):
                 return HttpResponseRedirect(company.get_absolute_url())
 
         else:
-            if request.is_ajax():
+            if is_ajax:
                 return render(
                     request,
                     'job_board/_errors.html',
