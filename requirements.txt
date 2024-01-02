@@ -5,4 +5,4 @@ bleach-whitelist==0.0.10
 mailchimp3==2.0.3
 stripe==1.42.0
 tweepy==3.7.0
-wheel==0.24.0
+wheel==0.38.1
